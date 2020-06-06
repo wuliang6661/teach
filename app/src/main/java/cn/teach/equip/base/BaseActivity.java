@@ -35,7 +35,7 @@ public abstract class BaseActivity extends SupportActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(getLayout());
         ButterKnife.bind(this);
-        ImmersionBar.with(this).keyboardEnable(true).init();   //解决虚拟按键与状态栏沉浸冲突
+        ImmersionBar.with(this).keyboardEnable(true).statusBarDarkFont(true).init();   //解决虚拟按键与状态栏沉浸冲突
         AppManager.getAppManager().addActivity(this);
         svProgressHUD = new SVProgressHUD(this);
         // 避免从桌面启动程序后，会重新实例化入口类的activity

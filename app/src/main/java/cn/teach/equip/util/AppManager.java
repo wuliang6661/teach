@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import java.util.Stack;
 
-import cn.teach.equip.MainActivity;
+import cn.teach.equip.view.main.MainActivity;
 
 /**
  * 作者 by wuliang 时间 16/10/31.
