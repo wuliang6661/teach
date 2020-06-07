@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.teach.equip.R;
+import cn.teach.equip.view.main.find.FindFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -27,9 +28,9 @@ public class NoneFragment3 extends SupportFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        if (findChildFragment(PersonListFragment.class) == null) {
-//            loadRootFragment(R.id.fl_first_container, listFragment);
-//        }
+        if (findChildFragment(FindFragment.class) == null) {
+            loadRootFragment(R.id.fl_first_container, new FindFragment());
+        }
     }
 
     @Override

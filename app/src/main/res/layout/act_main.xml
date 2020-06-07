@@ -31,7 +31,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:background="@drawable/main1_cli">
 
                 <TextView
@@ -52,7 +52,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -90,7 +90,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:background="@drawable/main2_cli"
                 android:visibility="gone">
 
@@ -112,7 +112,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -148,7 +148,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:background="@drawable/main3_cli"
                 android:visibility="gone">
 
@@ -170,7 +170,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -206,7 +206,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:background="@drawable/main4_cli"
                 android:visibility="gone">
 
@@ -228,7 +228,7 @@
                 android:layout_width="40dp"
                 android:layout_height="56dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
