@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import cn.teach.equip.R;
+import cn.teach.equip.view.main.shoucang.ShoucangFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -28,9 +28,9 @@ public class NoneFragment2 extends SupportFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        if (findChildFragment(MessageFragment.class) == null) {
-//            loadRootFragment(R.id.fl_first_container, new MessageFragment());
-//        }
+        if (findChildFragment(ShoucangFragment.class) == null) {
+            loadRootFragment(R.id.fl_first_container, new ShoucangFragment());
+        }
     }
 
     @Override

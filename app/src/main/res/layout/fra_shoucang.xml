@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="right"
     android:orientation="vertical">
 
 
@@ -20,6 +21,7 @@
 
 
         <LinearLayout
+            android:id="@+id/sousuo"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
@@ -40,6 +42,7 @@
 
 
         <ImageView
+            android:id="@+id/saoma"
             android:layout_width="46dp"
             android:layout_height="30dp"
             android:layout_marginRight="23dp"
@@ -48,8 +51,63 @@
     </LinearLayout>
 
 
+    <include layout="@layout/tab_bar_layout" />
 
 
+    <LinearLayout
+        android:id="@+id/edit_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="26dp"
+            android:src="@drawable/bianji" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="23dp"
+            android:text="编   辑"
+            android:textColor="#7F7F7F"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/shoucang_left_menu_bg"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/left_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
