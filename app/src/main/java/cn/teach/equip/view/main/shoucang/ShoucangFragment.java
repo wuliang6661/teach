@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.weight.TabLinerLayout;
 
 /**
  * MVPPlugin
@@ -38,6 +39,8 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     @BindView(R.id.recycle_view)
     RecyclerView recycleView;
     Unbinder unbinder;
+    @BindView(R.id.tab_linerlayout)
+    TabLinerLayout tabLinerlayout;
 
     @Nullable
     @Override
@@ -54,6 +57,12 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
 
         leftMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
+            @Override
+            public void clickBar(int position) {
+
+            }
+        });
     }
 
     @Override

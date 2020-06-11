@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -15,6 +18,7 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
 import butterknife.ButterKnife;
+import cn.teach.equip.R;
 import cn.teach.equip.util.AppManager;
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -106,14 +110,14 @@ public abstract class BaseActivity extends SupportActivity {
      * 设置返回
      */
     protected void goBack() {
-//        LinearLayout imageView = findViewById(R.id.back);
-//        imageView.setVisibility(View.VISIBLE);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+        LinearLayout imageView = findViewById(R.id.back);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**
@@ -122,8 +126,8 @@ public abstract class BaseActivity extends SupportActivity {
      * @param title
      */
     protected void setTitleText(String title) {
-//        TextView titleTex = findViewById(R.id.title_text);
-//        titleTex.setText(title);
+        TextView titleTex = findViewById(R.id.title_text);
+        titleTex.setText(title);
     }
 
 

@@ -51,7 +51,10 @@
     </LinearLayout>
 
 
-    <include layout="@layout/tab_bar_layout" />
+    <cn.teach.equip.weight.TabLinerLayout
+        android:id="@+id/tab_linerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <LinearLayout

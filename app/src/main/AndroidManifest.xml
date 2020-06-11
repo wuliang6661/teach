@@ -27,6 +27,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+
+        <!--目录下载-->
+        <activity
+            android:name=".view.mulu.MuluActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
