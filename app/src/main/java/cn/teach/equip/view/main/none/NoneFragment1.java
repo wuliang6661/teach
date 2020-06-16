@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.teach.equip.R;
+import cn.teach.equip.view.main.home.HomeFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -36,9 +37,9 @@ public class NoneFragment1 extends SupportFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        if (findChildFragment(HomeFragment.class) == null) {
-//            loadRootFragment(R.id.fl_first_container, new HomeFragment());
-//        }
+        if (findChildFragment(HomeFragment.class) == null) {
+            loadRootFragment(R.id.fl_first_container, new HomeFragment());
+        }
     }
 
     @Override

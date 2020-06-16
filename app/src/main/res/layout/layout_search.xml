@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="23dp"
+            android:src="@drawable/sousuo_left_logo" />
+
+
+        <LinearLayout
+            android:id="@+id/sousuo"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/sousuo_bg"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/sousuo" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/saoma"
+            android:layout_width="46dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="23dp"
+            android:src="@drawable/saoma" />
+
+    </LinearLayout>
+</LinearLayout>
