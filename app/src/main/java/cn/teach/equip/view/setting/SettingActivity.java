@@ -56,7 +56,7 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
                 gotoActivity(FanKuiActivity.class, false);
                 break;
             case R.id.clear_huancun:
-
+                showToast("清理成功");
                 break;
             case R.id.user_msg:
 
