@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.main.MainActivity;
+import cn.teach.equip.view.register.RegisterActivity;
 
 
 /**
@@ -49,4 +50,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     public void login() {
         gotoActivity(MainActivity.class, true);
     }
+
+
+    @OnClick(R.id.tx_registest)
+    public void register() {
+        gotoActivity(RegisterActivity.class, false);
+    }
+
 }

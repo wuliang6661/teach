@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".view.login.LoginActivity">
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,10 +28,26 @@
         </activity>
 
 
+        <!--登录页面-->
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!--主页-->
         <activity
             android:name=".view.main.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--注册-->
+        <activity
+            android:name=".view.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <!--搜索-->
+        <activity
+            android:name=".view.SearchActivity"
             android:screenOrientation="portrait" />
 
         <!--目录下载-->
@@ -52,8 +68,8 @@
         <!--反馈-->
         <activity
             android:name=".view.FanKuiActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
