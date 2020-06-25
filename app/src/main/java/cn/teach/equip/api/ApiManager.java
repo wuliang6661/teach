@@ -2,10 +2,16 @@ package cn.teach.equip.api;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.StringUtils;
+
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
+import cn.teach.equip.base.MyApplication;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -83,21 +89,18 @@ public class ApiManager {
     }
 
 
-
-
     /**
      * 所有请求头统一处理
      */
-//    private Interceptor headerInterceptor = chain -> {
-//        Request request;
-//        if (!StringUtils.isEmpty(App.token)) {
-//            // 以拦截到的请求为基础创建一个新的请求对象，然后插入Header
-//            request = chain.request().newBuilder()
-//                    .addHeader("Authorization", App.token)
-//                    .build();
-//            return chain.proceed(request);
-//        }
-//        return chain.proceed(chain.request());
-//    };
+    private Interceptor headerInterceptor = chain -> {
+        Request request;
+        // 以拦截到的请求为基础创建一个新的请求对象，然后插入Header
+        request = chain.request().newBuilder()
+                .addHeader("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token)
+                .addHeader("client-type", "android")
+                .addHeader("client-version", AppUtils.getAppPackageName())
+                .build();
+        return chain.proceed(request);
+    };
 
 }

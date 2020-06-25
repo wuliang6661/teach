@@ -23,6 +23,8 @@ public class MyApplication extends Application {
 
     public static boolean AppInBack = false;  //App 是否在后台
 
+    public static String token;
+
     @Override
     public void onCreate() {
         super.onCreate();
