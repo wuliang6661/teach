@@ -21,6 +21,8 @@ import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.view.mulu.MuluActivity;
+import cn.teach.equip.view.personmessage.PersonMessageActivity;
+import cn.teach.equip.view.setting.SettingActivity;
 
 /**
  * MVPPlugin
@@ -64,6 +66,17 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @OnClick(R.id.my_down_load)
     public void muLu() {
         gotoActivity(MuluActivity.class, false);
+    }
+
+
+    @OnClick(R.id.user_msg)
+    public void goUserMsg() {
+        gotoActivity(PersonMessageActivity.class, false);
+    }
+
+    @OnClick(R.id.setting_img)
+    public void clickSetting() {
+        gotoActivity(SettingActivity.class, false);
     }
 
     @Override

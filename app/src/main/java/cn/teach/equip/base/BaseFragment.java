@@ -7,9 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
-import com.blankj.utilcode.util.ToastUtils;
 
 import cn.teach.equip.R;
+import cn.teach.equip.weight.ToastManager;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -88,7 +88,7 @@ public abstract class BaseFragment extends SupportFragment {
 
 
     protected void showToast(String message) {
-        ToastUtils.showShort(message);
+        ToastManager.showShort(message);
     }
 
     public void onRequestEnd() {

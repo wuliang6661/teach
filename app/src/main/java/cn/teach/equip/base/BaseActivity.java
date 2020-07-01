@@ -20,6 +20,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import butterknife.ButterKnife;
 import cn.teach.equip.R;
 import cn.teach.equip.util.AppManager;
+import cn.teach.equip.weight.ToastManager;
 import me.yokeyword.fragmentation.SupportActivity;
 
 /**
@@ -132,7 +133,8 @@ public abstract class BaseActivity extends SupportActivity {
 
 
     protected void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        ToastManager.showShort(message);
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 

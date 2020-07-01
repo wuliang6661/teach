@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "cn.teach.equip"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -80,4 +80,5 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.guoqi.widget:actionsheet:1.0'
 }
