@@ -3,6 +3,7 @@ package cn.teach.equip.view.register;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
@@ -10,9 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.StringUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.mvp.MVPBaseActivity;
 
 
@@ -63,6 +69,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     @BindView(R.id.cancle)
     TextView cancle;
 
+    private int userType = 1;
+
     @Override
     protected int getLayout() {
         return R.layout.act_register;
@@ -81,6 +89,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     public void clickMenu(View view) {
         switch (view.getId()) {
             case R.id.two_text:
+                userType = 1;
                 oneImg.setImageResource(R.drawable.rgs_one);
                 twoText.setBackgroundResource(R.drawable.regis_select);
                 threeText.setBackgroundResource(R.drawable.regis_three);
@@ -91,6 +100,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 qiyeRegisLayout.setVisibility(View.GONE);
                 break;
             case R.id.three_text:
+                userType = 2;
                 oneImg.setImageResource(R.drawable.rgs_two_one);
                 twoText.setBackgroundResource(R.drawable.rgs_two_two);
                 threeText.setBackgroundResource(R.drawable.regis_select);
@@ -103,4 +113,161 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
         }
     }
 
+
+    @OnClick({R.id.commit, R.id.cancle})
+    public void clickMunu(View view) {
+        switch (view.getId()) {
+            case R.id.commit:
+                switch (userType) {
+                    case 1:
+                        String strJiaoyuCity = jiaoyuCity.getText().toString().trim();
+                        String strJiaoyuDanwei = jiaoyuDanwei.getText().toString().trim();
+                        String strJiaoyuName = etJiaoyuName.getText().toString().trim();
+                        String strJiaoyuPhone = etJiaoyuPhone.getText().toString().trim();
+                        String strJiaoyuVersion = etJiaoyuVersion.getText().toString().trim();
+                        if (StringUtils.isEmpty(strJiaoyuCity)) {
+                            showToast2("请选择省份与城市！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strJiaoyuDanwei)) {
+                            showToast2("请选择单位！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strJiaoyuName)) {
+                            showToast2("请输入姓名！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strJiaoyuPhone)) {
+                            showToast2("请输入手机号！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strJiaoyuVersion)) {
+                            showToast2("请输入验证码！");
+                            return;
+                        }
+                        register(strJiaoyuPhone, strJiaoyuVersion, "", "",
+                                strJiaoyuName, strJiaoyuDanwei, "");
+                        break;
+                    case 2:
+
+                        break;
+                }
+                break;
+            case R.id.cancle:
+                finish();
+                break;
+        }
+    }
+
+
+    private void register(String phone, String smsCode, String provinceId, String cityId, String userName,
+                          String unitName, String unitId) {
+        HttpServerImpl.register(phone, smsCode, provinceId, cityId, userName, unitName, unitId, userType + "")
+                .subscribe(new HttpResultSubscriber<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        showToast2("注册成功！");
+                        finish();
+                    }
+
+                    @Override
+                    public void onFiled(String message) {
+                        showToast2(message);
+                    }
+                });
+    }
+
+
+    /**
+     * 获取验证码
+     */
+    @OnClick({R.id.tx_jiaoyu_huoquyanzhengma, R.id.bt_qiye_huoquyanzhengma})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tx_jiaoyu_huoquyanzhengma:
+                String strJiaoyuPhone = etJiaoyuPhone.getText().toString().trim();
+                if (StringUtils.isEmpty(strJiaoyuPhone)) {
+                    showToast2("请输入手机号！");
+                    return;
+                }
+                if (!RegexUtils.isMobileExact(strJiaoyuPhone)) {
+                    showToast2("请输入正确的手机号！");
+                    return;
+                }
+                getVersion(userType, strJiaoyuPhone);
+                break;
+            case R.id.bt_qiye_huoquyanzhengma:
+                String strQiyePhone = etQiyePersonPhone.getText().toString().trim();
+                if (StringUtils.isEmpty(strQiyePhone)) {
+                    showToast2("请输入手机号！");
+                    return;
+                }
+                if (!RegexUtils.isMobileExact(strQiyePhone)) {
+                    showToast2("请输入正确的手机号！");
+                    return;
+                }
+                getVersion(userType, strQiyePhone);
+                break;
+        }
+    }
+
+
+    private void getVersion(int type, String phone) {
+        HttpServerImpl.sendSmsCode(phone).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (type == 1) {
+                    jiaoyuTimer.start();
+                } else {
+                    gongsiTimer.start();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+
+    CountDownTimer jiaoyuTimer = new CountDownTimer(60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            txJiaoyuHuoquyanzhengma.setEnabled(false);
+            txJiaoyuHuoquyanzhengma.setText("重新获取" + (millisUntilFinished / 1000) + "S");
+        }
+
+        @Override
+        public void onFinish() {
+            txJiaoyuHuoquyanzhengma.setEnabled(true);
+            txJiaoyuHuoquyanzhengma.setText("重新获取");
+        }
+    };
+
+    CountDownTimer gongsiTimer = new CountDownTimer(60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btQiyeHuoquyanzhengma.setEnabled(false);
+            btQiyeHuoquyanzhengma.setText("重新获取" + (millisUntilFinished / 1000) + "S");
+        }
+
+        @Override
+        public void onFinish() {
+            btQiyeHuoquyanzhengma.setEnabled(true);
+            btQiyeHuoquyanzhengma.setText("重新获取");
+        }
+    };
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (jiaoyuTimer != null) {
+            jiaoyuTimer.cancel();
+        }
+        if (gongsiTimer != null) {
+            gongsiTimer.cancel();
+        }
+    }
 }

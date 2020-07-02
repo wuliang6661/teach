@@ -1,5 +1,12 @@
 package cn.teach.equip.api;
 
+import java.util.Map;
+
+import cn.teach.equip.bean.BaseResult;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import rx.Observable;
+
 /**
  * Created by wuliang on 2017/3/9.
  * <p>
@@ -11,5 +18,71 @@ public interface HttpService {
     String URL = "http://47.96.126.117:8084/rope_skipping_webservice/";
 
 
+    /**
+     * 注册接口
+     */
+    @POST("api/visitor/register")
+    Observable<BaseResult<String>> register(@Body Map<String, Object> params);
 
+
+    /**
+     * 登录
+     */
+    @POST("api/visitor/login")
+    Observable<BaseResult<String>> login(@Body Map<String, Object> params);
+
+    /**
+     * 发送短信验证码
+     */
+    @POST("api/visitor/sendSmsCode")
+    Observable<BaseResult<String>> sendSmsCode(@Body Map<String, Object> params);
+
+    /**
+     * 退出登录
+     */
+    @POST("api/user/logout")
+    Observable<BaseResult<String>> logout();
+
+
+    /**
+     * 获取用户信息
+     */
+    @POST("api/user/getUserInfo")
+    Observable<BaseResult<String>> getUserInfo();
+
+    /**
+     * 检查更新
+     */
+    @POST("api/vistor/getVersionInfo")
+    Observable<BaseResult<String>> getVersionInfo();
+
+    /**
+     * 意见反馈
+     */
+    @POST("api/user/feedback")
+    Observable<BaseResult<String>> feedback(@Body Map<String, Object> params);
+
+    /**
+     * 获取省市区
+     */
+    @POST("api/visitor/getLocationList")
+    Observable<BaseResult<String>> getLocationList(@Body Map<String,Object> params);
+
+    /**
+     * 获取单位
+     */
+    @POST("api/visitor/getUnitList")
+    Observable<BaseResult<String>> getUnitList();
+
+    /**
+     * 获取banner
+     */
+    @POST("api/visitor/getBannerList")
+    Observable<BaseResult<String>> getBannerList(@Body Map<String,Object> params);
+
+    /**
+     * 获取文章列表
+     */
+    @POST("api/visitor/getArticleList")
+    Observable<BaseResult<String>> getArticleList();
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
 import butterknife.ButterKnife;
@@ -136,6 +137,12 @@ public abstract class BaseActivity extends SupportActivity {
         ToastManager.showShort(message);
 //        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    protected void showToast2(String message) {
+        ToastUtils.showShort(message);
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
 
 
     //调用隐藏系统默认的输入法

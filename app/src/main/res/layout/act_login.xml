@@ -115,6 +115,7 @@
 
 
                 <TextView
+                    android:id="@+id/get_version"
                     android:layout_width="89dp"
                     android:layout_height="match_parent"
                     android:gravity="center"

@@ -3,6 +3,7 @@ package cn.teach.equip.view.login;
 import android.content.Context;
 
 import cn.teach.equip.mvp.BasePresenter;
+import cn.teach.equip.mvp.BaseRequestView;
 import cn.teach.equip.mvp.BaseView;
 
 /**
@@ -11,8 +12,9 @@ import cn.teach.equip.mvp.BaseView;
  */
 
 public class LoginContract {
-    interface View extends BaseView {
-        
+    interface View extends BaseRequestView {
+
+        void loginSourcess();
     }
 
     interface  Presenter extends BasePresenter<View> {

@@ -45,6 +45,7 @@ public class ApiManager {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Log.i(TAG, "log: " + message));
         loggingInterceptor.setLevel(level);
         builder.addInterceptor(loggingInterceptor);
+        builder.addInterceptor(headerInterceptor);
     }
 
     private static class SingletonHolder {
