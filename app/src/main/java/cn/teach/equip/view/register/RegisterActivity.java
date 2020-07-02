@@ -64,10 +64,6 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     TextView btQiyeHuoquyanzhengma;
     @BindView(R.id.qiye_regis_layout)
     LinearLayout qiyeRegisLayout;
-    @BindView(R.id.commit)
-    TextView commit;
-    @BindView(R.id.cancle)
-    TextView cancle;
 
     private int userType = 1;
 
@@ -261,8 +257,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         if (jiaoyuTimer != null) {
             jiaoyuTimer.cancel();
         }
@@ -270,4 +266,5 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
             gongsiTimer.cancel();
         }
     }
+
 }
