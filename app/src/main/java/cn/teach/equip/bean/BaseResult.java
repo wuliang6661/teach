@@ -12,7 +12,7 @@ public class BaseResult<T> {
 //    3）	errorCode: 错误编码，当有错误发生时，此errorCode包含有错误编码
 //    4）	data：返回数据
 
-    private static int SURCESS = 200;
+    private static int SURCESS = 1;
 
     private String status;
 
@@ -23,7 +23,7 @@ public class BaseResult<T> {
     private T data;
 
     public boolean surcess() {
-        return code == 200;
+        return code == 0;
     }
 
 

@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 
 
@@ -145,7 +146,28 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                                 strJiaoyuName, strJiaoyuDanwei, "");
                         break;
                     case 2:
-
+                        String strQiyeName = etQiyeName.getText().toString().trim();
+                        String strQiyePersonName = etQiyePersonName.getText().toString().trim();
+                        String strQiyePhone = etQiyePersonPhone.getText().toString().trim();
+                        String strQiyeVersionPhone = etQiyeVersionCode.getText().toString().trim();
+                        if (StringUtils.isEmpty(strQiyeName)) {
+                            showToast2("请选择企业名称！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strQiyePersonName)) {
+                            showToast2("请输入姓名！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strQiyePhone)) {
+                            showToast2("请输入手机号！");
+                            return;
+                        }
+                        if (StringUtils.isEmpty(strQiyeVersionPhone)) {
+                            showToast2("请输入验证码！");
+                            return;
+                        }
+                        register(strQiyePhone, strQiyeVersionPhone, "", "",
+                                strQiyePersonName, strQiyeName, "");
                         break;
                 }
                 break;
@@ -159,9 +181,9 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     private void register(String phone, String smsCode, String provinceId, String cityId, String userName,
                           String unitName, String unitId) {
         HttpServerImpl.register(phone, smsCode, provinceId, cityId, userName, unitName, unitId, userType + "")
-                .subscribe(new HttpResultSubscriber<String>() {
+                .subscribe(new HttpResultSubscriber<UserBO>() {
                     @Override
-                    public void onSuccess(String s) {
+                    public void onSuccess(UserBO s) {
                         showToast2("注册成功！");
                         finish();
                     }
@@ -209,7 +231,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
 
 
     private void getVersion(int type, String phone) {
-        HttpServerImpl.sendSmsCode(phone).subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.sendSmsCode(phone, 1).subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
                 if (type == 1) {

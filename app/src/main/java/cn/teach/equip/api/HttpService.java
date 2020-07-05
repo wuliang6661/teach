@@ -3,6 +3,7 @@ package cn.teach.equip.api;
 import java.util.Map;
 
 import cn.teach.equip.bean.BaseResult;
+import cn.teach.equip.bean.pojo.UserBO;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -22,7 +23,7 @@ public interface HttpService {
      * 注册接口
      */
     @POST("api/visitor/register")
-    Observable<BaseResult<String>> register(@Body Map<String, Object> params);
+    Observable<BaseResult<UserBO>> register(@Body Map<String, Object> params);
 
 
     /**

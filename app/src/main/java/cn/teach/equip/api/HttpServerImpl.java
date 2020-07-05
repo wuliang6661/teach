@@ -5,6 +5,7 @@ import java.util.Map;
 
 import cn.teach.equip.api.rx.RxBus;
 import cn.teach.equip.api.rx.RxResultHelper;
+import cn.teach.equip.bean.pojo.UserBO;
 import rx.Observable;
 
 public class HttpServerImpl {
@@ -26,7 +27,7 @@ public class HttpServerImpl {
     /**
      * 注册
      */
-    public static Observable<String> register(String phone, String smsCode, String provinceId, String cityId, String userName,
+    public static Observable<UserBO> register(String phone, String smsCode, String provinceId, String cityId, String userName,
                                               String unitName, String unitId, String userType) {
         Map<String, Object> params = new HashMap<>();
         params.put("phone", phone);
@@ -55,20 +56,19 @@ public class HttpServerImpl {
     /**
      * 发送短信验证码
      */
-    public static Observable<String> sendSmsCode(String phone) {
+    public static Observable<String> sendSmsCode(String phone, int type) {
         Map<String, Object> params = new HashMap<>();
         params.put("phone", phone);
+        params.put("type", type);
         return getService().sendSmsCode(params).compose(RxResultHelper.httpRusult());
     }
 
     /**
      * 退出登录
      */
-    public static Observable<String> logout(){
+    public static Observable<String> logout() {
         return getService().logout().compose(RxResultHelper.httpRusult());
     }
-
-
 
 
 }

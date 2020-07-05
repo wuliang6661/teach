@@ -94,7 +94,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
      */
     private void getSyncVersion(String phone) {
         showProgress();
-        HttpServerImpl.sendSmsCode(phone).subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.sendSmsCode(phone, 2).subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
                 stopProgress();
