@@ -27,6 +27,8 @@ public class UserBO {
     private int userType;
     private String userToken;
 
+
+
     public int getUserId() {
         return userId;
     }

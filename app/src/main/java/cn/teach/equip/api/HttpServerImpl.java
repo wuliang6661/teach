@@ -1,10 +1,12 @@
 package cn.teach.equip.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import cn.teach.equip.api.rx.RxBus;
 import cn.teach.equip.api.rx.RxResultHelper;
+import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import rx.Observable;
 
@@ -45,7 +47,7 @@ public class HttpServerImpl {
     /**
      * 登录
      */
-    public static Observable<String> login(String phone, String smsCode) {
+    public static Observable<UserBO> login(String phone, String smsCode) {
         Map<String, Object> params = new HashMap<>();
         params.put("phone", phone);
         params.put("smsCode", smsCode);
@@ -70,5 +72,30 @@ public class HttpServerImpl {
         return getService().logout().compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 获取省市区
+     */
+    public static Observable<List<ProvinceBO>> getLocationList(String provinceId, String cityId, String provinceFirstLetter,
+                                                               String cityFirstLetter, String provinceName, String cityName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("provinceId", provinceId);
+        params.put("cityId", cityId);
+        params.put("provinceFirstLetter", provinceFirstLetter);
+        params.put("cityFirstLetter", cityFirstLetter);
+        params.put("provinceName", provinceName);
+        params.put("cityName", cityName);
+        return getService().getLocationList(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取首页banner
+     */
+    public static Observable<List<BannerBO>> getBannerList() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", 1);
+        return getService().getBannerList(params).compose(RxResultHelper.httpRusult());
+    }
 
 }

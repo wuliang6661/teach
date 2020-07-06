@@ -16,6 +16,8 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.main.MainActivity;
 import cn.teach.equip.view.register.RegisterActivity;
@@ -56,21 +58,22 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @OnClick(R.id.login_bt)
     public void login() {
-        String phone = etPhone.getText().toString().trim();
-        String smsCode = etYanzhengma.getText().toString().trim();
-        if (StringUtils.isEmpty(phone)) {
-            showToast2("请输入手机号码");
-            return;
-        }
-        if (!RegexUtils.isMobileExact(phone)) {
-            showToast2("请输入正确的手机号码！");
-            return;
-        }
-        if (StringUtils.isEmpty(smsCode)) {
-            showToast2("请输入验证码！");
-            return;
-        }
-        mPresenter.login(phone, smsCode);
+//        String phone = etPhone.getText().toString().trim();
+//        String smsCode = etYanzhengma.getText().toString().trim();
+//        if (StringUtils.isEmpty(phone)) {
+//            showToast2("请输入手机号码");
+//            return;
+//        }
+//        if (!RegexUtils.isMobileExact(phone)) {
+//            showToast2("请输入正确的手机号码！");
+//            return;
+//        }
+//        if (StringUtils.isEmpty(smsCode)) {
+//            showToast2("请输入验证码！");
+//            return;
+//        }
+//        mPresenter.login(phone, smsCode);
+        gotoActivity(MainActivity.class, true);
     }
 
 
@@ -138,13 +141,16 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         gotoActivity(RegisterActivity.class, false);
     }
 
-    @Override
-    public void loginSourcess() {
-        gotoActivity(MainActivity.class, true);
-    }
 
     @Override
     public void onRequestError(String msg) {
         showToast2(msg);
+    }
+
+    @Override
+    public void loginSourcess(UserBO userBO) {
+        MyApplication.token = userBO.getUserToken();
+        MyApplication.userBO = userBO;
+        gotoActivity(MainActivity.class, true);
     }
 }

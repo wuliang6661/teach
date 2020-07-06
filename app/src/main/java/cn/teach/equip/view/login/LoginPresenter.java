@@ -4,6 +4,7 @@ import android.content.Context;
 
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.BasePresenterImpl;
 
 /**
@@ -15,11 +16,11 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
 
     public void login(String phone, String smsCode) {
-        HttpServerImpl.login(phone, smsCode).subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.login(phone, smsCode).subscribe(new HttpResultSubscriber<UserBO>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(UserBO s) {
                 if (mView != null) {
-                    mView.loginSourcess();
+                    mView.loginSourcess(s);
                 }
             }
 

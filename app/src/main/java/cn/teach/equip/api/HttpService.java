@@ -1,8 +1,11 @@
 package cn.teach.equip.api;
 
+import java.util.List;
 import java.util.Map;
 
 import cn.teach.equip.bean.BaseResult;
+import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -30,7 +33,7 @@ public interface HttpService {
      * 登录
      */
     @POST("api/visitor/login")
-    Observable<BaseResult<String>> login(@Body Map<String, Object> params);
+    Observable<BaseResult<UserBO>> login(@Body Map<String, Object> params);
 
     /**
      * 发送短信验证码
@@ -67,7 +70,7 @@ public interface HttpService {
      * 获取省市区
      */
     @POST("api/visitor/getLocationList")
-    Observable<BaseResult<String>> getLocationList(@Body Map<String,Object> params);
+    Observable<BaseResult<List<ProvinceBO>>> getLocationList(@Body Map<String,Object> params);
 
     /**
      * 获取单位
@@ -79,7 +82,7 @@ public interface HttpService {
      * 获取banner
      */
     @POST("api/visitor/getBannerList")
-    Observable<BaseResult<String>> getBannerList(@Body Map<String,Object> params);
+    Observable<BaseResult<List<BannerBO>>> getBannerList(@Body Map<String,Object> params);
 
     /**
      * 获取文章列表

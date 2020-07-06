@@ -1,6 +1,7 @@
 package cn.teach.equip.view.register;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.selectcity.SelectCityActivity;
 
 
 /**
@@ -67,6 +69,9 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     LinearLayout qiyeRegisLayout;
 
     private int userType = 1;
+
+    private String cityId;
+    private String provinceId;
 
     @Override
     protected int getLayout() {
@@ -142,7 +147,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                             showToast2("请输入验证码！");
                             return;
                         }
-                        register(strJiaoyuPhone, strJiaoyuVersion, "", "",
+                        register(strJiaoyuPhone, strJiaoyuVersion, provinceId, cityId,
                                 strJiaoyuName, strJiaoyuDanwei, "");
                         break;
                     case 2:
@@ -248,6 +253,34 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
         });
     }
 
+
+    @OnClick({R.id.jiaoyu_city, R.id.jiaoyu_danwei})
+    public void click(View view) {
+        switch (view.getId()) {
+            case R.id.jiaoyu_city:
+                Intent intent = new Intent(this, SelectCityActivity.class);
+                startActivityForResult(intent, 0x11);
+                break;
+            case R.id.jiaoyu_danwei:
+
+                break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case 0x11:
+                String cityName = data.getStringExtra("cityName");
+                cityId = data.getIntExtra("cityId", 0) + "";
+                provinceId = data.getIntExtra("provinceId", 0) + "";
+                String provinceName = data.getStringExtra("provinceName");
+                jiaoyuCity.setText(provinceName + "省" + cityName + "市");
+                break;
+        }
+    }
 
     CountDownTimer jiaoyuTimer = new CountDownTimer(60000, 1000) {
         @Override

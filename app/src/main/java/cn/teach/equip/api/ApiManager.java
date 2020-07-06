@@ -100,6 +100,7 @@ public class ApiManager {
                 .addHeader("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token)
                 .addHeader("client-type", "android")
                 .addHeader("client-version", AppUtils.getAppPackageName())
+                .addHeader("user-deviceId","123333")
                 .build();
         return chain.proceed(request);
     };

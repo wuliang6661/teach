@@ -66,6 +66,11 @@
             android:name=".view.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
+        <!--选择省份城市-->
+        <activity
+            android:name=".view.selectcity.SelectCityActivity"
+            android:screenOrientation="portrait" />
+
         <!--反馈-->
         <activity
             android:name=".view.FanKuiActivity"

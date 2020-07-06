@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import cn.teach.equip.bean.pojo.UserBO;
 
 /**
  * 作者 by wuliang 时间 16/10/26.
@@ -23,7 +24,9 @@ public class MyApplication extends Application {
 
     public static boolean AppInBack = false;  //App 是否在后台
 
-    public static String token;
+    public static String token = "SqaE7Kq1ESJ2aSd1s5EPmA==";
+
+    public static UserBO userBO;
 
     @Override
     public void onCreate() {
