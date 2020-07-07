@@ -101,4 +101,53 @@ public interface HttpService {
      */
     @POST("api/visitor/getArticleList")
     Observable<BaseResult<String>> getArticleList(@Body Map<String, Object> params);
+
+    /**
+     * 获取我的文章收藏列表
+     */
+    @POST("api/article/getArticleCollectList")
+    Observable<BaseResult<String>> getArticleCollectList(@Body Map<String, Object> params);
+
+    /**
+     * 获取分类产品列表
+     */
+    @POST("api/visitor/getProductList")
+    Observable<BaseResult<String>> getProductList(@Body Map<String, Object> params);
+
+    /**
+     * 获取我的产品收藏列表
+     */
+    @POST("api/product/getProductCollectList")
+    Observable<BaseResult<String>> getProductCollectList(@Body Map<String, Object> params);
+
+    /**
+     * 获取发现视频列表
+     */
+    @POST("api/visitor/getVideoList")
+    Observable<BaseResult<String>> getVideoList(@Body Map<String, Object> params);
+
+
+    /**
+     * 视频点赞/取消点赞
+     */
+    @POST("api/video/videoUp")
+    Observable<BaseResult<String>> videoUp(@Body Map<String, Object> params);
+
+    /**
+     * 获取下载目录
+     */
+    @POST("api/visitor/getDownloadFileList")
+    Observable<BaseResult<String>> getDownloadFileList(@Body Map<String, Object> params);
+
+    /**
+     * 全文搜索
+     */
+    @POST("api/visitor/search")
+    Observable<BaseResult<String>> search(@Body Map<String, Object> params);
+
+    /**
+     * 收藏文章产品/取消收藏文章产品
+     */
+    @POST("api/product/productCollect")
+    Observable<BaseResult<String>> productCollect(@Body Map<String, Object> params);
 }
