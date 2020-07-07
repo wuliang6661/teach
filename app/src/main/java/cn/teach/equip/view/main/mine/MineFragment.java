@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
@@ -19,6 +20,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
@@ -60,6 +65,41 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        getUserInfo();
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+        HttpServerImpl.getUserInfo().subscribe(new HttpResultSubscriber<UserBO>() {
+            @Override
+            public void onSuccess(UserBO userBO) {
+                MyApplication.userBO = userBO;
+                showUI();
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+
+    /**
+     * 设置用户信息显示
+     */
+    private void showUI() {
+        Glide.with(getActivity()).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
+        userName.setText(MyApplication.userBO.getUserName());
+        userId.setText("ID:" + MyApplication.userBO.getUserId());
     }
 
 

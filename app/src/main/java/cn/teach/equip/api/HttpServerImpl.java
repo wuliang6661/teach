@@ -98,4 +98,10 @@ public class HttpServerImpl {
         return getService().getBannerList(params).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 获取用户信息
+     */
+    public static Observable<UserBO> getUserInfo(){
+        return getService().getUserInfo().compose(RxResultHelper.httpRusult());
+    }
 }

@@ -52,7 +52,7 @@ public interface HttpService {
      * 获取用户信息
      */
     @POST("api/user/getUserInfo")
-    Observable<BaseResult<String>> getUserInfo();
+    Observable<BaseResult<UserBO>> getUserInfo();
 
     /**
      * 检查更新
