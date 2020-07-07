@@ -19,9 +19,12 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
+import com.bumptech.glide.Glide;
 import com.guoqi.actionsheet.ActionSheet;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -31,6 +34,10 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.util.PhotoFromPhotoAlbum;
 
@@ -53,9 +60,17 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     TextView commit;
     @BindView(R.id.cancle)
     TextView cancle;
+    @BindView(R.id.et_user_name)
+    EditText etUserName;
+    @BindView(R.id.user_address)
+    TextView userAddress;
+    @BindView(R.id.user_danwei)
+    TextView userDanwei;
 
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
+
+    private File file;
 
     @Override
     protected int getLayout() {
@@ -72,11 +87,55 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         cameraSavePath = new File(Environment.getExternalStorageDirectory().getPath() + "/" +
                 System.currentTimeMillis() + ".jpg");
 
+        showUI();
     }
+
+
+    private void showUI() {
+        Glide.with(this).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
+        String address = "";
+        if (!StringUtils.isEmpty(MyApplication.userBO.getProvinceName())) {
+            address += MyApplication.userBO.getProvinceName() + "省";
+        }
+        if (!StringUtils.isEmpty(MyApplication.userBO.getCityName())) {
+            address += MyApplication.userBO.getCityName();
+        }
+        userAddress.setText(address);
+        userDanwei.setText(MyApplication.userBO.getUnitName());
+        etUserName.setText(MyApplication.userBO.getUserName());
+    }
+
 
     @OnClick(R.id.user_img_layout)
     public void clickImg() {
         checkPermissions();
+    }
+
+    @OnClick(R.id.cancle)
+    public void cancle() {
+        finish();
+    }
+
+
+    @OnClick(R.id.commit)
+    public void commit() {
+        String userName = etUserName.getText().toString().trim();
+        if (StringUtils.isEmpty(userName)) {
+            showToast2("请输入用户名称！");
+            return;
+        }
+        HttpServerImpl.saveUserInfo(userName, file).subscribe(new HttpResultSubscriber<UserBO>() {
+            @Override
+            public void onSuccess(UserBO s) {
+                MyApplication.userBO = s;
+                showUI();
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
     }
 
 
@@ -213,6 +272,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         jiahao.setVisibility(View.GONE);
         userImg.setVisibility(View.VISIBLE);
         userImg.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+        this.file = file;
 //        showProgress();
 //        HttpServerImpl.uploadHeadImage(file).subscribe(new HttpResultSubscriber<String>() {
 //            @Override

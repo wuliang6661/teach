@@ -1,5 +1,9 @@
 package cn.teach.equip.api;
 
+import com.blankj.utilcode.util.Utils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +12,10 @@ import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import id.zelory.compressor.Compressor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 public class HttpServerImpl {
@@ -101,7 +109,48 @@ public class HttpServerImpl {
     /**
      * 获取用户信息
      */
-    public static Observable<UserBO> getUserInfo(){
+    public static Observable<UserBO> getUserInfo() {
         return getService().getUserInfo().compose(RxResultHelper.httpRusult());
     }
+
+    /**
+     * 反馈
+     */
+    public static Observable<String> feedback(String fankui) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("content", fankui);
+        return getService().feedback(params).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 保存用户信息
+     */
+    public static Observable<UserBO> saveUserInfo(String userName, File file) {
+        MultipartBody.Part body = MultipartBody.Part.createFormData("", "");
+        if (file != null) {
+            File compressedImageFile;
+            try {
+                compressedImageFile = new Compressor(Utils.getApp()).setQuality(30).compressToFile(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+                compressedImageFile = file;
+            }
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), compressedImageFile);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        }
+        return getService().saveUserInfo(userName, body).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取文章列表
+     */
+    public static Observable<String> getArticleList(int type, int pageNum) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", type);
+        params.put("page", pageNum);
+        params.put("size", 20);
+        return getService().getArticleList(params).compose(RxResultHelper.httpRusult());
+    }
+
 }

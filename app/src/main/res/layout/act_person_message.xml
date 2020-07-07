@@ -22,8 +22,8 @@
             android:id="@+id/user_img"
             android:layout_width="66dp"
             android:layout_height="66dp"
-            android:visibility="gone"
             android:scaleType="fitXY"
+            android:visibility="gone"
             app:riv_corner_radius="10dp" />
 
         <TextView
@@ -62,6 +62,7 @@
 
 
         <TextView
+            android:id="@+id/user_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -97,6 +98,7 @@
 
 
         <TextView
+            android:id="@+id/user_danwei"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
@@ -132,6 +134,7 @@
 
 
         <EditText
+            android:id="@+id/et_user_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

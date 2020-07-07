@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,10 +52,16 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     RecyclerView bannerRecycle;
     @BindView(R.id.jingxuan_recycle)
     RecyclerView jingxuanRecycle;
+    @BindView(R.id.scoll_view)
+    NestedScrollView scollView;
     Unbinder unbinder;
 
     List<BannerBO> bannerBOS;
+
     private int curinPosition = 0;
+
+    private int pageNum = 1;
+    private boolean isPage = false;  //是否正在翻页
 
     @Nullable
     @Override
@@ -74,9 +81,34 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         bannerRecycle.setNestedScrollingEnabled(false);
         jingxuanRecycle.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         jingxuanRecycle.setNestedScrollingEnabled(false);
-        getBanner();
+        onScollViewListener();
+        getArticleList(4, 1);
+        setJingXuanAdapter();
     }
 
+
+    private void onScollViewListener() {
+        scollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // 滚动到底
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if (!isPage) {
+                        isPage = true;
+                        pageNum++;
+                        getArticleList(4, pageNum);
+                    }
+                }
+            }
+        });
+    }
+
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        getBanner();
+    }
 
     /**
      * 获取banner
@@ -98,9 +130,51 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     }
 
 
+    /**
+     * 获取文章列表
+     */
+    private void getArticleList(int type, int page) {
+        HttpServerImpl.getArticleList(type, page).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                isPage = false;
+            }
+
+            @Override
+            public void onFiled(String message) {
+                isPage = false;
+                showToast2(message);
+            }
+        });
+    }
+
+
+    /**
+     * 设置精选文章适配器
+     */
+    private void setJingXuanAdapter() {
+        List<String> sss = new ArrayList<>();
+        sss.add("111");
+        sss.add("111");
+        sss.add("111");
+        LGRecycleViewAdapter<String> adapter = new LGRecycleViewAdapter<String>(sss) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_home_wenzhang;
+            }
+
+            @Override
+            public void convert(LGViewHolder holder, String s, int position) {
+                holder.setText(R.id.wenzhang_title, s);
+            }
+        };
+        jingxuanRecycle.setAdapter(adapter);
+    }
+
+
     private void setBanner() {
         List<String> images = new ArrayList<>();
-        for (BannerBO banner : bannerBOS){
+        for (BannerBO banner : bannerBOS) {
             images.add(banner.getImgUrl());
         }
         //设置banner样式
@@ -153,7 +227,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     /**
      * 设置banner点适配器
      */
-    private void setBannerPointAdapter(){
+    private void setBannerPointAdapter() {
         LGRecycleViewAdapter<BannerBO> adapter = new LGRecycleViewAdapter<BannerBO>(bannerBOS) {
             @Override
             public int getLayoutId(int viewType) {
@@ -162,18 +236,17 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
             @Override
             public void convert(LGViewHolder holder, BannerBO bannerBO, int position) {
-                 if(curinPosition == position){
-                     holder.getView(R.id.un_select).setVisibility(View.GONE);
-                     holder.getView(R.id.select_point).setVisibility(View.VISIBLE);
-                 }else{
-                     holder.getView(R.id.un_select).setVisibility(View.VISIBLE);
-                     holder.getView(R.id.select_point).setVisibility(View.GONE);
-                 }
+                if (curinPosition == position) {
+                    holder.getView(R.id.un_select).setVisibility(View.GONE);
+                    holder.getView(R.id.select_point).setVisibility(View.VISIBLE);
+                } else {
+                    holder.getView(R.id.un_select).setVisibility(View.VISIBLE);
+                    holder.getView(R.id.select_point).setVisibility(View.GONE);
+                }
             }
         };
         bannerRecycle.setAdapter(adapter);
     }
-
 
 
     public class GlideImageLoader extends ImageLoader {

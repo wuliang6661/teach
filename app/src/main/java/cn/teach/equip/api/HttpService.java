@@ -7,8 +7,12 @@ import cn.teach.equip.bean.BaseResult;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -55,6 +59,14 @@ public interface HttpService {
     Observable<BaseResult<UserBO>> getUserInfo();
 
     /**
+     * 保存用户信息
+     */
+    @Multipart
+    @POST("api/user/saveUserInfo")
+    Observable<BaseResult<UserBO>> saveUserInfo(@Query("userName") String userName,
+                                                @Part MultipartBody.Part file);
+
+    /**
      * 检查更新
      */
     @POST("api/vistor/getVersionInfo")
@@ -70,7 +82,7 @@ public interface HttpService {
      * 获取省市区
      */
     @POST("api/visitor/getLocationList")
-    Observable<BaseResult<List<ProvinceBO>>> getLocationList(@Body Map<String,Object> params);
+    Observable<BaseResult<List<ProvinceBO>>> getLocationList(@Body Map<String, Object> params);
 
     /**
      * 获取单位
@@ -82,11 +94,11 @@ public interface HttpService {
      * 获取banner
      */
     @POST("api/visitor/getBannerList")
-    Observable<BaseResult<List<BannerBO>>> getBannerList(@Body Map<String,Object> params);
+    Observable<BaseResult<List<BannerBO>>> getBannerList(@Body Map<String, Object> params);
 
     /**
      * 获取文章列表
      */
     @POST("api/visitor/getArticleList")
-    Observable<BaseResult<String>> getArticleList();
+    Observable<BaseResult<String>> getArticleList(@Body Map<String, Object> params);
 }
