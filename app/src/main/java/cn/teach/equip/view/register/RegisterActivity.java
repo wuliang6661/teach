@@ -22,6 +22,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.selectcity.SelectCityActivity;
 
 
 /**
@@ -257,8 +258,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     public void click(View view) {
         switch (view.getId()) {
             case R.id.jiaoyu_city:
-//                Intent intent = new Intent(this, SelectCityActivity.class);
-//                startActivityForResult(intent, 0x11);
+                Intent intent = new Intent(this, SelectCityActivity.class);
+                startActivityForResult(intent, 0x11);
                 break;
             case R.id.jiaoyu_danwei:
 

@@ -153,4 +153,15 @@ public class HttpServerImpl {
         return getService().getArticleList(params).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 获取分类产品列表
+     */
+    public static Observable<String> getProductList(int levelType, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelType", levelType);
+        params.put("page", page);
+        params.put("size", 100);
+        return getService().getProductList(params).compose(RxResultHelper.httpRusult());
+    }
+
 }

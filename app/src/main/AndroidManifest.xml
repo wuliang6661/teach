@@ -71,6 +71,11 @@
             android:name=".view.selectcity.SelectCityActivity"
             android:screenOrientation="portrait" />
 
+        <!--网页-->
+        <activity
+            android:name=".view.WebActivity"
+            android:screenOrientation="portrait" />
+
         <!--反馈-->
         <activity
             android:name=".view.FanKuiActivity"

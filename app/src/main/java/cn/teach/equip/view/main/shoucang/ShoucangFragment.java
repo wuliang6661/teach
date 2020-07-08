@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.weight.TabLinerLayout;
 
@@ -35,7 +38,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     @BindView(R.id.edit_layout)
     LinearLayout editLayout;
     @BindView(R.id.left_menu)
-    RecyclerView leftMenu;
+    ExpandableListView leftMenu;
     @BindView(R.id.recycle_view)
     RecyclerView recycleView;
     Unbinder unbinder;
@@ -55,15 +58,32 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        leftMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        leftMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {
+                getFenlei(position + 4, 1);
+            }
+        });
+        getFenlei(4, 1);
+    }
 
+
+    private void getFenlei(int levelType, int page) {
+        HttpServerImpl.getProductList(levelType, page).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
             }
         });
     }
+
 
     @Override
     public void onDestroyView() {
