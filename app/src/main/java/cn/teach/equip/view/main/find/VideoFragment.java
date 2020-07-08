@@ -3,7 +3,6 @@ package cn.teach.equip.view.main.find;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.VideoListBO;
 
 /**
@@ -26,7 +26,7 @@ import cn.teach.equip.bean.pojo.VideoListBO;
  */
 
 
-public class VideoFragment extends Fragment {
+public class VideoFragment extends BaseFragment {
 
     @BindView(R.id.video_player)
     StandardGSYVideoPlayer videoPlayer;
@@ -50,7 +50,7 @@ public class VideoFragment extends Fragment {
 
         video = (VideoListBO.PageListBean) getArguments().getSerializable("video");
         inviVideo();
-        video();
+//        video();
     }
 
 
@@ -88,15 +88,20 @@ public class VideoFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if (videoPlayer == null) {
-            return;
-        }
-        if (isVisibleToUser) {
-            videoPlayer.onVideoResume();
-        } else {
-            videoPlayer.onVideoPause();
-        }
+    }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+//        videoPlayer.onVideoResume();
+        video();
+    }
+
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        videoPlayer.onVideoPause();
     }
 
     @Override

@@ -76,13 +76,14 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
                     videoList.addAll(s.getPageList());
                     pagerAdapter.setUrlList(videoList);
                     pagerAdapter.notifyDataSetChanged();
-                    srlPage.finishLoadMore();
                 }
+                srlPage.finishLoadMore();
             }
 
             @Override
             public void onFiled(String message) {
                 showToast2(message);
+                srlPage.finishLoadMore();
             }
         });
     }

@@ -71,6 +71,11 @@
             android:name=".view.selectcity.SelectCityActivity"
             android:screenOrientation="portrait" />
 
+        <!--选择省份城市-->
+        <activity
+            android:name=".view.wenzhanglist.WenzhangListActivity"
+            android:screenOrientation="portrait" />
+
         <!--网页-->
         <activity
             android:name=".view.WebActivity"

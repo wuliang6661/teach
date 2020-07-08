@@ -13,12 +13,15 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.weight.TabLinerLayout;
 
@@ -45,6 +48,10 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     @BindView(R.id.tab_linerlayout)
     TabLinerLayout tabLinerlayout;
 
+
+    private int selectPosition = 4;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,22 +65,26 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        leftMenu.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {
+                selectPosition = position + 4;
                 getFenlei(position + 4, 1);
             }
         });
-        getFenlei(4, 1);
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        getFenlei(selectPosition, 1);
+    }
 
     private void getFenlei(int levelType, int page) {
-        HttpServerImpl.getProductList(levelType, page).subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.getProductCollectList(levelType, page).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(List<FenLeiBO> s) {
 
             }
 

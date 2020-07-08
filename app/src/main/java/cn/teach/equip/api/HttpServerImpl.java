@@ -10,6 +10,7 @@ import java.util.Map;
 
 import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
@@ -175,6 +176,18 @@ public class HttpServerImpl {
         params.put("page", page);
         params.put("size", 100);
         return getService().getProductList(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取收藏产品列表
+     */
+    public static Observable<List<FenLeiBO>> getProductCollectList(int levelType, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelType", levelType);
+        params.put("page", page);
+        params.put("size", 100);
+        return getService().getProductCollectList(params).compose(RxResultHelper.httpRusult());
     }
 
 }

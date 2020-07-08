@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
@@ -33,6 +36,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -53,15 +57,14 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     RecyclerView bannerRecycle;
     @BindView(R.id.jingxuan_recycle)
     RecyclerView jingxuanRecycle;
-    @BindView(R.id.scoll_view)
-    NestedScrollView scollView;
+    @BindView(R.id.srl_page)
+    SmartRefreshLayout srlPage;
     Unbinder unbinder;
 
     List<BannerBO> bannerBOS;
 
     private int curinPosition = 0;
     private int pageNum = 1;
-    private boolean isPage = false;  //是否正在翻页
 
     private List<WenZhangListBo.PageListBean> list;
 
@@ -84,24 +87,30 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         bannerRecycle.setNestedScrollingEnabled(false);
         jingxuanRecycle.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         jingxuanRecycle.setNestedScrollingEnabled(false);
-        onScollViewListener();
+//        onScollViewListener();
+        addListener();
         getArticleList(4, 1);
         setJingXuanAdapter();
     }
 
 
-    private void onScollViewListener() {
-        scollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+    private void addListener() {
+        srlPage.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                // 滚动到底
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    if (!isPage) {
-                        isPage = true;
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                srlPage.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
                         pageNum++;
                         getArticleList(4, pageNum);
                     }
-                }
+                }, 1000);
+
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
             }
         });
     }
@@ -140,23 +149,22 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         HttpServerImpl.getArticleList(type, page).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
             @Override
             public void onSuccess(WenZhangListBo s) {
-                isPage = false;
                 if (pageNum == 1) {
                     list = s.getPageList();
                 } else {
                     if (s.getPageList().isEmpty()) {
                         pageNum--;
-                        return;
                     }
                     list.addAll(s.getPageList());
                 }
+                srlPage.finishLoadMore();
                 setJingXuanAdapter();
             }
 
             @Override
             public void onFiled(String message) {
-                isPage = false;
                 showToast2(message);
+                srlPage.finishLoadMore();
             }
         });
     }
@@ -180,6 +188,36 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     }
                 };
         jingxuanRecycle.setAdapter(adapter);
+    }
+
+
+    @OnClick({R.id.zhuangbei_layout, R.id.jiaoxue_layout, R.id.ronghe_layout,
+            R.id.guoqi_layout, R.id.yunwei_layout, R.id.zonghe_layout})
+    public void clickView(View view) {
+        Bundle bundle = new Bundle();
+        switch (view.getId()) {
+            case R.id.zhuangbei_layout:
+                bundle.putInt("type", 0);
+                gotoActivity(WenzhangListActivity.class, bundle, false);
+                break;
+            case R.id.jiaoxue_layout:
+
+                break;
+            case R.id.ronghe_layout:
+                bundle.putInt("type", 1);
+                gotoActivity(WenzhangListActivity.class, bundle, false);
+                break;
+            case R.id.guoqi_layout:
+                bundle.putInt("type", 2);
+                gotoActivity(WenzhangListActivity.class, bundle, false);
+                break;
+            case R.id.yunwei_layout:
+
+                break;
+            case R.id.zonghe_layout:
+
+                break;
+        }
     }
 
 
