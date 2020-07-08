@@ -62,6 +62,23 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
     }
 
 
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        if (pagerAdapter != null) {
+            pagerAdapter.setHintVideo();
+        }
+    }
+
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (pagerAdapter != null) {
+            pagerAdapter.showVideo();
+        }
+    }
+
     /**
      * 获取视频列表
      */
@@ -114,7 +131,6 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
 
     private void initView() {
         pagerAdapter = new VerticalViewPagerAdapter(getActivity().getSupportFragmentManager());
-//        videoPager.setVertical(true);
         videoPager.setOffscreenPageLimit(10);
         pagerAdapter.setUrlList(videoList);
         videoPager.setAdapter(pagerAdapter);

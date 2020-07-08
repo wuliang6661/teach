@@ -272,6 +272,7 @@
 
 
     <TextView
+        android:id="@+id/bt_logout"
         android:layout_width="132dp"
         android:layout_height="50dp"
         android:layout_marginTop="48dp"

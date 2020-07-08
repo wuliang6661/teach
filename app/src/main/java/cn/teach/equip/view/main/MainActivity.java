@@ -142,7 +142,7 @@ public class MainActivity extends BaseActivity {
             case KeyEvent.KEYCODE_BACK:
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
-                    showToast("再按一次退出程序");
+                    showToast2("再按一次退出程序");
                     firstTime = secondTime;
                     return true;
                 } else {

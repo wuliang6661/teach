@@ -1,6 +1,7 @@
 package cn.teach.equip.view.main.mine;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,9 +26,12 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.util.AppManager;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
 import cn.teach.equip.view.setting.SettingActivity;
+import cn.teach.equip.weight.AlertDialog;
 
 /**
  * MVPPlugin
@@ -118,6 +122,30 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     public void clickSetting() {
         gotoActivity(SettingActivity.class, false);
     }
+
+    @OnClick(R.id.bt_logout)
+    public void logout() {
+        new AlertDialog(getActivity()).builder().setGone().setMsg("确认退出账号？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", v -> {
+                    HttpServerImpl.logout().subscribe(new HttpResultSubscriber<String>() {
+                        @Override
+                        public void onSuccess(String s) {
+                            Intent intent = new Intent();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.setClass(getActivity(), LoginActivity.class);
+                            AppManager.getAppManager().finishAllActivity();
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFiled(String message) {
+                            showToast2(message);
+                        }
+                    });
+                }).show();
+    }
+
 
     @Override
     public void onDestroyView() {

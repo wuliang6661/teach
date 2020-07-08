@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import cn.teach.equip.bean.pojo.VideoListBO;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * 作者： ch
@@ -25,7 +26,7 @@ public class VerticalViewPagerAdapter extends PagerAdapter {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction mCurTransaction;
-    private Fragment mCurrentPrimaryItem = null;
+    private SupportFragment mCurrentPrimaryItem = null;
     private List<VideoListBO.PageListBean> urlList;
 
     public void setUrlList(List<VideoListBO.PageListBean> urlList) {
@@ -84,18 +85,27 @@ public class VerticalViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        Fragment fragment = (Fragment) object;
+        SupportFragment fragment = (SupportFragment) object;
         if (fragment != mCurrentPrimaryItem) {
             if (mCurrentPrimaryItem != null) {
                 mCurrentPrimaryItem.setMenuVisibility(false);
                 mCurrentPrimaryItem.setUserVisibleHint(false);
             }
-            if (fragment != null) {
-                fragment.setMenuVisibility(true);
-                fragment.setUserVisibleHint(true);
-            }
+//            if (fragment != null) {
+//                fragment.setMenuVisibility(true);
+//                fragment.setUserVisibleHint(true);
+//            }
             mCurrentPrimaryItem = fragment;
         }
+    }
+
+
+    public void setHintVideo(){
+        mCurrentPrimaryItem.onSupportInvisible();
+    }
+
+    public void showVideo(){
+        mCurrentPrimaryItem.onSupportVisible();
     }
 
     @Override
