@@ -31,6 +31,7 @@ import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -59,9 +60,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     List<BannerBO> bannerBOS;
 
     private int curinPosition = 0;
-
     private int pageNum = 1;
     private boolean isPage = false;  //是否正在翻页
+
+    private List<WenZhangListBo.PageListBean> list;
+
 
     @Nullable
     @Override
@@ -134,10 +137,20 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
      * 获取文章列表
      */
     private void getArticleList(int type, int page) {
-        HttpServerImpl.getArticleList(type, page).subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.getArticleList(type, page).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(WenZhangListBo s) {
                 isPage = false;
+                if (pageNum == 1) {
+                    list = s.getPageList();
+                } else {
+                    if (s.getPageList().isEmpty()) {
+                        pageNum--;
+                        return;
+                    }
+                    list.addAll(s.getPageList());
+                }
+                setJingXuanAdapter();
             }
 
             @Override
@@ -153,21 +166,19 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
      * 设置精选文章适配器
      */
     private void setJingXuanAdapter() {
-        List<String> sss = new ArrayList<>();
-        sss.add("111");
-        sss.add("111");
-        sss.add("111");
-        LGRecycleViewAdapter<String> adapter = new LGRecycleViewAdapter<String>(sss) {
-            @Override
-            public int getLayoutId(int viewType) {
-                return R.layout.item_home_wenzhang;
-            }
+        LGRecycleViewAdapter<WenZhangListBo.PageListBean> adapter =
+                new LGRecycleViewAdapter<WenZhangListBo.PageListBean>(list) {
+                    @Override
+                    public int getLayoutId(int viewType) {
+                        return R.layout.item_home_wenzhang;
+                    }
 
-            @Override
-            public void convert(LGViewHolder holder, String s, int position) {
-                holder.setText(R.id.wenzhang_title, s);
-            }
-        };
+                    @Override
+                    public void convert(LGViewHolder holder, WenZhangListBo.PageListBean s, int position) {
+                        holder.setText(R.id.wenzhang_title, s.getTitle());
+                        holder.setImageUrl(getActivity(), R.id.wenzhang_img, s.getSmallImgUrl());
+                    }
+                };
         jingxuanRecycle.setAdapter(adapter);
     }
 
@@ -260,6 +271,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
              切记不要胡乱强转！
              */
             //Glide 加载图片简单用法
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Glide.with(context).load(path).into(imageView);
         }
 

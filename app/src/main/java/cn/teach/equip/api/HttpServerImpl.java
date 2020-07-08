@@ -12,6 +12,8 @@ import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.bean.pojo.VideoListBO;
+import cn.teach.equip.bean.pojo.WenZhangListBo;
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -145,12 +147,23 @@ public class HttpServerImpl {
     /**
      * 获取文章列表
      */
-    public static Observable<String> getArticleList(int type, int pageNum) {
+    public static Observable<WenZhangListBo> getArticleList(int type, int pageNum) {
         Map<String, Object> params = new HashMap<>();
         params.put("type", type);
         params.put("page", pageNum);
         params.put("size", 20);
         return getService().getArticleList(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取发现视频列表
+     */
+    public static Observable<VideoListBO> getVideoList(int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", page);
+        params.put("size", 20);
+        return getService().getVideoList(params).compose(RxResultHelper.httpRusult());
     }
 
     /**
