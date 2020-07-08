@@ -28,7 +28,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="20dp"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="4dp">
+                app:cardElevation="4dp"
+                app:cardPreventCornerOverlap="false">
 
 
                 <com.youth.banner.Banner
@@ -253,9 +254,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/jingxuan_recycle"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="23dp"
                 android:layout_marginRight="23dp"
-                android:layout_height="wrap_content" />
+                android:layout_marginBottom="80dp" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

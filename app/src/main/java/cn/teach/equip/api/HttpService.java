@@ -7,6 +7,8 @@ import cn.teach.equip.bean.BaseResult;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.bean.pojo.VideoListBO;
+import cn.teach.equip.bean.pojo.WenZhangListBo;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Multipart;
@@ -100,7 +102,7 @@ public interface HttpService {
      * 获取文章列表
      */
     @POST("api/visitor/getArticleList")
-    Observable<BaseResult<String>> getArticleList(@Body Map<String, Object> params);
+    Observable<BaseResult<WenZhangListBo>> getArticleList(@Body Map<String, Object> params);
 
     /**
      * 获取我的文章收藏列表
@@ -124,7 +126,7 @@ public interface HttpService {
      * 获取发现视频列表
      */
     @POST("api/visitor/getVideoList")
-    Observable<BaseResult<String>> getVideoList(@Body Map<String, Object> params);
+    Observable<BaseResult<VideoListBO>> getVideoList(@Body Map<String, Object> params);
 
 
     /**
