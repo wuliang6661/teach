@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +32,7 @@ public class VideoFragment extends Fragment {
     StandardGSYVideoPlayer videoPlayer;
     Unbinder unbinder;
 
-    private OrientationUtils orientationUtils;
+//    private OrientationUtils orientationUtils;
 
     private VideoListBO.PageListBean video;
 
@@ -76,13 +73,15 @@ public class VideoFragment extends Fragment {
      */
     private void inviVideo() {
         //外部辅助的旋转，帮助全屏
-        orientationUtils = new OrientationUtils(getActivity(), videoPlayer);
+//        orientationUtils = new OrientationUtils(getActivity(), videoPlayer);
         //是否可以滑动调整
         videoPlayer.setIsTouchWiget(true);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.GONE);
         videoPlayer.getBackButton().setVisibility(View.GONE);
         videoPlayer.getFullscreenButton().setVisibility(View.GONE);
+//        ENPlayView startImg = (ENPlayView) videoPlayer.getStartButton();
+//        startImg.setImageResource(R.drawable.video_start);
     }
 
     @Override

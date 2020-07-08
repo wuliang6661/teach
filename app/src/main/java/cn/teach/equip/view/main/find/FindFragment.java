@@ -100,7 +100,7 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
                         pageNum++;
                         getVideoList();
                     }
-                }, 2000);
+                }, 1000);
 
             }
 
