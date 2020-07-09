@@ -40,7 +40,7 @@ public class FileUtils {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
-                String fileName = file.getName().split(".")[0];
+                String fileName = file.getName();
                 if (file.isDirectory()) {
                     getAllFiles(file.getAbsolutePath());
                 } else {
@@ -56,7 +56,7 @@ public class FileUtils {
      * 下载文件到指定目录
      */
     public static void downloadFile(String filePath, String fileName, String url) {
-        File file = new File(filePath, "update.apk");
+        File file = new File(filePath, fileName);
         boolean existsFile = com.blankj.utilcode.util.FileUtils.createOrExistsFile(file);
         if (!existsFile) {
             ToastUtils.showShort("IO异常");
