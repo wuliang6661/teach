@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -28,7 +27,7 @@ import rx.Subscriber;
 public class FileUtils {
 
 
-    private static Map<String, File> maps = new HashMap<>();
+    public static Map<String, File> maps = new HashMap<>();
 
 
     /**
@@ -55,7 +54,8 @@ public class FileUtils {
     /**
      * 下载文件到指定目录
      */
-    public static void downloadFile(String filePath, String fileName, String url) {
+    public static void downloadFile(String filePath, String fileName,
+                                    String url, onProgressListener listener) {
         File file = new File(filePath, fileName);
         boolean existsFile = com.blankj.utilcode.util.FileUtils.createOrExistsFile(file);
         if (!existsFile) {
@@ -66,36 +66,30 @@ public class FileUtils {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                LogUtils.e(Thread.currentThread().getName(), "2");
-//                progressView.setCurrentProgress((Float) msg.obj);
+                if (listener != null) {
+                    listener.onProgress((Integer) msg.obj);
+                }
             }
         };
 
-        DownloadResponseBody.DownloadListener downloadListener = new DownloadResponseBody.DownloadListener() {
-            @Override
-            public void onProgress(String progress) {
-                Message message = Message.obtain();
-                message.obj = Float.valueOf(progress);
-                handler.sendMessage(message);
-            }
+        DownloadResponseBody.DownloadListener downloadListener = progress -> {
+            Message message = Message.obtain();
+            message.obj = Integer.valueOf(progress);
+            handler.sendMessage(message);
         };
         HttpServerImpl.downLoad(url, downloadListener, file).subscribe(new Subscriber<ResponseBody>() {
 
             @Override
             public void onCompleted() {
-                LogUtils.e(Thread.currentThread().getName(), "1");
-//                baseDialog.dismiss();
-//                progressView.setCurrentProgress(100F);
-//                listener.update(file);
-//                // AppUtils.installApp(file);
-//                //LogUtils.e("安装");
-//                UpdateUtils.isUpdate = false;
-
+                if (listener != null) {
+                    listener.onProgress(100);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-                ToastUtils.showShort(e.getMessage());
+                ToastUtils.showShort("文件下载失败！");
+                com.blankj.utilcode.util.FileUtils.deleteFile(file);
             }
 
             @Override
@@ -106,5 +100,10 @@ public class FileUtils {
         });
     }
 
+
+    public interface onProgressListener {
+
+        void onProgress(int progress);
+    }
 
 }

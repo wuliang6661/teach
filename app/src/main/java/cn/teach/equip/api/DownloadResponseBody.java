@@ -50,13 +50,12 @@ public class DownloadResponseBody extends ResponseBody {
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
                 final long bytesRead = super.read(sink, byteCount);
-                // read() returns the number of bytes read, or -1 if this source is exhausted.
                 if (null != downloadListener) {
                     totalBytesRead += bytesRead != -1 ? bytesRead : 0;
 
                     BigDecimal decimal = new BigDecimal(totalBytesRead * 100F / responseBody.contentLength());
                     String progress = decimal.setScale(1, BigDecimal.ROUND_HALF_UP).toString();
-                      LogUtils.d("已经下载的：" + totalBytesRead + "共有：" + responseBody.contentLength()+"进度"+progress+",,"+(totalBytesRead * 100L / responseBody.contentLength()));
+//                      LogUtils.d("已经下载的：" + totalBytesRead + "共有：" + responseBody.contentLength()+"进度"+progress+",,"+(totalBytesRead * 100L / responseBody.contentLength()));
                     downloadListener.onProgress(progress);
                 }
                 return bytesRead;

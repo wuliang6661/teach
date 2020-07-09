@@ -218,6 +218,14 @@ public class HttpServerImpl {
     }
 
     /**
+     * 获取推荐列表
+     */
+    public static Observable<String> getNavigationHotList() {
+        return getService().getNavigationHotList().compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
      * 下载
      *
      * @param url              下载地址，全路径

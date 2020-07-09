@@ -15,7 +15,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -32,8 +35,10 @@ import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.MuluListBO;
+import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.util.FileUtils;
+import cn.teach.equip.util.OpenFileUtil;
 import cn.teach.equip.weight.TabLinerLayout;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -136,7 +141,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
     private void showWaringDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("警告！")
-                .setMessage("请前往设置->应用->PermissionDemo->权限中打开相关权限，否则功能无法正常运行！")
+                .setMessage("请前往设置->应用->教育装备->权限中打开相关权限，否则功能无法正常运行！")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -216,7 +221,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
             public void convert(LGViewHolder holder, MuluListBO.PageListBean s, int position) {
                 holder.setText(R.id.mulu_name, s.getTitle());
                 TextView downText = (TextView) holder.getView(R.id.progress_text);
-                if (fileMap.containsKey(s.getCode())) {
+                if (fileMap.containsKey(s.getCode() + "." + s.getSuffix())) {
                     holder.getView(R.id.down_wancheng_layout).setVisibility(View.VISIBLE);
                     holder.setImageResurce(R.id.item_img, R.drawable.xiazaiwancheng);
                     holder.setText(R.id.progress_text, "已下载");
@@ -234,6 +239,19 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
         adapter.setOnItemClickListener(R.id.down_load_layout, new LGRecycleViewAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
+                downloadFile(position);
+            }
+        });
+        adapter.setOnItemClickListener(R.id.open_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                OpenFileUtil.openFile(adapter.getItem(position).getCode() + "." +
+                        adapter.getItem(position).getSuffix());
+            }
+        });
+        adapter.setOnItemClickListener(R.id.zhuanfa_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
 
             }
         });
@@ -241,4 +259,30 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
     }
 
 
+    private void downloadFile(int position) {
+        MuluListBO.PageListBean item = list.get(position);
+        FileUtils.downloadFile(FileConfig.getMlFile(), item.getCode() + "." + item.getSuffix(),
+                item.getUrl(), progress -> {
+                    RelativeLayout layout = (RelativeLayout) recycleView.getChildAt(position);
+                    LinearLayout layout_fuceng = layout.findViewById(R.id.layout_fuceng);
+                    layout_fuceng.setVisibility(View.GONE);
+                    ProgressBar progressBar = layout.findViewById(R.id.progress_bar);
+                    ImageView image = layout.findViewById(R.id.item_img);
+                    TextView itemText = layout.findViewById(R.id.progress_text);
+                    progressBar.setProgress(progress);
+                    if (progress == 100) {
+//                            layout_fuceng.setVisibility(View.VISIBLE);
+//                            image.setImageResource(R.drawable.xiazaiwancheng);
+//                            itemText.setText("已下载");
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FileUtils.maps.clear();
+    }
 }

@@ -76,6 +76,11 @@
             android:name=".view.wenzhanglist.WenzhangListActivity"
             android:screenOrientation="portrait" />
 
+        <!--综合导航-->
+        <activity
+            android:name=".view.navigation.NavigationActivity"
+            android:screenOrientation="portrait" />
+
         <!--网页-->
         <activity
             android:name=".view.WebActivity"

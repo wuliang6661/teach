@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,6 +37,8 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.view.navigation.NavigationActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -215,7 +218,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
                 break;
             case R.id.zonghe_layout:
-
+                gotoActivity(NavigationActivity.class, false);
                 break;
         }
     }
@@ -244,12 +247,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.RIGHT);
         banner.setOnBannerListener(position -> {
-//            if (StringUtils.isEmpty(bannerBOS.get(position).getForwardUrl())) {
+//            if (StringUtils.isEmpty(bannerBOS.get(position).getUrl()) || bannerBOS.get(position).getTargetType() != 1) {
 //                return;
 //            }
-//            Bundle bundle = new Bundle();
-//            bundle.putString("url", bannerBOS.get(position).getForwardUrl());
-//            gotoActivity(WebActivity.class, bundle, false);
+            Bundle bundle = new Bundle();
+            bundle.putString("url", bannerBOS.get(position).getUrl());
+            bundle.putString("title",bannerBOS.get(position).getTitle());
+            gotoActivity(WebActivity.class, bundle, false);
         });
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

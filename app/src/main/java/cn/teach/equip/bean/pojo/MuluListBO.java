@@ -119,6 +119,15 @@ public class MuluListBO {
         private String addTime;
         private String url;
         private String code;
+        private String suffix;
+
+        public String getSuffix() {
+            return suffix;
+        }
+
+        public void setSuffix(String suffix) {
+            this.suffix = suffix;
+        }
 
         public String getCode() {
             return code;

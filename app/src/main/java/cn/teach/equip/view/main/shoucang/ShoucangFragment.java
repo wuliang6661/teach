@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.view.main.NoneFragment;
 import cn.teach.equip.weight.TabLinerLayout;
 
 /**
@@ -58,10 +59,10 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
             public void clickBar(int position) {
                 switch (position) {
                     case 0:
-//                        FragmentUtils.replace(getActivity().getSupportFragmentManager(), fragment, R.id.fragment_container);
+                        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
                         break;
                     case 1:
-
+                        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
                         break;
                     case 2:
                         FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
@@ -72,6 +73,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                 }
             }
         });
+        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
     }
 
     @Override

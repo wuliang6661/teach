@@ -159,6 +159,12 @@ public interface HttpService {
     @POST("api/product/productCollect")
     Observable<BaseResult<String>> productCollect(@Body Map<String, Object> params);
 
+    /**
+     * 获取导航推荐
+     */
+    @POST("api/visitor/getNavigationHotList")
+    Observable<BaseResult<String>> getNavigationHotList();
+
 
     /**
      * 下载
