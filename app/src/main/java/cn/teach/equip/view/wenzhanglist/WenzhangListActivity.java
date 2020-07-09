@@ -78,6 +78,7 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
     private void addListener() {
         srlPage.setEnableAutoLoadMore(true);
         srlPage.setEnableLoadMore(true);
+//        srlPage.setRefreshHeader(new FunG)
         srlPage.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

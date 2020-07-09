@@ -23,6 +23,7 @@
 
 
             <TextView
+                android:id="@+id/mulu_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -40,6 +41,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/down_load_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -56,6 +58,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layout_fuceng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"

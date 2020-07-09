@@ -11,6 +11,7 @@ import java.util.Map;
 import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
@@ -19,11 +20,14 @@ import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import rx.Observable;
 
 public class HttpServerImpl {
 
     private static HttpService service;
+
+    private static HttpService downLoadService;
 
     /**
      * 获取代理对象
@@ -34,6 +38,17 @@ public class HttpServerImpl {
         if (service == null)
             service = ApiManager.getInstance().configRetrofit(HttpService.class, HttpService.URL);
         return service;
+    }
+
+    /**
+     * 获取代理对象
+     *
+     * @return
+     */
+    public static HttpService getDownLoadService(DownloadResponseBody.DownloadListener listener) {
+        downLoadService = ApiManager.getInstance().downloadConfigRetrofit(HttpService.class, HttpService.URL, listener);
+        return downLoadService;
+
     }
 
 
@@ -190,4 +205,29 @@ public class HttpServerImpl {
         return getService().getProductCollectList(params).compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 获取下载目录
+     */
+    public static Observable<MuluListBO> getDownloadFileList(int type, int pageNum) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", type);
+        params.put("page", pageNum);
+        params.put("size", 20);
+        return getService().getDownloadFileList(params).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 下载
+     *
+     * @param url              下载地址，全路径
+     * @param downloadListener 进度监听
+     * @param file             保存地址文件
+     * @return
+     */
+    public static Observable<ResponseBody> downLoad(String url, DownloadResponseBody.DownloadListener
+            downloadListener, File file) {
+        //url = "http://172.18.100.26:8080/manager/images/kkk.7z";
+        return getDownLoadService(downloadListener).download(url).compose(RxResultHelper.downRequest(file));
+    }
 }

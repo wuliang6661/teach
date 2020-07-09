@@ -92,7 +92,14 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
 
     private void showUI() {
-        Glide.with(this).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
+        if(StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())){
+            jiahao.setVisibility(View.VISIBLE);
+            userImg.setVisibility(View.GONE);
+        }else{
+            jiahao.setVisibility(View.GONE);
+            userImg.setVisibility(View.VISIBLE);
+            Glide.with(this).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
+        }
         String address = "";
         if (!StringUtils.isEmpty(MyApplication.userBO.getProvinceName())) {
             address += MyApplication.userBO.getProvinceName() + "省";
@@ -127,6 +134,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         HttpServerImpl.saveUserInfo(userName, file).subscribe(new HttpResultSubscriber<UserBO>() {
             @Override
             public void onSuccess(UserBO s) {
+                showToast2("修改成功！");
                 MyApplication.userBO = s;
                 showUI();
             }

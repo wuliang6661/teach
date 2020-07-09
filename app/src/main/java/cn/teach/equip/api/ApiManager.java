@@ -12,6 +12,7 @@ import cn.teach.equip.base.MyApplication;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -77,6 +78,35 @@ public class ApiManager {
 
 
     /**
+     * 文件下载请求代理
+     */
+    HttpService downloadConfigRetrofit(Class<HttpService> httpServiceClass, String url,
+                                       DownloadResponseBody.DownloadListener downloadListener) {
+        //手动创建一个OkHttpClient并设置超时时间
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Log.i(TAG, "log: " + message));
+        loggingInterceptor.setLevel(level);
+        builder.addInterceptor(loggingInterceptor);
+        builder.addInterceptor(headerInterceptor);
+        builder.addInterceptor(chain -> {
+            Response originalResponse = chain.proceed(chain.request());
+            return originalResponse.newBuilder()
+                    .body(new DownloadResponseBody(originalResponse.body(), downloadListener))
+                    .build();
+        });
+
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        return mRetrofit.create(httpServiceClass);
+    }
+
+    /**
      * 获取STS服务的代理服务
      */
     public <T> T configRetrofit2(Class<T> service, String url) {
@@ -100,7 +130,7 @@ public class ApiManager {
                 .addHeader("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token)
                 .addHeader("client-type", "android")
                 .addHeader("client-version", AppUtils.getAppPackageName())
-                .addHeader("user-deviceId","123333")
+                .addHeader("user-deviceId", "123333")
                 .build();
         return chain.proceed(request);
     };

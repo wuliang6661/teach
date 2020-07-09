@@ -6,16 +6,21 @@ import java.util.Map;
 import cn.teach.equip.bean.BaseResult;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -140,7 +145,7 @@ public interface HttpService {
      * 获取下载目录
      */
     @POST("api/visitor/getDownloadFileList")
-    Observable<BaseResult<String>> getDownloadFileList(@Body Map<String, Object> params);
+    Observable<BaseResult<MuluListBO>> getDownloadFileList(@Body Map<String, Object> params);
 
     /**
      * 全文搜索
@@ -153,4 +158,12 @@ public interface HttpService {
      */
     @POST("api/product/productCollect")
     Observable<BaseResult<String>> productCollect(@Body Map<String, Object> params);
+
+
+    /**
+     * 下载
+     */
+    @Streaming
+    @GET
+    Observable<ResponseBody> download(@Url String url);
 }

@@ -2,7 +2,15 @@ package cn.teach.equip.api.rx;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.FileUtils;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 import cn.teach.equip.bean.BaseResult;
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -21,11 +29,59 @@ public class RxResultHelper {
                     Log.d(TAG, "call() called with: mDYResponse = [" + mDYResponse + "]");
                     if (mDYResponse.surcess()) {
                         return createData(mDYResponse.getData());
-                    }else {
+                    } else {
                         return Observable.error(new RuntimeException(mDYResponse.getMsg()));
                     }
                 }
         ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    /**
+     * 下载文件的过滤机制
+     */
+    public static Observable.Transformer<ResponseBody, ResponseBody> downRequest(File file) {
+        return apiResponseObservable -> apiResponseObservable
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<ResponseBody, Observable<ResponseBody>>() {
+                    @Override
+                    public Observable<ResponseBody> call(ResponseBody responseBody) {
+                        return write2File(responseBody, file);
+                    }
+                })
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    private static Observable<ResponseBody> write2File(ResponseBody body, File file) {
+        return Observable.create(subscriber -> {
+            try {
+                FileUtils.createOrExistsFile(file);
+                InputStream inputStream = body.byteStream();
+                //long totalSize = body.contentLength();
+                // long currentLength = 0;
+
+                FileOutputStream fos = new FileOutputStream(file);
+                BufferedInputStream bis = new BufferedInputStream(inputStream);
+                byte[] buffer = new byte[1024];
+                int len;
+
+                while ((len = bis.read(buffer)) != -1) {
+                    fos.write(buffer, 0, len);
+                    fos.flush();
+                    //currentLength += len;
+                    //LogUtils.e("write2File", currentLength + "");
+                    //subscriber.onNext((int) (100 * currentLength / totalSize));
+                }
+                fos.close();
+                bis.close();
+                inputStream.close();
+                subscriber.onNext(body);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                subscriber.onError(e);
+            }
+        });
     }
 
 
