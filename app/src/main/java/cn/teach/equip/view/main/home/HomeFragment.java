@@ -2,6 +2,7 @@ package cn.teach.equip.view.main.home;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -255,6 +256,30 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
                 break;
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    gotoActivity(CaptureActivity.class, false);
+                } else {
+                    showWaringDialog();
+                }
+                break;
+            }
+        }
+    }
+
+    private void showWaringDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("警告！")
+                .setMessage("请前往设置->应用->教育装备->权限中打开相关权限，否则功能无法正常运行！")
+                .setPositiveButton("确定", null).show();
     }
 
 
