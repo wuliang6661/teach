@@ -92,10 +92,10 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
 
     private void showUI() {
-        if(StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())){
+        if (StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())) {
             jiahao.setVisibility(View.VISIBLE);
             userImg.setVisibility(View.GONE);
-        }else{
+        } else {
             jiahao.setVisibility(View.GONE);
             userImg.setVisibility(View.VISIBLE);
             Glide.with(this).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
@@ -123,6 +123,11 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         finish();
     }
 
+    @OnClick(R.id.edit_txt)
+    public void editClick() {
+        etUserName.setFocusable(true);
+        etUserName.setFocusableInTouchMode(true);
+    }
 
     @OnClick(R.id.commit)
     public void commit() {

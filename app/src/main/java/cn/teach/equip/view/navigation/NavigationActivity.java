@@ -20,6 +20,9 @@ import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.mulu.MuluActivity;
+import cn.teach.equip.view.personmessage.PersonMessageActivity;
+import cn.teach.equip.view.setting.SettingActivity;
 
 
 /**
@@ -51,12 +54,16 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
 
         goBack();
         setTitleText("综合导航");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setChanPinAdapter();
         setHexinAdapter();
         setQitaAdapter();
         getTuijian();
     }
-
 
     /**
      * 产品导航
@@ -130,6 +137,26 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                 tv.setTextColor(Color.parseColor("#4D4D4D"));
             }
         };
+        hexinTag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                switch (position) {
+                    case 0:
+                        gotoActivity(MuluActivity.class, false);
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                }
+                return false;
+            }
+        });
         hexinTag.setAdapter(adapter);
     }
 
@@ -166,6 +193,20 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                 tv.setTextColor(Color.parseColor("#4D4D4D"));
             }
         };
+        qitaTag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                switch (position) {
+                    case 0:
+                        gotoActivity(PersonMessageActivity.class, false);
+                        break;
+                    case 1:
+                        gotoActivity(SettingActivity.class, false);
+                        break;
+                }
+                return false;
+            }
+        });
         qitaTag.setAdapter(adapter);
     }
 
