@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.KeyboardUtils;
@@ -90,7 +89,7 @@ public abstract class BaseActivity extends SupportActivity {
      * 显示加载进度弹窗
      */
     protected void showProgress() {
-        svProgressHUD.showWithStatus("加载中...", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
+        svProgressHUD.showWithStatus("加载中...", SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
     }
 
     /**
