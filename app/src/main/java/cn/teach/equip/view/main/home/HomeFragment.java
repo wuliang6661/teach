@@ -1,10 +1,14 @@
 package cn.teach.equip.view.main.home;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,6 +44,7 @@ import cn.teach.equip.view.navigation.NavigationActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
+import cn.teach.equip.zxing.activity.CaptureActivity;
 
 /**
  * MVPPlugin
@@ -50,10 +53,6 @@ import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
 
-    @BindView(R.id.sousuo)
-    LinearLayout sousuo;
-    @BindView(R.id.saoma)
-    ImageView saoma;
     @BindView(R.id.baner)
     Banner banner;
     @BindView(R.id.banner_recycle)
@@ -228,6 +227,32 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 break;
             case R.id.zonghe_layout:
                 gotoActivity(NavigationActivity.class, false);
+                break;
+        }
+    }
+
+
+    @OnClick({R.id.saoma, R.id.sousuo})
+    public void clickTitle(View view) {
+        switch (view.getId()) {
+            case R.id.saoma:
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
+                        ) {
+
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 1);
+                } else {
+                    gotoActivity(CaptureActivity.class, false);
+                }
+                break;
+            case R.id.sousuo:
+
                 break;
         }
     }

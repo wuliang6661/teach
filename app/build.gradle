@@ -90,4 +90,5 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation 'com.hyman:flowlayout-lib:1.1.2'
+    implementation 'com.google.zxing:core:3.3.0'
 }

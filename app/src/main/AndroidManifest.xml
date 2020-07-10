@@ -86,6 +86,12 @@
             android:name=".view.WebActivity"
             android:screenOrientation="portrait" />
 
+        <!--扫一扫-->
+        <activity
+            android:name=".zxing.activity.CaptureActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!--反馈-->
         <activity
             android:name=".view.FanKuiActivity"
