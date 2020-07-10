@@ -2,15 +2,21 @@ package cn.teach.equip.util;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
+
+import com.blankj.utilcode.util.Utils;
 
 import java.io.File;
 import java.util.Locale;
+
+import cn.teach.equip.constans.FileConfig;
 
 public class OpenFileUtil {
 
     public static Intent openFile(String filePath) {
 
-        File file = new File(filePath);
+        File file = new File(FileConfig.getMlFile(), filePath);
         if (!file.exists())
             return null;
         /* 取得扩展名 */
@@ -46,7 +52,7 @@ public class OpenFileUtil {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "*/*");
         return intent;
     }
@@ -56,7 +62,7 @@ public class OpenFileUtil {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         return intent;
     }
@@ -67,7 +73,7 @@ public class OpenFileUtil {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("oneshot", 0);
         intent.putExtra("configchange", 0);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "video/*");
         return intent;
     }
@@ -79,7 +85,7 @@ public class OpenFileUtil {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("oneshot", 0);
         intent.putExtra("configchange", 0);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "audio/*");
         return intent;
     }
@@ -97,7 +103,7 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "image/*");
         return intent;
     }
@@ -107,7 +113,7 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
         return intent;
     }
@@ -117,7 +123,7 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/vnd.ms-excel");
         return intent;
     }
@@ -127,7 +133,7 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/msword");
         return intent;
     }
@@ -137,7 +143,7 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/x-chm");
         return intent;
     }
@@ -151,7 +157,7 @@ public class OpenFileUtil {
             Uri uri1 = Uri.parse(param);
             intent.setDataAndType(uri1, "text/plain");
         } else {
-            Uri uri2 = Uri.fromFile(new File(param));
+            Uri uri2 = getUriForFile(new File(param));
             intent.setDataAndType(uri2, "text/plain");
         }
         return intent;
@@ -162,9 +168,23 @@ public class OpenFileUtil {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = Uri.fromFile(new File(param));
+        Uri uri = getUriForFile(new File(param));
         intent.setDataAndType(uri, "application/pdf");
         return intent;
+    }
+
+
+    private static Uri getUriForFile(File file) {
+        if (file == null) {
+            throw new NullPointerException();
+        }
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= 24) {
+            uri = FileProvider.getUriForFile(Utils.getApp().getApplicationContext(), "cn.teach.equip.fileprovider", file);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
     }
 
 }

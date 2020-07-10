@@ -4,6 +4,7 @@ package cn.teach.equip.view.mulu;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -245,8 +246,9 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
         adapter.setOnItemClickListener(R.id.open_layout, new LGRecycleViewAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
-                OpenFileUtil.openFile(adapter.getItem(position).getCode() + "." +
+                Intent intent = OpenFileUtil.openFile(adapter.getItem(position).getCode() + "." +
                         adapter.getItem(position).getSuffix());
+                startActivity(intent);
             }
         });
         adapter.setOnItemClickListener(R.id.zhuanfa_layout, new LGRecycleViewAdapter.ItemClickListener() {
