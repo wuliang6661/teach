@@ -3,19 +3,25 @@ package cn.teach.equip.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseWebActivity;
 import cn.teach.equip.weight.web.ChromeClient;
 import cn.teach.equip.weight.web.MyWebClient;
+import cn.teach.equip.weight.web.WebJsInterface;
 
 public class WebActivity extends BaseWebActivity {
 
     @BindView(R.id.wen_view)
     WebView wenView;
+    @BindView(R.id.back)
+    LinearLayout back;
 
     private ChromeClient chooseClient;
 
@@ -27,17 +33,28 @@ public class WebActivity extends BaseWebActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        goBack();
+        back.setVisibility(View.VISIBLE);
         initWebView(wenView);
 
         String title = getIntent().getExtras().getString("title");
         String url = getIntent().getExtras().getString("url");
         setTitleText(title);
-        wenView.setWebChromeClient(new ChromeClient(this));
+        chooseClient = new ChromeClient(this);
+        wenView.setWebChromeClient(chooseClient);
         wenView.setWebViewClient(new MyWebClient(this));
+        wenView.addJavascriptInterface(new WebJsInterface(), "Android");
         wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
     }
 
+
+    @OnClick(R.id.back)
+    public void back() {
+        if (wenView.canGoBack()) {
+            wenView.goBack();
+        } else {
+            finish();
+        }
+    }
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

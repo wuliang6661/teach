@@ -15,8 +15,7 @@ import cn.teach.equip.constans.FileConfig;
 public class OpenFileUtil {
 
     public static Intent openFile(String filePath) {
-
-        File file = new File(FileConfig.getMlFile(), filePath);
+        File file = new File( filePath);
         if (!file.exists())
             return null;
         /* 取得扩展名 */
@@ -32,9 +31,9 @@ public class OpenFileUtil {
             return getApkFileIntent(filePath);
         } else if (end.equals("ppt")) {
             return getPptFileIntent(filePath);
-        } else if (end.equals("xls")) {
+        } else if (end.equals("xls") || end.equals("xlsx")) {
             return getExcelFileIntent(filePath);
-        } else if (end.equals("doc")) {
+        } else if (end.equals("doc") || end.equals("docx")) {
             return getWordFileIntent(filePath);
         } else if (end.equals("pdf")) {
             return getPdfFileIntent(filePath);

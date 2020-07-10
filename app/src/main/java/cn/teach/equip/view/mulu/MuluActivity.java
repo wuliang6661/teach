@@ -246,8 +246,9 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
         adapter.setOnItemClickListener(R.id.open_layout, new LGRecycleViewAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
-                Intent intent = OpenFileUtil.openFile(adapter.getItem(position).getCode() + "." +
-                        adapter.getItem(position).getSuffix());
+                String filePath = new File(FileConfig.getMlFile(), adapter.getItem(position).getCode() + "." +
+                        adapter.getItem(position).getSuffix()).getAbsolutePath();
+                Intent intent = OpenFileUtil.openFile(filePath);
                 startActivity(intent);
             }
         });
