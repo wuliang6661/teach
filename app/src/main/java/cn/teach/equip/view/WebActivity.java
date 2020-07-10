@@ -43,7 +43,8 @@ public class WebActivity extends BaseWebActivity {
         wenView.setWebChromeClient(chooseClient);
         wenView.setWebViewClient(new MyWebClient(this));
         wenView.addJavascriptInterface(new WebJsInterface(), "Android");
-        wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
+//        wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
+        wenView.loadUrl(url);
     }
 
 

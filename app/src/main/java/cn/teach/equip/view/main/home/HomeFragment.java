@@ -190,6 +190,15 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, s.getSmallImgUrl());
                     }
                 };
+        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", adapter.getItem(position).getUrl());
+                bundle.putString("title", adapter.getItem(position).getTitle());
+                gotoActivity(WebActivity.class, bundle, false);
+            }
+        });
         jingxuanRecycle.setAdapter(adapter);
     }
 
@@ -252,7 +261,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 //            }
             Bundle bundle = new Bundle();
             bundle.putString("url", bannerBOS.get(position).getUrl());
-            bundle.putString("title",bannerBOS.get(position).getTitle());
+            bundle.putString("title", bannerBOS.get(position).getTitle());
             gotoActivity(WebActivity.class, bundle, false);
         });
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

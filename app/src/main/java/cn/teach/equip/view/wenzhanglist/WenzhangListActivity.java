@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -19,6 +20,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -145,6 +147,15 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                 holder.setText(R.id.wenzhang_time, pageListBean.getAddTime());
             }
         };
+        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", adapter.getItem(position).getUrl());
+                bundle.putString("title", adapter.getItem(position).getTitle());
+                gotoActivity(WebActivity.class, bundle, false);
+            }
+        });
         recycleView.setAdapter(adapter);
     }
 
