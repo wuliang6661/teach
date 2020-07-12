@@ -41,6 +41,7 @@ import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
@@ -213,7 +214,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 gotoActivity(WenzhangListActivity.class, bundle, false);
                 break;
             case R.id.jiaoxue_layout:
-
+                gotoActivity(JiaoyuchanpinActivity.class, false);
                 break;
             case R.id.ronghe_layout:
                 bundle.putInt("type", 1);
@@ -389,5 +390,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        banner.releaseBanner();
     }
 }

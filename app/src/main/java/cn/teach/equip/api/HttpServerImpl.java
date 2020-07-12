@@ -11,8 +11,10 @@ import java.util.Map;
 import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
+import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
@@ -185,7 +187,7 @@ public class HttpServerImpl {
     /**
      * 获取分类产品列表
      */
-    public static Observable<String> getProductList(int levelType, int page) {
+    public static Observable<List<FenLeiBO>> getProductList(int levelType, int page) {
         Map<String, Object> params = new HashMap<>();
         params.put("levelType", levelType);
         params.put("page", page);
@@ -220,10 +222,19 @@ public class HttpServerImpl {
     /**
      * 获取推荐列表
      */
-    public static Observable<String> getNavigationHotList() {
+    public static Observable<List<FlagBO>> getNavigationHotList() {
         return getService().getNavigationHotList().compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 获取单位
+     */
+    public static Observable<List<UnitBO>> getUnitList(String unitName) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("unitName", unitName);
+        return getService().getUnitList(params).compose(RxResultHelper.httpRusult());
+    }
 
     /**
      * 下载

@@ -19,7 +19,9 @@ import butterknife.BindView;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
 import cn.teach.equip.view.setting.SettingActivity;
@@ -214,10 +216,10 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
      * 获取推荐
      */
     private void getTuijian() {
-        HttpServerImpl.getNavigationHotList().subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.getNavigationHotList().subscribe(new HttpResultSubscriber<List<FlagBO>>() {
             @Override
-            public void onSuccess(String s) {
-
+            public void onSuccess(List<FlagBO> s) {
+                setTuijianAdapter(s);
             }
 
             @Override
@@ -225,6 +227,46 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                 showToast2(message);
             }
         });
+    }
+
+
+    private void setTuijianAdapter(List<FlagBO> s) {
+        TagAdapter<FlagBO> adapter = new TagAdapter<FlagBO>(s) {
+            @Override
+            public View getView(FlowLayout parent, int position, FlagBO s) {
+                LayoutInflater inflater = LayoutInflater.from(NavigationActivity.this);
+                TextView tv = (TextView) inflater.inflate(R.layout.item_flag, parent, false);
+                tv.setText(s.getTitle());
+                return tv;
+            }
+
+            @Override
+            public void onSelected(int position, View view) {
+                super.onSelected(position, view);
+                TextView tv = (TextView) view;
+                tv.setBackgroundResource(R.drawable.daohang_select_flag);
+                tv.setTextColor(Color.parseColor("#F69223"));
+            }
+
+            @Override
+            public void unSelected(int position, View view) {
+                super.unSelected(position, view);
+                TextView tv = (TextView) view;
+                tv.setBackgroundResource(R.drawable.daohang_flag);
+                tv.setTextColor(Color.parseColor("#4D4D4D"));
+            }
+        };
+        tuijianTag.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", s.get(position).getUrl());
+                bundle.putString("title", s.get(position).getTitle());
+                gotoActivity(WebActivity.class, bundle, false);
+                return false;
+            }
+        });
+        tuijianTag.setAdapter(adapter);
     }
 
 }

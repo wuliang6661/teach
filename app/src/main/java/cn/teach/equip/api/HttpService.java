@@ -6,8 +6,10 @@ import java.util.Map;
 import cn.teach.equip.bean.BaseResult;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
+import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
@@ -96,7 +98,7 @@ public interface HttpService {
      * 获取单位
      */
     @POST("api/visitor/getUnitList")
-    Observable<BaseResult<String>> getUnitList();
+    Observable<BaseResult<List<UnitBO>>> getUnitList(@Body Map<String, Object> params);
 
     /**
      * 获取banner
@@ -120,7 +122,7 @@ public interface HttpService {
      * 获取分类产品列表
      */
     @POST("api/visitor/getProductList")
-    Observable<BaseResult<String>> getProductList(@Body Map<String, Object> params);
+    Observable<BaseResult<List<FenLeiBO>>> getProductList(@Body Map<String, Object> params);
 
     /**
      * 获取我的产品收藏列表
@@ -163,7 +165,7 @@ public interface HttpService {
      * 获取导航推荐
      */
     @POST("api/visitor/getNavigationHotList")
-    Observable<BaseResult<String>> getNavigationHotList();
+    Observable<BaseResult<List<FlagBO>>> getNavigationHotList();
 
 
     /**

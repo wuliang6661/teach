@@ -21,6 +21,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -44,6 +45,17 @@ public class PlayingFragment extends BaseFragment {
 
     List<FenLeiBO> fenLeiBOS;
 
+    private int type = 0;
+
+    public static PlayingFragment getInstance(int type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        PlayingFragment fragment = new PlayingFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,16 +70,44 @@ public class PlayingFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (getArguments() != null) {
+            type = getArguments().getInt("type");
+        }
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        getFenlei();
+        if (type == 0) {
+            getFenlei();
+        } else {
+            getChanPing();
+        }
     }
 
+    /**
+     * 获取收藏
+     */
     private void getFenlei() {
         HttpServerImpl.getProductCollectList(6, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
+            @Override
+            public void onSuccess(List<FenLeiBO> s) {
+                fenLeiBOS = s;
+                setClassAdapter();
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+    /**
+     * 获取产品
+     */
+    private void getChanPing() {
+        HttpServerImpl.getProductList(6, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
             @Override
             public void onSuccess(List<FenLeiBO> s) {
                 fenLeiBOS = s;
@@ -150,6 +190,15 @@ public class PlayingFragment extends BaseFragment {
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());
                     }
                 };
+        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", adapter.getItem(position).getUrl());
+                bundle.putString("title", adapter.getItem(position).getTitle());
+                gotoActivity(WebActivity.class, bundle, false);
+            }
+        });
         recycleView.setAdapter(adapter);
     }
 

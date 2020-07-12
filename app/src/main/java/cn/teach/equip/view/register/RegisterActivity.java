@@ -20,9 +20,11 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.selectcity.SelectCityActivity;
+import cn.teach.equip.view.selectunit.SelectUnitActivity;
 
 
 /**
@@ -72,6 +74,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
 
     private String cityId;
     private String provinceId;
+
+    private UnitBO selectUnit;
 
     @Override
     protected int getLayout() {
@@ -148,7 +152,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                             return;
                         }
                         register(strJiaoyuPhone, strJiaoyuVersion, provinceId, cityId,
-                                strJiaoyuName, strJiaoyuDanwei, "");
+                                strJiaoyuName, strJiaoyuDanwei, selectUnit.getUnitId() + "");
                         break;
                     case 2:
                         String strQiyeName = etQiyeName.getText().toString().trim();
@@ -262,7 +266,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 startActivityForResult(intent, 0x11);
                 break;
             case R.id.jiaoyu_danwei:
-
+                Intent intent1 = new Intent(this, SelectUnitActivity.class);
+                startActivityForResult(intent1, 0x22);
                 break;
         }
     }
@@ -278,6 +283,10 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 provinceId = data.getIntExtra("provinceId", 0) + "";
                 String provinceName = data.getStringExtra("provinceName");
                 jiaoyuCity.setText(provinceName + "省" + cityName + "市");
+                break;
+            case 0x22:
+                selectUnit = (UnitBO) data.getSerializableExtra("data");
+                jiaoyuDanwei.setText(selectUnit.getUnitName());
                 break;
         }
     }

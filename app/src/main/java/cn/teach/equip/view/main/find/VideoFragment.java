@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseFragment;
@@ -31,6 +33,12 @@ public class VideoFragment extends BaseFragment {
     @BindView(R.id.video_player)
     StandardGSYVideoPlayer videoPlayer;
     Unbinder unbinder;
+    @BindView(R.id.bt_fenxiang)
+    ImageView btFenxiang;
+    @BindView(R.id.bt_dianzan)
+    ImageView btDianzan;
+    @BindView(R.id.dianzan_num)
+    TextView dianzanNum;
 
 //    private OrientationUtils orientationUtils;
 
@@ -49,6 +57,7 @@ public class VideoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         video = (VideoListBO.PageListBean) getArguments().getSerializable("video");
+        dianzanNum.setText(video.getLikeNum() + "");
         inviVideo();
 //        video();
     }
@@ -83,6 +92,24 @@ public class VideoFragment extends BaseFragment {
 //        ENPlayView startImg = (ENPlayView) videoPlayer.getStartButton();
 //        startImg.setImageResource(R.drawable.video_start);
     }
+
+
+    @OnClick({R.id.bt_dianzan,R.id.bt_fenxiang})
+    public void clickVideo(View view){
+        switch (view.getId()){
+            case R.id.bt_dianzan:
+
+                break;
+            case R.id.bt_fenxiang:
+
+                break;
+        }
+    }
+
+
+
+
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

@@ -81,6 +81,16 @@
             android:name=".view.navigation.NavigationActivity"
             android:screenOrientation="portrait" />
 
+        <!--教育产品-->
+        <activity
+            android:name=".view.jiaoyuchanpin.JiaoyuchanpinActivity"
+            android:screenOrientation="portrait" />
+
+        <!--搜索单位-->
+        <activity
+            android:name=".view.selectunit.SelectUnitActivity"
+            android:screenOrientation="portrait" />
+
         <!--网页-->
         <activity
             android:name=".view.WebActivity"
