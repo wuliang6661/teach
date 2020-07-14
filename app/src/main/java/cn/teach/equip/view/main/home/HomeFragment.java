@@ -37,6 +37,7 @@ import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.constans.IContans;
@@ -239,8 +240,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                                     Manifest.permission.READ_EXTERNAL_STORAGE
                             }, 1);
                 } else {
-                    String userName = "哈哈哈哈";
-                    String phone = "15026569854";
+                    String userName = MyApplication.userBO.getUserName();
+                    String phone = MyApplication.userBO.getPhone();
                     String stringA = "mobile=" + phone + "&name=" + userName + "&key=" + IContans.YUNWEI_KEY;
                     String sign = MD5.strToMd5Low32(stringA).toUpperCase();
                     String url = "https://app.shrpfc.com?mobile=" + phone + "&name=" + userName

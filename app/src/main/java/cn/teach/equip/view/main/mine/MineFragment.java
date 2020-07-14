@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +26,7 @@ import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.AppManager;
@@ -121,6 +124,11 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @OnClick(R.id.setting_img)
     public void clickSetting() {
         gotoActivity(SettingActivity.class, false);
+    }
+
+    @OnClick(R.id.my_shoucang)
+    public void clickShouCang(){
+        EventBus.getDefault().post(new SwitchEvent(1));
     }
 
     @OnClick(R.id.bt_logout)

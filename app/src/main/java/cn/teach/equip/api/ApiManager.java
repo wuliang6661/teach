@@ -129,7 +129,7 @@ public class ApiManager {
         request = chain.request().newBuilder()
                 .addHeader("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token)
                 .addHeader("client-type", "android")
-                .addHeader("client-version", AppUtils.getAppPackageName())
+                .addHeader("client-version", AppUtils.getAppVersionName())
                 .addHeader("user-deviceId", "123333")
                 .build();
         return chain.proceed(request);

@@ -46,7 +46,10 @@ public class SearchActivity extends BaseActivity {
             case R.id.bt_sousuo:
 
                 break;
-
         }
     }
+
+
+
+
 }

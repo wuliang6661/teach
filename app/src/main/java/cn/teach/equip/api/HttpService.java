@@ -5,6 +5,7 @@ import java.util.Map;
 
 import cn.teach.equip.bean.BaseResult;
 import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
@@ -128,7 +129,7 @@ public interface HttpService {
      * 获取我的产品收藏列表
      */
     @POST("api/product/getProductCollectList")
-    Observable<BaseResult<List<FenLeiBO>>> getProductCollectList(@Body Map<String, Object> params);
+    Observable<BaseResult<ChanPinBO>> getProductCollectList(@Body Map<String, Object> params);
 
     /**
      * 获取发现视频列表
@@ -167,6 +168,11 @@ public interface HttpService {
     @POST("api/visitor/getNavigationHotList")
     Observable<BaseResult<List<FlagBO>>> getNavigationHotList();
 
+    /**
+     * 获取产品列表
+     */
+    @POST("api/visitor/getProductInfoList")
+    Observable<BaseResult<ChanPinBO>> getProductInfoList(@Body Map<String, Object> params);
 
     /**
      * 下载

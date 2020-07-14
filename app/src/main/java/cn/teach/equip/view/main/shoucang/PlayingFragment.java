@@ -20,6 +20,7 @@ import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseFragment;
+import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
@@ -78,22 +79,17 @@ public class PlayingFragment extends BaseFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        if (type == 0) {
-            getFenlei();
-        } else {
-            getChanPing();
-        }
+        getChanPing();
     }
 
     /**
-     * 获取收藏
+     * 获取收藏产品列表
      */
-    private void getFenlei() {
-        HttpServerImpl.getProductCollectList(6, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
+    private void getFenlei(int levelId3) {
+        HttpServerImpl.getProductCollectList(levelId3, 1).subscribe(new HttpResultSubscriber<ChanPinBO>() {
             @Override
-            public void onSuccess(List<FenLeiBO> s) {
-                fenLeiBOS = s;
-                setClassAdapter();
+            public void onSuccess(ChanPinBO s) {
+                setMsgAdapter(s.getPageList());
             }
 
             @Override
@@ -104,7 +100,25 @@ public class PlayingFragment extends BaseFragment {
     }
 
     /**
-     * 获取产品
+     * 获取产品列表
+     */
+    private void getMsg(int levelId3) {
+        HttpServerImpl.getProductInfoList(levelId3, 1).subscribe(new HttpResultSubscriber<ChanPinBO>() {
+            @Override
+            public void onSuccess(ChanPinBO chanPinBO) {
+                setMsgAdapter(chanPinBO.getPageList());
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+
+    /**
+     * 获取产品分类
      */
     private void getChanPing() {
         HttpServerImpl.getProductList(6, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
@@ -112,6 +126,11 @@ public class PlayingFragment extends BaseFragment {
             public void onSuccess(List<FenLeiBO> s) {
                 fenLeiBOS = s;
                 setClassAdapter();
+                if (type == 0) {
+                    getFenlei(fenLeiBOS.get(0).getSubList().get(0).getLevelId3());
+                } else {
+                    getMsg(fenLeiBOS.get(0).getSubList().get(0).getLevelId3());
+                }
             }
 
             @Override
@@ -126,13 +145,14 @@ public class PlayingFragment extends BaseFragment {
         ExpandAdapter adapter = new ExpandAdapter(getActivity(), fenLeiBOS);
         leftMenu.setAdapter(adapter);
         leftMenu.expandGroup(0);
-        setMsgAdapter(fenLeiBOS.get(0).getSubList().get(0).getProductList().getPageList());
         leftMenu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 adapter.setSelectChild(childPosition);
-                if (fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getProductList() != null) {
-                    setMsgAdapter(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getProductList().getPageList());
+                if (type == 0) {
+                    getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                } else {
+                    getMsg(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
                 }
                 adapter.notifyDataSetChanged();
                 return false;
@@ -143,8 +163,10 @@ public class PlayingFragment extends BaseFragment {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 adapter.setSelectGroup(groupPosition);
                 adapter.setSelectChild(0);
-                if (fenLeiBOS.get(groupPosition).getSubList().get(0).getProductList() != null) {
-                    setMsgAdapter(fenLeiBOS.get(groupPosition).getSubList().get(0).getProductList().getPageList());
+                if (type == 0) {
+                    getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                } else {
+                    getMsg(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
                 }
                 adapter.notifyDataSetChanged();
                 return false;
@@ -175,16 +197,16 @@ public class PlayingFragment extends BaseFragment {
     /**
      * 设置内容适配器
      */
-    private void setMsgAdapter(List<FenLeiBO.SubListBean.ProductListBean.PageListBean> listBeans) {
-        LGRecycleViewAdapter<FenLeiBO.SubListBean.ProductListBean.PageListBean> adapter =
-                new LGRecycleViewAdapter<FenLeiBO.SubListBean.ProductListBean.PageListBean>(listBeans) {
+    private void setMsgAdapter(List<ChanPinBO.PageListBean> listBeans) {
+        LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
+                new LGRecycleViewAdapter<ChanPinBO.PageListBean>(listBeans) {
                     @Override
                     public int getLayoutId(int viewType) {
                         return R.layout.item_shoucang;
                     }
 
                     @Override
-                    public void convert(LGViewHolder holder, FenLeiBO.SubListBean.ProductListBean.PageListBean productListBean, int position) {
+                    public void convert(LGViewHolder holder, ChanPinBO.PageListBean productListBean, int position) {
                         holder.setText(R.id.wenzhang_title, productListBean.getTitle());
                         holder.setText(R.id.wenzhang_time, productListBean.getContent());
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());

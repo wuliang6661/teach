@@ -24,7 +24,7 @@ public class MyApplication extends Application {
 
     public static boolean AppInBack = false;  //App 是否在后台
 
-    public static String token = "3YHLoNJKXQsIQNTI";
+    public static String token;
 
     public static UserBO userBO;
 

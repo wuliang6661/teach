@@ -10,6 +10,7 @@ import java.util.Map;
 
 import cn.teach.equip.api.rx.RxResultHelper;
 import cn.teach.equip.bean.pojo.BannerBO;
+import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
@@ -185,7 +186,7 @@ public class HttpServerImpl {
     }
 
     /**
-     * 获取分类产品列表
+     * 获取产品分类
      */
     public static Observable<List<FenLeiBO>> getProductList(int levelType, int page) {
         Map<String, Object> params = new HashMap<>();
@@ -199,14 +200,25 @@ public class HttpServerImpl {
     /**
      * 获取收藏产品列表
      */
-    public static Observable<List<FenLeiBO>> getProductCollectList(int levelType, int page) {
+    public static Observable<ChanPinBO> getProductCollectList(int levelId3, int page) {
         Map<String, Object> params = new HashMap<>();
-        params.put("levelType", levelType);
+        params.put("levelId3", levelId3);
         params.put("page", page);
         params.put("size", 100);
         return getService().getProductCollectList(params).compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 获取产品列表
+     */
+    public static Observable<ChanPinBO> getProductInfoList(int levelId3, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelId3", levelId3);
+        params.put("page", page);
+        params.put("size", 100);
+        return getService().getProductInfoList(params).compose(RxResultHelper.httpRusult());
+    }
 
     /**
      * 获取下载目录

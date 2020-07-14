@@ -6,10 +6,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseActivity;
+import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.util.AppManager;
 import cn.teach.equip.view.main.none.NoneFragment1;
 import cn.teach.equip.view.main.none.NoneFragment2;
@@ -54,6 +59,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        EventBus.getDefault().register(this);
         buttoms = new RelativeLayout[]{main1Cli, main2Cli, main3Cli, main4Cli};
         linears = new LinearLayout[]{main1, main2, main3, main4};
         initFragment();
@@ -133,6 +139,14 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SwitchEvent event) {
+        showHideFragment(mFragments[event.position], mFragments[selectPosition]);
+        selectPosition = event.position;
+        clickButtom(event.position);
+    }
+
+
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
 
@@ -152,5 +166,12 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
