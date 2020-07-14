@@ -205,42 +205,18 @@ public class CaptureActivity extends BaseActivity implements Callback {
      */
     public void handleDecode(Result result, Bitmap barcode) {
         inactivityTimer.onActivity();
-//        playBeepSoundAndVibrate();
         String resultString = result.getText();
         //FIXME
         if (TextUtils.isEmpty(resultString)) {
-//            gotoActivity(QrCodeErrorActivty.class, true);
+            showToast2("扫描失败！");
         } else {
-//            Intent resultIntent = new Intent(this, PcUpdateAct.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString(Constant.INTENT_EXTRA_KEY_QR_SCAN, resultString);
-//            System.out.println("sssssssssssssssss scan 0 = " + resultString);
-//            resultIntent.putExtras(bundle);
-//            startActivity(resultIntent);
-            getUser(resultString);
+            Intent intent = new Intent();
+            intent.putExtra("result", resultString);
+            setResult(0x11, intent);
         }
         CaptureActivity.this.finish();
     }
 
-
-    private void getUser(String result) {
-        showProgress();
-//        HttpServerImpl.getUserInfoByCode(result).subscribe(new HttpResultSubscriber<UserBO>() {
-//            @Override
-//            public void onSuccess(UserBO userBO) {
-//                stopProgress();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("user", userBO);
-//                gotoActivity(QrCodeSourcessActivity.class, bundle, true);
-//            }
-//
-//            @Override
-//            public void onFiled(String message) {
-//                stopProgress();
-//                gotoActivity(QrCodeErrorActivty.class, true);
-//            }
-//        });
-    }
 
 
     private void initCamera(SurfaceHolder surfaceHolder) {

@@ -58,22 +58,22 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @OnClick(R.id.login_bt)
     public void login() {
-        String phone = etPhone.getText().toString().trim();
-        String smsCode = etYanzhengma.getText().toString().trim();
-        if (StringUtils.isEmpty(phone)) {
-            showToast2("请输入手机号码");
-            return;
-        }
-        if (!RegexUtils.isMobileExact(phone)) {
-            showToast2("请输入正确的手机号码！");
-            return;
-        }
-        if (StringUtils.isEmpty(smsCode)) {
-            showToast2("请输入验证码！");
-            return;
-        }
-        mPresenter.login(phone, smsCode);
-//        gotoActivity(MainActivity.class, true);
+//        String phone = etPhone.getText().toString().trim();
+//        String smsCode = etYanzhengma.getText().toString().trim();
+//        if (StringUtils.isEmpty(phone)) {
+//            showToast2("请输入手机号码");
+//            return;
+//        }
+//        if (!RegexUtils.isMobileExact(phone)) {
+//            showToast2("请输入正确的手机号码！");
+//            return;
+//        }
+//        if (StringUtils.isEmpty(smsCode)) {
+//            showToast2("请输入验证码！");
+//            return;
+//        }
+//        mPresenter.login(phone, smsCode);
+        gotoActivity(MainActivity.class, true);
     }
 
 

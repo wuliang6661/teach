@@ -39,7 +39,9 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
+import cn.teach.equip.constans.IContans;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.util.MD5;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
@@ -225,7 +227,29 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 gotoActivity(WenzhangListActivity.class, bundle, false);
                 break;
             case R.id.yunwei_layout:
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
+                        ) {
 
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 1);
+                } else {
+                    String userName = "哈哈哈哈";
+                    String phone = "15026569854";
+                    String stringA = "mobile=" + phone + "&name=" + userName + "&key=" + IContans.YUNWEI_KEY;
+                    String sign = MD5.strToMd5Low32(stringA).toUpperCase();
+                    String url = "https://app.shrpfc.com?mobile=" + phone + "&name=" + userName
+                            + "&sign=" + sign + "&sign_type=MD5";
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("url", url);
+                    bundle1.putString("title", "运维服务");
+                    gotoActivity(WebActivity.class, bundle1, false);
+                }
                 break;
             case R.id.zonghe_layout:
                 gotoActivity(NavigationActivity.class, false);
@@ -267,7 +291,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    gotoActivity(CaptureActivity.class, false);
+//                    gotoActivity(CaptureActivity.class, false);
                 } else {
                     showWaringDialog();
                 }

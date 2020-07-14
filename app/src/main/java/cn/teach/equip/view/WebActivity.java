@@ -69,6 +69,12 @@ public class WebActivity extends BaseWebActivity {
             } else {
                 Toast.makeText(this, "发生错误", Toast.LENGTH_SHORT).show();
             }
+        } else if (requestCode == 0x11) {
+            if (data == null) {
+                return;
+            }
+            String result = data.getStringExtra("result");
+            wenView.loadUrl("javascript:takeScanResult(" + result + ")");
         }
     }
 
