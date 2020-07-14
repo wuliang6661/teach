@@ -10,6 +10,10 @@ package cn.teach.equip.constans;
 public interface IContans {
 
 
+    /**
+     * 运维的key
+     */
+    String YUNWEI_KEY = "892006250b4c09247ec02edce69f6a3c";
 
 
 }
