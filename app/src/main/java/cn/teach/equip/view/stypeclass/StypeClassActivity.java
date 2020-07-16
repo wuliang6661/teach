@@ -1,6 +1,7 @@
 package cn.teach.equip.view.stypeclass;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +15,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -67,6 +70,20 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
     }
 
 
+    @OnClick({R.id.right_img, R.id.edit_layout})
+    public void onClickView(View view) {
+        switch (view.getId()) {
+            case R.id.right_img:
+                Intent intent = new Intent(this, SearchActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("isCollect", 0);
+                startActivity(intent);
+                break;
+            case R.id.edit_layout:
+
+                break;
+        }
+    }
 
 
     /**
