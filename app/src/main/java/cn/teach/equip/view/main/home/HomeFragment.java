@@ -4,6 +4,7 @@ package cn.teach.equip.view.main.home;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.constans.IContans;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.MD5;
+import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
@@ -279,7 +281,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 }
                 break;
             case R.id.sousuo:
-
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("isCollect", 0);
+                startActivity(intent);
                 break;
         }
     }

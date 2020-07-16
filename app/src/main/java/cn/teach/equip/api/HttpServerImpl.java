@@ -108,11 +108,8 @@ public class HttpServerImpl {
     public static Observable<List<ProvinceBO>> getLocationList(String provinceId, String cityId, String provinceFirstLetter,
                                                                String cityFirstLetter, String provinceName, String cityName) {
         Map<String, Object> params = new HashMap<>();
-        params.put("provinceId", provinceId);
         params.put("cityId", cityId);
-        params.put("provinceFirstLetter", provinceFirstLetter);
         params.put("cityFirstLetter", cityFirstLetter);
-        params.put("provinceName", provinceName);
         params.put("cityName", cityName);
         return getService().getLocationList(params).compose(RxResultHelper.httpRusult());
     }
@@ -247,6 +244,21 @@ public class HttpServerImpl {
         params.put("unitName", unitName);
         return getService().getUnitList(params).compose(RxResultHelper.httpRusult());
     }
+
+
+    /**
+     * 全文搜索
+     */
+    public static Observable<WenZhangListBo> search(int type, int isCollect, String searchContent) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", type);
+        params.put("isCollect", isCollect);
+        params.put("searchContent", searchContent);
+        params.put("page", 1);
+        params.put("size", 100);
+        return getService().search(params).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 下载

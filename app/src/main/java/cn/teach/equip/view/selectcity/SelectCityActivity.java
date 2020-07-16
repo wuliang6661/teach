@@ -19,6 +19,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -60,7 +61,9 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
 
     @OnClick(R.id.right_img)
     public void search() {
-
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("type", 1);
+        startActivity(intent);
     }
 
 

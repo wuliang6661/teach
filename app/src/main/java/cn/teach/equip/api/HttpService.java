@@ -154,7 +154,7 @@ public interface HttpService {
      * 全文搜索
      */
     @POST("api/visitor/search")
-    Observable<BaseResult<String>> search(@Body Map<String, Object> params);
+    Observable<BaseResult<WenZhangListBo>> search(@Body Map<String, Object> params);
 
     /**
      * 收藏文章产品/取消收藏文章产品
