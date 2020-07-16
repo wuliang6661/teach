@@ -193,6 +193,18 @@ public class HttpServerImpl {
         return getService().getProductList(params).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 获取主题教室分类
+     */
+    public static Observable<List<FenLeiBO>> getProductList(int levelType, int levelId2, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelType", levelType);
+        params.put("page", page);
+        params.put("levelId2", levelId2);
+        params.put("size", 10);
+        return getService().getProductList(params).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 获取收藏产品列表

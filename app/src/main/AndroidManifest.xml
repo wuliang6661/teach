@@ -90,6 +90,11 @@
             android:name=".view.selectunit.SelectUnitActivity"
             android:screenOrientation="portrait" />
 
+        <!--主题教室-->
+        <activity
+            android:name=".view.stypeclass.StypeClassActivity"
+            android:screenOrientation="portrait" />
+
         <!--网页-->
         <activity
             android:name=".view.WebActivity"

@@ -48,6 +48,7 @@ import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
+import cn.teach.equip.view.stypeclass.StypeClassActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -220,6 +221,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 break;
             case R.id.jiaoxue_layout:
                 gotoActivity(JiaoyuchanpinActivity.class, false);
+//                gotoActivity(StypeClassActivity.class, false);
                 break;
             case R.id.ronghe_layout:
                 bundle.putInt("type", 1);

@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 
+import java.net.Inet4Address;
+
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.view.stypeclass.StypeClassActivity;
 import cn.teach.equip.zxing.activity.CaptureActivity;
 
 /**
@@ -37,8 +40,10 @@ public class WebJsInterface {
      * 去主题教室
      */
     @JavascriptInterface
-    public void goThemeClass() {
-
+    public void goThemeClass(int levelId2) {
+        Intent intent = new Intent(activity, StypeClassActivity.class);
+        intent.putExtra("levelId2", levelId2);
+        activity.startActivity(intent);
     }
 
 
