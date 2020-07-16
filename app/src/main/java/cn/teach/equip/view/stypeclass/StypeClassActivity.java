@@ -51,6 +51,10 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
 
     private int levelId2;
 
+    private int pageNum = 1;
+
+    private int levelId3;
+
     @Override
     protected int getLayout() {
         return R.layout.act_style_class;
@@ -80,7 +84,8 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
                 startActivity(intent);
                 break;
             case R.id.edit_layout:
-
+                pageNum++;
+                getMsg();
                 break;
         }
     }
@@ -135,12 +140,16 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
             public void onItemClicked(View view, int position) {
                 selectFenlei = position;
                 adapter.notifyDataSetChanged();
-                getMsg(adapter.getItem(position).getLevelId3());
+                levelId3 = adapter.getItem(position).getLevelId3();
+                pageNum = 1;
+                getMsg();
             }
         });
         classRecycle.setAdapter(adapter);
         if (!classFenlei.getSubList().isEmpty()) {
-            getMsg(classFenlei.getSubList().get(0).getLevelId3());
+            levelId3 = classFenlei.getSubList().get(0).getLevelId3();
+            pageNum = 1;
+            getMsg();
         }
     }
 
@@ -148,10 +157,13 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
     /**
      * 获取产品列表
      */
-    private void getMsg(int levelId3) {
-        HttpServerImpl.getProductInfoList(levelId3, 1).subscribe(new HttpResultSubscriber<ChanPinBO>() {
+    private void getMsg() {
+        HttpServerImpl.getProductInfoList(levelId3, pageNum).subscribe(new HttpResultSubscriber<ChanPinBO>() {
             @Override
             public void onSuccess(ChanPinBO chanPinBO) {
+                if (chanPinBO.getPageList().isEmpty()) {
+                    pageNum = 0;
+                }
                 setMsgAdapter(chanPinBO.getPageList());
             }
 
