@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
@@ -127,7 +128,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     }
 
     @OnClick(R.id.my_shoucang)
-    public void clickShouCang(){
+    public void clickShouCang() {
         EventBus.getDefault().post(new SwitchEvent(1));
     }
 
@@ -139,6 +140,8 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                     HttpServerImpl.logout().subscribe(new HttpResultSubscriber<String>() {
                         @Override
                         public void onSuccess(String s) {
+                            JPushInterface.deleteAlias(getActivity(), 1);
+                            JPushInterface.cleanTags(getActivity(), 1);
                             Intent intent = new Intent();
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             intent.setClass(getActivity(), LoginActivity.class);

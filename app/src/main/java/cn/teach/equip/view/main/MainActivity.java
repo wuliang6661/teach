@@ -10,10 +10,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.TreeSet;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseActivity;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.util.AppManager;
 import cn.teach.equip.view.main.none.NoneFragment1;
@@ -64,7 +68,20 @@ public class MainActivity extends BaseActivity {
         linears = new LinearLayout[]{main1, main2, main3, main4};
         initFragment();
         clickButtom(0);
+        registerPush();
     }
+
+
+    /**
+     * 注册极光
+     */
+    private void registerPush() {
+        JPushInterface.setAlias(this, 1, MyApplication.userBO.getPhone());
+        TreeSet<String> treeSet = new TreeSet<>();
+        treeSet.add(MyApplication.userBO.getPhone());
+        JPushInterface.setTags(this, 1, treeSet);
+    }
+
 
 
     /**
