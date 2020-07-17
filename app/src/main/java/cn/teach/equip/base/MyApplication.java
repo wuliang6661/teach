@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import cn.jpush.android.api.JPushInterface;
 import cn.teach.equip.bean.pojo.UserBO;
 
 /**
@@ -36,6 +37,8 @@ public class MyApplication extends Application {
         Utils.init(this);
         spUtils = SPUtils.getInstance(TAG);
 
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
         registerActivityLifecycleCallbacks(new AppLifecycleHandler());
     }
 
