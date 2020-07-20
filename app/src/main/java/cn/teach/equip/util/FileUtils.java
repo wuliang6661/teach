@@ -67,14 +67,15 @@ public class FileUtils {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (listener != null) {
-                    listener.onProgress((Integer) msg.obj);
+                    listener.onProgress(Double.valueOf((Double) msg.obj).intValue());
                 }
             }
         };
 
         DownloadResponseBody.DownloadListener downloadListener = progress -> {
             Message message = Message.obtain();
-            message.obj = Integer.valueOf(progress);
+//            String pro = progress.replaceAll("[^0-9\\.]", "");
+            message.obj = Double.parseDouble(progress);
             handler.sendMessage(message);
         };
         HttpServerImpl.downLoad(url, downloadListener, file).subscribe(new Subscriber<ResponseBody>() {
@@ -88,6 +89,7 @@ public class FileUtils {
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
                 ToastUtils.showShort("文件下载失败！");
                 com.blankj.utilcode.util.FileUtils.deleteFile(file);
             }

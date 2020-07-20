@@ -232,11 +232,12 @@ public class HttpServerImpl {
     /**
      * 获取下载目录
      */
-    public static Observable<MuluListBO> getDownloadFileList(int type, int pageNum) {
+    public static Observable<MuluListBO> getDownloadFileList(int type, int pageNum, String searchContent) {
         Map<String, Object> params = new HashMap<>();
         params.put("type", type);
         params.put("page", pageNum);
         params.put("size", 20);
+        params.put("searchContent", searchContent);
         return getService().getDownloadFileList(params).compose(RxResultHelper.httpRusult());
     }
 
@@ -269,6 +270,13 @@ public class HttpServerImpl {
         params.put("page", 1);
         params.put("size", 100);
         return getService().search(params).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 获取文章是否更新
+     */
+    public static Observable<String> getArticleListInfo() {
+        return getService().getArticleListInfo().compose(RxResultHelper.httpRusult());
     }
 
 

@@ -66,6 +66,10 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     TextView userAddress;
     @BindView(R.id.user_danwei)
     TextView userDanwei;
+    @BindView(R.id.address_layout)
+    LinearLayout addressLayout;
+    @BindView(R.id.address_line)
+    View addressLine;
 
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
@@ -106,6 +110,10 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         }
         if (!StringUtils.isEmpty(MyApplication.userBO.getCityName())) {
             address += MyApplication.userBO.getCityName();
+        }
+        if (MyApplication.userBO.getUserType() == 2) {  //企业用户不展示地址
+            addressLayout.setVisibility(View.GONE);
+            addressLine.setVisibility(View.GONE);
         }
         userAddress.setText(address);
         userDanwei.setText(MyApplication.userBO.getUnitName());

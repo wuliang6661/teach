@@ -76,7 +76,7 @@ public class TabLinerLayout extends RelativeLayout implements View.OnClickListen
         twoLayout.setOnClickListener(this);
         threeLayout.setOnClickListener(this);
         fourLayout.setOnClickListener(this);
-        onClick(oneLayout);
+        onClick(threeLayout);
     }
 
 
@@ -179,6 +179,7 @@ public class TabLinerLayout extends RelativeLayout implements View.OnClickListen
      */
     public void setListener(onClickBarListener listener) {
         this.listener = listener;
+        onClick(threeLayout);
     }
 
 

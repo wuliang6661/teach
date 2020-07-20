@@ -175,6 +175,12 @@ public interface HttpService {
     Observable<BaseResult<ChanPinBO>> getProductInfoList(@Body Map<String, Object> params);
 
     /**
+     * 获取文章是否更新
+     */
+    @POST("api/visitor/getArticleListInfo")
+    Observable<BaseResult<String>> getArticleListInfo();
+
+    /**
      * 下载
      */
     @Streaming

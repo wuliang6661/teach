@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
@@ -61,6 +63,8 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
     SmartRefreshLayout srlPage;
     @BindView(R.id.tab_linerlayout)
     TabLinerLayout tabLinerlayout;
+    @BindView(R.id.et_sousuo)
+    EditText etSousuo;
 
     private int pageNum = 1;
     private int selectMenu = 1; //默认是1
@@ -85,7 +89,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
 
         goBack();
         setTitleText("目录下载");
-        rightImg.setVisibility(View.VISIBLE);
+//        rightImg.setVisibility(View.VISIBLE);
 
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         addListener();
@@ -94,10 +98,17 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
             public void clickBar(int position) {
                 selectMenu = position + 1;
                 pageNum = 1;
-                getDownLoadList();
+                getDownLoadList("");
             }
         });
         requestPermission();
+    }
+
+
+    @OnClick(R.id.bt_sousuo)
+    public void sousuo() {
+        String searchContent = etSousuo.getText().toString().trim();
+        getDownLoadList(searchContent);
     }
 
 
@@ -116,7 +127,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                     }, 1);
         } else {
             fileMap = FileUtils.getAllFiles(null);
-            getDownLoadList();
+            getDownLoadList("");
         }
     }
 
@@ -129,7 +140,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.i(TAG, "onRequestPermissionsResult granted");
                     fileMap = FileUtils.getAllFiles(null);
-                    getDownLoadList();
+                    getDownLoadList("");
                 } else {
                     Log.i(TAG, "onRequestPermissionsResult denied");
                     showWaringDialog();
@@ -163,7 +174,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                     @Override
                     public void run() {
                         pageNum++;
-                        getDownLoadList();
+                        getDownLoadList("");
                     }
                 }, 1000);
 
@@ -175,7 +186,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                     @Override
                     public void run() {
                         pageNum = 1;
-                        getDownLoadList();
+                        getDownLoadList("");
                     }
                 }, 1000);
             }
@@ -183,8 +194,8 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
     }
 
 
-    private void getDownLoadList() {
-        HttpServerImpl.getDownloadFileList(selectMenu, pageNum).subscribe(new HttpResultSubscriber<MuluListBO>() {
+    private void getDownLoadList(String searchContent) {
+        HttpServerImpl.getDownloadFileList(selectMenu, pageNum, searchContent).subscribe(new HttpResultSubscriber<MuluListBO>() {
             @Override
             public void onSuccess(MuluListBO s) {
                 if (pageNum == 1) {
@@ -274,9 +285,10 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                     TextView itemText = layout.findViewById(R.id.progress_text);
                     progressBar.setProgress(progress);
                     if (progress == 100) {
-//                            layout_fuceng.setVisibility(View.VISIBLE);
-//                            image.setImageResource(R.drawable.xiazaiwancheng);
-//                            itemText.setText("已下载");
+                        layout_fuceng.setVisibility(View.VISIBLE);
+                        image.setImageResource(R.drawable.xiazaiwancheng);
+                        itemText.setText("已下载");
+                        fileMap = FileUtils.getAllFiles(null);
                         adapter.notifyDataSetChanged();
                     }
                 });

@@ -82,7 +82,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                 }
             }
         });
-        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+        FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
     }
 
 

@@ -420,8 +420,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     @Override
     public void onDestroyView() {
+        banner.releaseBanner();
         super.onDestroyView();
         unbinder.unbind();
-        banner.releaseBanner();
     }
 }

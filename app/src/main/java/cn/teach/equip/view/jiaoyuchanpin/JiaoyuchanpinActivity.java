@@ -37,6 +37,7 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
         goBack();
         setTitleText("教育设备");
 
+        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {
@@ -56,6 +57,5 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
                 }
             }
         });
-        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
     }
 }

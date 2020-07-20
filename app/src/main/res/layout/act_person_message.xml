@@ -41,16 +41,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="45dp"
         android:text="点击上传头像"
         android:textColor="#7F7F7F"
         android:textSize="14sp" />
 
 
     <LinearLayout
+        android:id="@+id/address_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="56dp"
-        android:layout_marginTop="45dp"
         android:layout_marginRight="56dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -75,6 +76,7 @@
 
 
     <View
+        android:id="@+id/address_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="56dp"
