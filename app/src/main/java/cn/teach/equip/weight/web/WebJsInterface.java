@@ -40,9 +40,10 @@ public class WebJsInterface {
      * 去主题教室
      */
     @JavascriptInterface
-    public void goThemeClass(int levelId2) {
+    public void goThemeClass(int levelId2, String title) {
         Intent intent = new Intent(activity, StypeClassActivity.class);
         intent.putExtra("levelId2", levelId2);
+        intent.putExtra("title", title);
         activity.startActivity(intent);
     }
 

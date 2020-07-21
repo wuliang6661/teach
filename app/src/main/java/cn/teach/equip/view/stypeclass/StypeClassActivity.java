@@ -70,6 +70,8 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
         classRecycle.setLayoutManager(new LinearLayoutManager(this));
         recycleView.setLayoutManager(new GridLayoutManager(this, 2));
         levelId2 = getIntent().getIntExtra("levelId2", 1);
+        String title = getIntent().getStringExtra("title");
+        setTitleText(title);
         getProductList();
     }
 
