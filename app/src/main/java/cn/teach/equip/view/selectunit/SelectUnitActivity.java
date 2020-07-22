@@ -51,7 +51,7 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
         super.onCreate(savedInstanceState);
 
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-        getUnitList();
+        getUnitList("");
     }
 
 
@@ -62,14 +62,15 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
                 finish();
                 break;
             case R.id.sousuo:
-
+                String text = editSearch.getText().toString().trim();
+                getUnitList(text);
                 break;
         }
     }
 
 
-    private void getUnitList() {
-        HttpServerImpl.getUnitList(null).subscribe(new HttpResultSubscriber<List<UnitBO>>() {
+    private void getUnitList(String name) {
+        HttpServerImpl.getUnitList(name).subscribe(new HttpResultSubscriber<List<UnitBO>>() {
             @Override
             public void onSuccess(List<UnitBO> s) {
                 setAdapter(s);
@@ -105,7 +106,6 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
         });
         recycleView.setAdapter(adapter);
     }
-
 
 
 }

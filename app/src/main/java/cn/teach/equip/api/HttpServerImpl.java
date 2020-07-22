@@ -281,6 +281,17 @@ public class HttpServerImpl {
 
 
     /**
+     * 设置视频是否点赞
+     */
+    public static Observable<String> videoUp(String code, int type) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", type);
+        params.put("code", code);
+        return getService().videoUp(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
      * 下载
      *
      * @param url              下载地址，全路径

@@ -150,9 +150,13 @@ public class PlayingFragment extends BaseFragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 adapter.setSelectChild(childPosition);
                 if (type == 0) {
-                    getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                    if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
+                        getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                    }
                 } else {
-                    getMsg(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                    if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
+                        getMsg(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 return false;
@@ -164,9 +168,13 @@ public class PlayingFragment extends BaseFragment {
                 adapter.setSelectGroup(groupPosition);
                 adapter.setSelectChild(0);
                 if (type == 0) {
-                    getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                    if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
+                        getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                    }
                 } else {
-                    getMsg(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                    if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
+                        getMsg(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                    }
                 }
                 adapter.notifyDataSetChanged();
                 return false;

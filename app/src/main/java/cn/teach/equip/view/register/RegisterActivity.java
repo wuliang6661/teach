@@ -15,11 +15,16 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
@@ -69,6 +74,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     TextView btQiyeHuoquyanzhengma;
     @BindView(R.id.qiye_regis_layout)
     LinearLayout qiyeRegisLayout;
+    @BindView(R.id.select_unit)
+    LinearLayout selectUnitLayout;
 
     private int userType = 1;
 
@@ -85,6 +92,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         goBack();
         setTitleText("新用户注册");
 
@@ -282,7 +290,13 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 cityId = data.getIntExtra("cityId", 0) + "";
                 provinceId = data.getIntExtra("provinceId", 0) + "";
                 String provinceName = data.getStringExtra("provinceName");
-                jiaoyuCity.setText(provinceName + "省" + cityName + "市");
+                int hasUnit = data.getIntExtra("hasUnit", 0);
+                jiaoyuCity.setText(provinceName + cityName);
+                if (hasUnit == 1) {
+                    selectUnitLayout.setVisibility(View.VISIBLE);
+                } else {
+                    selectUnitLayout.setVisibility(View.GONE);
+                }
                 break;
             case 0x22:
                 selectUnit = (UnitBO) data.getSerializableExtra("data");
@@ -331,4 +345,25 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ProvinceBO.CityListBean cityListBean) {
+        String cityName = cityListBean.getCityName();
+        cityId = cityListBean.getCityId() + "";
+        provinceId = cityListBean.getProvinceId() + "";
+        String provinceName = cityListBean.getProvinceName();
+        int hasUnit = cityListBean.getHasUnit();
+        jiaoyuCity.setText(provinceName + cityName);
+        if (hasUnit == 1) {
+            selectUnitLayout.setVisibility(View.VISIBLE);
+        } else {
+            selectUnitLayout.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

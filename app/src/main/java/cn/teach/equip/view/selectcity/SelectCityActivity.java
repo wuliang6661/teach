@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +51,7 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
 
         leftMenu.setLayoutManager(new LinearLayoutManager(this));
         recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,6 +71,10 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
         startActivity(intent);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ProvinceBO.CityListBean cityListBean) {
+        finish();
+    }
 
     /**
      * 获取省市区
@@ -140,6 +149,7 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
                 intent.putExtra("cityId", adapter.getItem(position).getCityId());
                 intent.putExtra("provinceName", provinceBO.getProvinceName());
                 intent.putExtra("cityName", adapter.getItem(position).getCityName());
+                intent.putExtra("hasUnit", adapter.getItem(position).getHasUnit());
                 setResult(0x11, intent);
                 finish();
             }
@@ -148,4 +158,9 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

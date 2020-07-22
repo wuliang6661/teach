@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.VideoListBO;
 
@@ -91,14 +93,19 @@ public class VideoFragment extends BaseFragment {
         videoPlayer.getFullscreenButton().setVisibility(View.GONE);
 //        ENPlayView startImg = (ENPlayView) videoPlayer.getStartButton();
 //        startImg.setImageResource(R.drawable.video_start);
+        if (video.getIsUp() == 1) {
+            btDianzan.setImageResource(R.drawable.dianzan);
+        } else {
+            btDianzan.setImageResource(R.drawable.un_dianzan);
+        }
     }
 
 
-    @OnClick({R.id.bt_dianzan,R.id.bt_fenxiang})
-    public void clickVideo(View view){
-        switch (view.getId()){
+    @OnClick({R.id.bt_dianzan, R.id.bt_fenxiang})
+    public void clickVideo(View view) {
+        switch (view.getId()) {
             case R.id.bt_dianzan:
-
+                upVideo();
                 break;
             case R.id.bt_fenxiang:
 
@@ -107,8 +114,29 @@ public class VideoFragment extends BaseFragment {
     }
 
 
+    private void upVideo() {
+        showProgress();
+        HttpServerImpl.videoUp(video.getCode(), video.getIsUp() == 1 ? 0 : 1).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                stopProgress();
+                video.setIsUp(video.getIsUp() == 1 ? 0 : 1);
+                if (video.getIsUp() == 1) {
+                    btDianzan.setImageResource(R.drawable.dianzan);
+                    video.setLikeNum(video.getLikeNum() + 1);
+                } else {
+                    btDianzan.setImageResource(R.drawable.un_dianzan);
+                    video.setLikeNum(video.getLikeNum() - 1);
+                }
+                dianzanNum.setText(video.getLikeNum() + "");
+            }
 
-
+            @Override
+            public void onFiled(String message) {
+                stopProgress();
+            }
+        });
+    }
 
 
     @Override
@@ -122,6 +150,9 @@ public class VideoFragment extends BaseFragment {
         super.onSupportVisible();
 //        videoPlayer.onVideoResume();
         video();
+        if (videoPlayer != null) {
+            videoPlayer.onVideoResume();
+        }
     }
 
 
@@ -134,10 +165,6 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (videoPlayer != null) {
-            videoPlayer.onVideoResume();
-        }
-
     }
 
     @Override

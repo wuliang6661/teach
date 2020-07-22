@@ -59,6 +59,33 @@ public class ProvinceBO {
         private String cityName;
         private int cityId;
         private String firstLetter;
+        private int hasUnit;
+        private String provinceName;
+        private int provinceId;
+
+        public String getProvinceName() {
+            return provinceName;
+        }
+
+        public void setProvinceName(String provinceName) {
+            this.provinceName = provinceName;
+        }
+
+        public int getProvinceId() {
+            return provinceId;
+        }
+
+        public void setProvinceId(int provinceId) {
+            this.provinceId = provinceId;
+        }
+
+        public int getHasUnit() {
+            return hasUnit;
+        }
+
+        public void setHasUnit(int hasUnit) {
+            this.hasUnit = hasUnit;
+        }
 
         public String getCityName() {
             return cityName;

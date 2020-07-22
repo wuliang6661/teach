@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,7 +98,34 @@ public class SearchActivity extends BaseActivity {
      * 设置地址适配器
      */
     private void setSeachAdapter(List<ProvinceBO> provinceBOS) {
+        List<ProvinceBO.CityListBean> lists = new ArrayList<>();
+        for (ProvinceBO provinceBO : provinceBOS) {
+            for (ProvinceBO.CityListBean item : provinceBO.getCityList()) {
+                item.setProvinceId(provinceBO.getProvinceId());
+                item.setProvinceName(provinceBO.getProvinceName());
+                lists.add(item);
+            }
+        }
+        LGRecycleViewAdapter<ProvinceBO.CityListBean> adapter =
+                new LGRecycleViewAdapter<ProvinceBO.CityListBean>(lists) {
+                    @Override
+                    public int getLayoutId(int viewType) {
+                        return R.layout.item_unit;
+                    }
 
+                    @Override
+                    public void convert(LGViewHolder holder, ProvinceBO.CityListBean pageListBean, int position) {
+                        holder.setText(R.id.unit_name, pageListBean.getCityName());
+                    }
+                };
+        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                EventBus.getDefault().post(adapter.getItem(position));
+                finish();
+            }
+        });
+        recycleView.setAdapter(adapter);
     }
 
 

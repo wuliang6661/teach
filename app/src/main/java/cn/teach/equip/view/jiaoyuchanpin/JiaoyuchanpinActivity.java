@@ -35,24 +35,24 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
         super.onCreate(savedInstanceState);
 
         goBack();
-        setTitleText("教育设备");
+        setTitleText("教学设备");
 
-        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
+        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {
                 switch (position) {
                     case 0:
-                        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
                         break;
                     case 1:
-                        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
                         break;
                     case 2:
                         FragmentUtils.replace(getSupportFragmentManager(), PlayingFragment.getInstance(1), R.id.fragment_container);
                         break;
                     case 3:
-                        FragmentUtils.replace(getSupportFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
                         break;
                 }
             }

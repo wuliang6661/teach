@@ -7,7 +7,7 @@ android {
         signConfig {
             keyAlias 'teach'
             keyPassword '123456'
-            storeFile file('../keystore/teach.jks')
+            storeFile file('../keystory/teach.jks')
             storePassword '123456'
         }
     }

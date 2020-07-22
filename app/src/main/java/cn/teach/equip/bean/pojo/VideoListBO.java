@@ -125,6 +125,15 @@ public class VideoListBO {
         private String imgUrl;
         private int likeNum;
         private String code;
+        private int isUp;
+
+        public int getIsUp() {
+            return isUp;
+        }
+
+        public void setIsUp(int isUp) {
+            this.isUp = isUp;
+        }
 
         public String getTitle() {
             return title;
