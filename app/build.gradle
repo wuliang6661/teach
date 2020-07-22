@@ -2,6 +2,17 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
+
+    signingConfigs {
+        signConfig {
+            keyAlias 'teach'
+            keyPassword '123456'
+            storeFile file('../keystore/teach.jks')
+            storePassword '123456'
+        }
+    }
+
+
     defaultConfig {
         applicationId "cn.teach.equip"
         minSdkVersion 19
@@ -27,9 +38,18 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signConfig
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signConfig
         }
     }
+
 
     sourceSets {
         main {

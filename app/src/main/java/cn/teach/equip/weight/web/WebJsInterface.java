@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 
-import java.net.Inet4Address;
-
+import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.util.AppManager;
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.stypeclass.StypeClassActivity;
 import cn.teach.equip.zxing.activity.CaptureActivity;
 
@@ -68,5 +69,18 @@ public class WebJsInterface {
     @JavascriptInterface
     public void share(String title, String content, String url) {
 
+    }
+
+    /**
+     * 去登陆
+     */
+    @JavascriptInterface
+    public void goLogin() {
+        MyApplication.spUtils.remove("token");
+        MyApplication.token = null;
+        Intent intent = new Intent(activity, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        AppManager.getAppManager().finishAllActivity();
+        activity.startActivity(intent);
     }
 }
