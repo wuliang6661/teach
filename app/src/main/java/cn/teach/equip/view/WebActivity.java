@@ -8,6 +8,8 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
@@ -44,6 +46,7 @@ public class WebActivity extends BaseWebActivity {
         wenView.setWebViewClient(new MyWebClient(this));
         wenView.addJavascriptInterface(new WebJsInterface(this), "app");
 //        wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
+        LogUtils.e(url);
         wenView.loadUrl(url);
     }
 
