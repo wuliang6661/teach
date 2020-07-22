@@ -61,4 +61,12 @@ public class WebJsInterface {
         activity.startActivity(intent);
     }
 
+
+    /**
+     * 分享
+     */
+    @JavascriptInterface
+    public void share(String title, String content, String url) {
+
+    }
 }
