@@ -69,6 +69,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
         super.onCreate(savedInstanceState);
 
         goBack();
+        setTitleText("扫一扫");
         CameraManager.init(getApplication());
         viewfinderView = findViewById(R.id.viewfinder_content);
 

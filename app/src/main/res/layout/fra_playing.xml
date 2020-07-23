@@ -15,12 +15,14 @@
 
 
         <ImageView
+            android:id="@+id/option_img"
             android:layout_width="27dp"
             android:layout_height="26dp"
             android:src="@drawable/bianji" />
 
 
         <TextView
+            android:id="@+id/option_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -59,7 +61,35 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+
+        <LinearLayout
+            android:id="@+id/none_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:src="@drawable/none_img" />
+
+
+            <TextView
+                android:id="@+id/none_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="此分类暂无产品"
+                android:textColor="#7F7F7F"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

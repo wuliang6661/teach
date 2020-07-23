@@ -3,14 +3,17 @@ package cn.teach.equip.view.jiaoyuchanpin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.FragmentUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.main.NoneFragment;
 import cn.teach.equip.view.main.shoucang.PlayingFragment;
+import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.weight.TabLinerLayout;
 
 
@@ -24,6 +27,10 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
 
     @BindView(R.id.tab_linerlayout)
     TabLinerLayout tabLinerlayout;
+    @BindView(R.id.down_load_layout)
+    LinearLayout downLoadLayout;
+
+    private int type;
 
     @Override
     protected int getLayout() {
@@ -36,8 +43,8 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
 
         goBack();
         setTitleText("教学设备");
-
-        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
+        type = getIntent().getIntExtra("type", Integer.MAX_VALUE);
+//        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {
@@ -57,5 +64,21 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
                 }
             }
         });
+        if (type == Integer.MAX_VALUE) {
+            tabLinerlayout.setSelectTab(2);
+        } else {
+            tabLinerlayout.setSelectTab(type);
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @OnClick(R.id.down_load_layout)
+    public void downLoad() {
+        gotoActivity(MuluActivity.class, false);
     }
 }

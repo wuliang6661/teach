@@ -99,7 +99,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         jingxuanRecycle.setNestedScrollingEnabled(false);
 //        onScollViewListener();
         addListener();
-        getArticleList(4, 1);
+        getArticleList(8, 1);
         setJingXuanAdapter();
     }
 
@@ -112,7 +112,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     @Override
                     public void run() {
                         pageNum++;
-                        getArticleList(4, pageNum);
+                        getArticleList(8, pageNum);
                     }
                 }, 1000);
 

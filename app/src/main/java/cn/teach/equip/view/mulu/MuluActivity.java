@@ -102,6 +102,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                 getDownLoadList("");
             }
         });
+        tabLinerlayout.setSelectTab(2);
         requestPermission();
     }
 

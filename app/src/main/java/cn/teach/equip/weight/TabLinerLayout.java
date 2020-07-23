@@ -179,7 +179,23 @@ public class TabLinerLayout extends RelativeLayout implements View.OnClickListen
      */
     public void setListener(onClickBarListener listener) {
         this.listener = listener;
-        onClick(threeLayout);
+    }
+
+    public void setSelectTab(int position) {
+        switch (position) {
+            case 0:
+                onClick(oneLayout);
+                break;
+            case 1:
+                onClick(twoLayout);
+                break;
+            case 2:
+                onClick(threeLayout);
+                break;
+            case 3:
+                onClick(fourLayout);
+                break;
+        }
     }
 
 

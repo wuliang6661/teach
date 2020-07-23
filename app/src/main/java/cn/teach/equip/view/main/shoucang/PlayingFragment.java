@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
@@ -45,8 +48,17 @@ public class PlayingFragment extends BaseFragment {
     Unbinder unbinder;
 
     List<FenLeiBO> fenLeiBOS;
+    @BindView(R.id.none_layout)
+    LinearLayout noneLayout;
+    @BindView(R.id.option_img)
+    ImageView optionImg;
+    @BindView(R.id.option_text)
+    TextView optionText;
 
     private int type = 0;
+
+    private int levelId3;
+    private int pageNum = 1;
 
     public static PlayingFragment getInstance(int type) {
         Bundle bundle = new Bundle();
@@ -73,6 +85,10 @@ public class PlayingFragment extends BaseFragment {
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (getArguments() != null) {
             type = getArguments().getInt("type");
+            if (type == 1) {
+                optionImg.setImageResource(R.drawable.huanyipi);
+                optionText.setText("换一批");
+            }
         }
         getChanPing();
     }
@@ -102,10 +118,13 @@ public class PlayingFragment extends BaseFragment {
     /**
      * 获取产品列表
      */
-    private void getMsg(int levelId3) {
-        HttpServerImpl.getProductInfoList(levelId3, 1).subscribe(new HttpResultSubscriber<ChanPinBO>() {
+    private void getMsg() {
+        HttpServerImpl.getProductInfoList(levelId3, pageNum).subscribe(new HttpResultSubscriber<ChanPinBO>() {
             @Override
             public void onSuccess(ChanPinBO chanPinBO) {
+                if (chanPinBO.getPageList().isEmpty()) {
+                    pageNum = 0;
+                }
                 setMsgAdapter(chanPinBO.getPageList());
             }
 
@@ -114,6 +133,14 @@ public class PlayingFragment extends BaseFragment {
                 showToast2(message);
             }
         });
+    }
+
+    @OnClick(R.id.edit_layout)
+    public void onClickImg() {
+        if (type == 1) {
+            pageNum++;
+            getMsg();
+        }
     }
 
 
@@ -129,7 +156,9 @@ public class PlayingFragment extends BaseFragment {
                 if (type == 0) {
                     getFenlei(fenLeiBOS.get(0).getSubList().get(0).getLevelId3());
                 } else {
-                    getMsg(fenLeiBOS.get(0).getSubList().get(0).getLevelId3());
+                    levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                    pageNum = 1;
+                    getMsg();
                 }
             }
 
@@ -155,7 +184,9 @@ public class PlayingFragment extends BaseFragment {
                     }
                 } else {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
-                        getMsg(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                        levelId3 = fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3();
+                        pageNum = 1;
+                        getMsg();
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -173,7 +204,9 @@ public class PlayingFragment extends BaseFragment {
                     }
                 } else {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
-                        getMsg(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                        levelId3 = fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3();
+                        pageNum = 1;
+                        getMsg();
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -206,6 +239,13 @@ public class PlayingFragment extends BaseFragment {
      * 设置内容适配器
      */
     private void setMsgAdapter(List<ChanPinBO.PageListBean> listBeans) {
+        if (listBeans.isEmpty()) {
+            noneLayout.setVisibility(View.VISIBLE);
+            recycleView.setVisibility(View.GONE);
+        } else {
+            noneLayout.setVisibility(View.GONE);
+            recycleView.setVisibility(View.VISIBLE);
+        }
         LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
                 new LGRecycleViewAdapter<ChanPinBO.PageListBean>(listBeans) {
                     @Override

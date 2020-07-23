@@ -1,9 +1,14 @@
 package cn.teach.equip.view.navigation;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +17,8 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +26,15 @@ import butterknife.BindView;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
 import cn.teach.equip.view.setting.SettingActivity;
+import cn.teach.equip.zxing.activity.CaptureActivity;
 
 
 /**
@@ -101,6 +111,15 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                 tv.setTextColor(Color.parseColor("#4D4D4D"));
             }
         };
+        chanpinLeibie.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                Intent intent = new Intent(NavigationActivity.this, JiaoyuchanpinActivity.class);
+                intent.putExtra("type", position);
+                startActivity(intent);
+                return false;
+            }
+        });
         chanpinLeibie.setAdapter(adapter);
     }
 
@@ -147,13 +166,28 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                         gotoActivity(MuluActivity.class, false);
                         break;
                     case 1:
-
+                        EventBus.getDefault().post(new SwitchEvent(1));
+                        finish();
                         break;
                     case 2:
-
+                        EventBus.getDefault().post(new SwitchEvent(2));
+                        finish();
                         break;
                     case 3:
+                        if (ContextCompat.checkSelfPermission(NavigationActivity.this, Manifest.permission.CAMERA)
+                                != PackageManager.PERMISSION_GRANTED
+                                || ContextCompat.checkSelfPermission(NavigationActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED
+                                ) {
 
+                            ActivityCompat.requestPermissions(NavigationActivity.this,
+                                    new String[]{
+                                            Manifest.permission.CAMERA,
+                                            Manifest.permission.READ_EXTERNAL_STORAGE
+                                    }, 1);
+                        } else {
+                            gotoActivity(CaptureActivity.class, false);
+                        }
                         break;
                 }
                 return false;
