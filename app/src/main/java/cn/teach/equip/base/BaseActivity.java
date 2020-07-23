@@ -1,7 +1,6 @@
 package cn.teach.equip.base;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -143,17 +142,15 @@ public abstract class BaseActivity extends SupportActivity {
     }
 
 
-
     //调用隐藏系统默认的输入法
-    public static void showOrHide(Context context, Activity activity) {
-        ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+    public void showOrHide() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 
     //获取输入法打开的状态
-    public static boolean isShowing(Context context) {
+    public boolean isShowing(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         return imm.isActive();//isOpen若返回true，则表示输入法打开
     }

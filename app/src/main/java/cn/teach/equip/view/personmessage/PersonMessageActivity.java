@@ -135,7 +135,9 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     public void editClick() {
         etUserName.setFocusable(true);
         etUserName.setFocusableInTouchMode(true);
-        showOrHide(this, this);
+        if (isShowing(this)) {
+            showOrHide();
+        }
     }
 
     @OnClick(R.id.commit)
