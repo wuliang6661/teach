@@ -74,12 +74,12 @@ public class PlayingFragment extends BaseFragment {
         if (getArguments() != null) {
             type = getArguments().getInt("type");
         }
+        getChanPing();
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        getChanPing();
     }
 
     /**
