@@ -135,6 +135,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     public void editClick() {
         etUserName.setFocusable(true);
         etUserName.setFocusableInTouchMode(true);
+        showOrHide(this, this);
     }
 
     @OnClick(R.id.commit)
@@ -147,7 +148,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         HttpServerImpl.saveUserInfo(userName, file).subscribe(new HttpResultSubscriber<UserBO>() {
             @Override
             public void onSuccess(UserBO s) {
-                showToast2("修改成功！");
+                showToast("修改成功！");
                 MyApplication.userBO = s;
                 showUI();
             }
