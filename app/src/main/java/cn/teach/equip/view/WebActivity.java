@@ -8,12 +8,18 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseWebActivity;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.weight.web.ChromeClient;
 import cn.teach.equip.weight.web.MyWebClient;
 import cn.teach.equip.weight.web.WebJsInterface;
@@ -47,7 +53,10 @@ public class WebActivity extends BaseWebActivity {
         wenView.addJavascriptInterface(new WebJsInterface(this), "app");
 //        wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
         LogUtils.e(url);
-        wenView.loadUrl(url);
+        Map<String, String> headers = new HashMap<>();
+        headers.put("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token);
+        headers.put("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":",""));
+        wenView.loadUrl(url, headers);
     }
 
 

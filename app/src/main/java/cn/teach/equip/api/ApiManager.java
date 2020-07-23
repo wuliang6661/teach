@@ -3,6 +3,7 @@ package cn.teach.equip.api;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.StringUtils;
 
 import java.nio.charset.Charset;
@@ -130,7 +131,7 @@ public class ApiManager {
                 .addHeader("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token)
                 .addHeader("client-type", "android")
                 .addHeader("client-version", AppUtils.getAppVersionName())
-                .addHeader("user-deviceId", "123333")
+                .addHeader("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":",""))
                 .build();
         return chain.proceed(request);
     };
