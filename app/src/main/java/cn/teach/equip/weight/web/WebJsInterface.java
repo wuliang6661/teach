@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.util.AppManager;
+import cn.teach.equip.util.ShareUtils;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.stypeclass.StypeClassActivity;
@@ -68,7 +69,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void share(String title, String content, String url) {
-
+        ShareUtils.shareHtml(title, content, url);
     }
 
     /**
