@@ -21,6 +21,7 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.VideoListBO;
+import cn.teach.equip.util.ShareUtils;
 
 /**
  * 作者： ch
@@ -108,7 +109,7 @@ public class VideoFragment extends BaseFragment {
                 upVideo();
                 break;
             case R.id.bt_fenxiang:
-
+                ShareUtils.shareVideo(video.getTitle(), video.getDesc(), video.getUrl());
                 break;
         }
     }
@@ -148,10 +149,11 @@ public class VideoFragment extends BaseFragment {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-//        videoPlayer.onVideoResume();
-        video();
-        if (videoPlayer != null) {
-            videoPlayer.onVideoResume();
+        if (FindFragment.isVisable) {
+            video();
+            if (videoPlayer != null) {
+                videoPlayer.onVideoResume();
+            }
         }
     }
 

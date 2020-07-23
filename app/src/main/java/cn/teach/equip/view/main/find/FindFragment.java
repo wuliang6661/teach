@@ -45,6 +45,8 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
 
     private List<VideoListBO.PageListBean> videoList;
 
+    public static boolean isVisable = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
+        isVisable = false;
         if (pagerAdapter != null) {
             pagerAdapter.setHintVideo();
         }
@@ -74,6 +77,7 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        isVisable = true;
         if (pagerAdapter != null) {
             pagerAdapter.showVideo();
         }

@@ -166,4 +166,29 @@ public class ShareUtils {
         // 执行应用分享
         pla.share(oks);
     }
+
+
+    /**
+     * 分享视频
+     */
+    public static void shareVideo(String title, String content, String videoUrl) {
+        Platform.ShareParams oks = new Platform.ShareParams();
+        oks.setShareType(Platform.SHARE_VIDEO);
+        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+        oks.setTitle(title);
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText(content);
+        //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+//        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        oks.setImageData(BitmapFactory.decodeResource(AppManager.getAppManager().curremtActivity().getResources(),
+                R.mipmap.ic_launcher));
+        // url仅在微信（包括好友和朋友圈）中使用
+        oks.setUrl(videoUrl);
+        //启动分享
+        //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
+        Platform pla;
+        pla = ShareSDK.getPlatform(Wechat.NAME);
+        // 执行应用分享
+        pla.share(oks);
+    }
 }
