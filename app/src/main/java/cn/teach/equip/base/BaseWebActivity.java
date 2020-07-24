@@ -49,7 +49,7 @@ public abstract class BaseWebActivity extends BaseActivity {
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         //支持缩放
-        settings.setSupportZoom(false);
+//        settings.setSupportZoom(false);
         //隐藏原生的缩放控件
         settings.setDisplayZoomControls(false);
         //支持内容重新布局
@@ -71,6 +71,9 @@ public abstract class BaseWebActivity extends BaseActivity {
             settings.setLoadsImagesAutomatically(true);
         } else {
             settings.setLoadsImagesAutomatically(false);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
         //设置编码格式
         settings.setDefaultTextEncodingName("UTF-8");

@@ -292,6 +292,17 @@ public class HttpServerImpl {
 
 
     /**
+     * 取消收藏产品
+     */
+    public static Observable<String> productCollect(String code) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", 0);
+        params.put("code", code);
+        return getService().productCollect(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
      * 下载
      *
      * @param url              下载地址，全路径

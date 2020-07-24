@@ -8,12 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +30,7 @@ import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.weight.PopDeleteWindow;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -56,9 +61,13 @@ public class PlayingFragment extends BaseFragment {
     TextView optionText;
 
     private int type = 0;
-
     private int levelId3;
     private int pageNum = 1;
+
+    private boolean isEdit = false;
+    private ChanPinBO shoucangList;
+    private PopDeleteWindow popDeleteWindow;
+    private Map<String, ChanPinBO.PageListBean> selectMaps = new HashMap<>();
 
     public static PlayingFragment getInstance(int type) {
         Bundle bundle = new Bundle();
@@ -101,10 +110,11 @@ public class PlayingFragment extends BaseFragment {
     /**
      * 获取收藏产品列表
      */
-    private void getFenlei(int levelId3) {
+    private void getFenlei() {
         HttpServerImpl.getProductCollectList(levelId3, 1).subscribe(new HttpResultSubscriber<ChanPinBO>() {
             @Override
             public void onSuccess(ChanPinBO s) {
+                shoucangList = s;
                 setMsgAdapter(s.getPageList());
             }
 
@@ -140,7 +150,60 @@ public class PlayingFragment extends BaseFragment {
         if (type == 1) {
             pageNum++;
             getMsg();
+        } else {
+            if (isEdit) {  //正在修改
+                isEdit = false;
+                optionText.setText("编辑");
+                popDeleteWindow.dismiss();
+                selectMaps.clear();
+            } else {
+                isEdit = true;
+                optionText.setText("完成");
+                popDeleteWindow = new PopDeleteWindow(getActivity());
+                popDeleteWindow.setListener(new PopDeleteWindow.onClickListener() {
+                    @Override
+                    public void onClick() {
+                        if (selectMaps.isEmpty()) {
+                            showToast2("请选择要删除的收藏！");
+                        } else {
+                            StringBuilder builder = new StringBuilder();
+                            for (String code : selectMaps.keySet()) {
+                                builder.append(code);
+                                builder.append(",");
+                            }
+                            productCollect(builder.substring(0, builder.length() - 1));
+                            popDeleteWindow.dismiss();
+                            isEdit = false;
+                            optionText.setText("编辑");
+                            popDeleteWindow.dismiss();
+                            selectMaps.clear();
+                        }
+                    }
+                });
+                popDeleteWindow.showAtLocation(getActivity().getWindow().getDecorView());
+            }
+            setMsgAdapter(shoucangList.getPageList());
         }
+    }
+
+
+    /**
+     * 取消收藏
+     */
+    private void productCollect(String code) {
+        HttpServerImpl.productCollect(code).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                getFenlei();
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+                setMsgAdapter(shoucangList.getPageList());
+                selectMaps.clear();
+            }
+        });
     }
 
 
@@ -154,7 +217,8 @@ public class PlayingFragment extends BaseFragment {
                 fenLeiBOS = s;
                 setClassAdapter();
                 if (type == 0) {
-                    getFenlei(fenLeiBOS.get(0).getSubList().get(0).getLevelId3());
+                    levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                    getFenlei();
                 } else {
                     levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
                     pageNum = 1;
@@ -178,9 +242,16 @@ public class PlayingFragment extends BaseFragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 adapter.setSelectChild(childPosition);
+                if (isEdit) {  //正在修改
+                    isEdit = false;
+                    optionText.setText("编辑");
+                    popDeleteWindow.dismiss();
+                    selectMaps.clear();
+                }
                 if (type == 0) {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
-                        getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3());
+                        levelId3 = fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3();
+                        getFenlei();
                     }
                 } else {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
@@ -198,9 +269,16 @@ public class PlayingFragment extends BaseFragment {
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 adapter.setSelectGroup(groupPosition);
                 adapter.setSelectChild(0);
+                if (isEdit) {  //正在修改
+                    isEdit = false;
+                    optionText.setText("编辑");
+                    popDeleteWindow.dismiss();
+                    selectMaps.clear();
+                }
                 if (type == 0) {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
-                        getFenlei(fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3());
+                        levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                        getFenlei();
                     }
                 } else {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
@@ -258,6 +336,18 @@ public class PlayingFragment extends BaseFragment {
                         holder.setText(R.id.wenzhang_title, productListBean.getTitle());
                         holder.setText(R.id.wenzhang_time, productListBean.getContent());
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());
+                        CheckBox checkBox = (CheckBox) holder.getView(R.id.checkbox);
+                        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                    selectMaps.put(productListBean.getCode(), productListBean);
+                                } else {
+                                    selectMaps.remove(productListBean.getCode());
+                                }
+                            }
+                        });
+                        checkBox.setVisibility(isEdit ? View.VISIBLE : View.GONE);
                     }
                 };
         adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
