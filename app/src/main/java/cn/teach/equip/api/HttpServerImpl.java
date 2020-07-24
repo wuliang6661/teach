@@ -297,7 +297,7 @@ public class HttpServerImpl {
     public static Observable<String> productCollect(String code) {
         Map<String, Object> params = new HashMap<>();
         params.put("type", 0);
-        params.put("code", code);
+        params.put("codes", code);
         return getService().productCollect(params).compose(RxResultHelper.httpRusult());
     }
 
