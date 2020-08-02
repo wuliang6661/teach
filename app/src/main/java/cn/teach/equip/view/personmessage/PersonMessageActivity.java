@@ -18,10 +18,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
@@ -29,6 +31,9 @@ import com.guoqi.actionsheet.ActionSheet;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -73,6 +78,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
+    private Uri mCutUri;
 
     private File file;
 
@@ -244,45 +250,31 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
     //激活相机操作
     private void goCamera() {
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", cameraSavePath);
-//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//        } else {
-//            uri = Uri.fromFile(cameraSavePath);
-//        }
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-//        startActivityForResult(intent, 1);
-        Intent openCameraIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {  //Android7.0以上
-            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", new File(Environment
-                    .getExternalStorageDirectory(), "image.jpg"));//通过FileProvider创建一个content类型的Uri
-
-            openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
-            openCameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//设置Action为拍照
-            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//将拍取的照片保存到指定URI
-            startActivityForResult(openCameraIntent, 1);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", cameraSavePath);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
-            uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.jpg"));//7.0以下打开相机拍照的方法
-            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//保存照片
-            startActivityForResult(openCameraIntent, 1);
+            uri = Uri.fromFile(cameraSavePath);
         }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, 1);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String photoPath;
         if (requestCode == 1 && resultCode == RESULT_OK) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                photoPath = String.valueOf(cameraSavePath);
-//            } else {
-//                photoPath = uri.getEncodedPath();
-//            }
-//            Log.d("拍照返回图片路径:", photoPath);
-            startPhotoZoom(uri);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                photoPath = String.valueOf(cameraSavePath);
+            } else {
+                photoPath = uri.getEncodedPath();
+            }
+            Log.d("拍照返回图片路径:", photoPath);
+            startPhotoZoom(uri,true);
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            startPhotoZoom(data.getData());
+            startPhotoZoom(data.getData(),false);
         } else if (requestCode == 3) {
             if (data == null) {
                 return;
@@ -337,7 +329,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     }
 
 
-    private void startPhotoZoom(Uri uri) {
+    private void startPhotoZoom(Uri uri,boolean fromCapture) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
@@ -346,6 +338,28 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         intent.putExtra("outputX", 320);
         intent.putExtra("outputY", 320);
         intent.putExtra("return-data", true);
+        // 注意一定要添加该项权限，否则会提示无法裁剪
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        // 指定裁剪完成以后的图片所保存的位置,pic info显示有延时
+        if (fromCapture) {
+            // 如果是使用拍照，那么原先的uri和最终目标的uri一致,注意这里的uri必须是Uri.fromFile生成的
+            mCutUri = Uri.fromFile(cameraSavePath);
+        } else { // 从相册中选择，那么裁剪的图片保存在take_photo中
+            String time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
+            String fileName = "photo_" + time;
+            File mCutFile = new File(Environment.getExternalStorageDirectory() + "/take_photo", fileName + ".jpeg");
+            if (!mCutFile.getParentFile().exists()) {
+                mCutFile.getParentFile().mkdirs();
+            }
+            mCutUri = Uri.fromFile(mCutFile);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mCutUri);
+        // 以广播方式刷新系统相册，以便能够在相册中找到刚刚所拍摄和裁剪的照片
+        Intent intentBc = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intentBc.setData(uri);
+        this.sendBroadcast(intentBc);
 
         startActivityForResult(intent, 3);
     }
