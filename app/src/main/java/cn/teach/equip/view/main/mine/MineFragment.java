@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,7 @@ import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.AppManager;
+import cn.teach.equip.view.BigPicutreActivity;
 import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
@@ -56,7 +59,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @BindView(R.id.user_msg)
     CardView userMsg;
     @BindView(R.id.my_down_load)
-    RelativeLayout myDownLoad;
+    CardView myDownLoad;
     @BindView(R.id.my_shoucang)
     CardView myShoucang;
     Unbinder unbinder;
@@ -105,9 +108,14 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
      * 设置用户信息显示
      */
     private void showUI() {
-        Glide.with(getActivity()).load(MyApplication.userBO.getAvatarUrl()).into(userImg);
+        Glide.with(getActivity()).load(MyApplication.userBO.getAvatarUrl())
+                .error(R.drawable.person_defalt_img)
+                .placeholder(R.drawable.person_defalt_img).into(userImg);
         userName.setText(MyApplication.userBO.getUserName());
         userId.setText("ID:" + MyApplication.userBO.getUserId());
+        if (MyApplication.userBO.getUserType() == 2) {  //企业用户
+            myDownLoad.setVisibility(View.GONE);
+        }
     }
 
 
@@ -130,6 +138,18 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @OnClick(R.id.my_shoucang)
     public void clickShouCang() {
         EventBus.getDefault().post(new SwitchEvent(1));
+    }
+
+    @OnClick(R.id.user_img)
+    public void clickUserImg(){
+        if(StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())){
+            return;
+        }
+        ArrayList<String> images = new ArrayList<>();
+        images.add(MyApplication.userBO.getAvatarUrl());
+        Intent intent = new Intent(getActivity(),BigPicutreActivity.class);
+        intent.putStringArrayListExtra("imageBos",images);
+        startActivity(intent);
     }
 
     @OnClick(R.id.bt_logout)

@@ -33,4 +33,11 @@
         android:singleLine="true"
         android:textColor="#7F7F7F"
         android:textSize="12sp" />
+
+    <View
+        android:id="@+id/tianchong"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:visibility="gone" />
+
 </LinearLayout>

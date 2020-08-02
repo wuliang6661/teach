@@ -32,6 +32,14 @@ public class FileConfig {
 
 
     /**
+     * 存储上传头像的文件夹
+     */
+    public static String getImgFile() {
+        return getBaseFile() + File.separator + "IMG";
+    }
+
+
+    /**
      * 存储目录文件的文件夹
      */
     public static String getMlFile() {

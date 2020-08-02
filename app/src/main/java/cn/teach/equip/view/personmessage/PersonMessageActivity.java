@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -17,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,7 +29,6 @@ import com.guoqi.actionsheet.ActionSheet;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,8 +37,9 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.mvp.MVPBaseActivity;
-import cn.teach.equip.util.PhotoFromPhotoAlbum;
+import cn.teach.equip.util.AvatarUtils;
 
 
 /**
@@ -244,32 +244,55 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
     //激活相机操作
     private void goCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", cameraSavePath);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", cameraSavePath);
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        } else {
+//            uri = Uri.fromFile(cameraSavePath);
+//        }
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        startActivityForResult(intent, 1);
+        Intent openCameraIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {  //Android7.0以上
+            uri = FileProvider.getUriForFile(this, "cn.teach.equip.fileprovider", new File(Environment
+                    .getExternalStorageDirectory(), "image.jpg"));//通过FileProvider创建一个content类型的Uri
+
+            openCameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            openCameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);//设置Action为拍照
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//将拍取的照片保存到指定URI
+            startActivityForResult(openCameraIntent, 1);
         } else {
-            uri = Uri.fromFile(cameraSavePath);
+            uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.jpg"));//7.0以下打开相机拍照的方法
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//保存照片
+            startActivityForResult(openCameraIntent, 1);
         }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, 1);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String photoPath;
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                photoPath = String.valueOf(cameraSavePath);
-            } else {
-                photoPath = uri.getEncodedPath();
-            }
-            Log.d("拍照返回图片路径:", photoPath);
-            updateFile(new File(Objects.requireNonNull(photoPath)));
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                photoPath = String.valueOf(cameraSavePath);
+//            } else {
+//                photoPath = uri.getEncodedPath();
+//            }
+//            Log.d("拍照返回图片路径:", photoPath);
+            startPhotoZoom(uri);
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            photoPath = PhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
-            updateFile(new File(photoPath));
+            startPhotoZoom(data.getData());
+        } else if (requestCode == 3) {
+            if (data == null) {
+                return;
+            }
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap bitmap = extras.getParcelable("data");
+                String path = AvatarUtils.savePhoto(bitmap, FileConfig.getImgFile(), "header");
+                updateFile(new File(path));
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -313,5 +336,18 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 //        });
     }
 
+
+    private void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 320);
+        intent.putExtra("outputY", 320);
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, 3);
+    }
 
 }

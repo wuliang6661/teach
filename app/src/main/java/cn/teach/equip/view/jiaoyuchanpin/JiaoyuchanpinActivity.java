@@ -3,6 +3,7 @@ package cn.teach.equip.view.jiaoyuchanpin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.FragmentUtils;
@@ -10,6 +11,7 @@ import com.blankj.utilcode.util.FragmentUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.main.NoneFragment;
 import cn.teach.equip.view.main.shoucang.PlayingFragment;
@@ -29,6 +31,8 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
     TabLinerLayout tabLinerlayout;
     @BindView(R.id.down_load_layout)
     LinearLayout downLoadLayout;
+    @BindView(R.id.layout_bottom)
+    LinearLayout layoutBottom;
 
     private int type;
 
@@ -68,6 +72,9 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
             tabLinerlayout.setSelectTab(2);
         } else {
             tabLinerlayout.setSelectTab(type);
+        }
+        if (MyApplication.userBO.getUserType() == 2) {  //企业用户
+            layoutBottom.setVisibility(View.GONE);
         }
     }
 

@@ -133,6 +133,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <!--查看大图-->
+        <activity
+            android:name=".view.BigPicutreActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!--反馈-->
         <activity
             android:name=".view.FanKuiActivity"

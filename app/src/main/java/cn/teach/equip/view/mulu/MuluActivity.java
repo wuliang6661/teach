@@ -43,6 +43,7 @@ import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.util.FileUtils;
 import cn.teach.equip.util.OpenFileUtil;
 import cn.teach.equip.util.ShareUtils;
+import cn.teach.equip.weight.ShareDialog;
 import cn.teach.equip.weight.TabLinerLayout;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -270,7 +271,13 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
             public void onItemClicked(View view, int position) {
                 String filePath = new File(FileConfig.getMlFile(), adapter.getItem(position).getCode() + "." +
                         adapter.getItem(position).getSuffix()).getAbsolutePath();
-                ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath);
+                new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
+                    @Override
+                    public void share(int flag) {
+                        ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath,flag);
+                    }
+                });
+
             }
         });
         recycleView.setAdapter(adapter);

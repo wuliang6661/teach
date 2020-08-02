@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 
+import java.util.ArrayList;
+
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.util.AppManager;
 import cn.teach.equip.util.ShareUtils;
+import cn.teach.equip.view.BigPicutreActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.stypeclass.StypeClassActivity;
+import cn.teach.equip.weight.ShareDialog;
 import cn.teach.equip.zxing.activity.CaptureActivity;
 
 /**
@@ -69,7 +73,12 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void share(String title, String content, String url) {
-        ShareUtils.shareHtml(title, content, url);
+        new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
+            @Override
+            public void share(int flag) {
+                ShareUtils.shareHtml(title, content, url, flag);
+            }
+        });
     }
 
     /**
@@ -84,4 +93,18 @@ public class WebJsInterface {
         AppManager.getAppManager().finishAllActivity();
         activity.startActivity(intent);
     }
+
+
+    /**
+     * 查看大图
+     */
+    @JavascriptInterface
+    public void zoomBigImg(String imageUrl){
+        ArrayList<String> images = new ArrayList<>();
+        images.add(imageUrl);
+        Intent intent = new Intent(activity,BigPicutreActivity.class);
+        intent.putStringArrayListExtra("imageBos",images);
+        activity.startActivity(intent);
+    }
+
 }

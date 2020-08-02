@@ -121,7 +121,7 @@ public class ShareUtils {
     /**
      * 分享网页
      */
-    public static void shareHtml(String title, String content, String url) {
+    public static void shareHtml(String title, String content, String url, int flag) {
         Platform.ShareParams oks = new Platform.ShareParams();
         oks.setShareType(Platform.SHARE_WEBPAGE);
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -137,7 +137,11 @@ public class ShareUtils {
         //启动分享
         //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
         Platform pla;
-        pla = ShareSDK.getPlatform(Wechat.NAME);
+        if (flag == 0) {   //微信好友
+            pla = ShareSDK.getPlatform(Wechat.NAME);
+        } else {
+            pla = ShareSDK.getPlatform(WechatMoments.NAME);
+        }
         // 执行应用分享
         pla.share(oks);
     }
@@ -146,7 +150,7 @@ public class ShareUtils {
     /**
      * 分享文件
      */
-    public static void shareFile(String title, String content, String filePath) {
+    public static void shareFile(String title, String content, String filePath, int flag) {
         Platform.ShareParams oks = new Platform.ShareParams();
         oks.setShareType(Platform.SHARE_FILE);
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -162,7 +166,11 @@ public class ShareUtils {
         //启动分享
         //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
         Platform pla;
-        pla = ShareSDK.getPlatform(Wechat.NAME);
+        if (flag == 0) {   //微信好友
+            pla = ShareSDK.getPlatform(Wechat.NAME);
+        } else {
+            pla = ShareSDK.getPlatform(WechatMoments.NAME);
+        }
         // 执行应用分享
         pla.share(oks);
     }
@@ -171,7 +179,7 @@ public class ShareUtils {
     /**
      * 分享视频
      */
-    public static void shareVideo(String title, String content, String videoUrl) {
+    public static void shareVideo(String title, String content, String videoUrl, int flag) {
         Platform.ShareParams oks = new Platform.ShareParams();
         oks.setShareType(Platform.SHARE_VIDEO);
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -187,8 +195,13 @@ public class ShareUtils {
         //启动分享
         //指定分享的平台，如果为空，还是会调用九宫格的平台列表界面
         Platform pla;
-        pla = ShareSDK.getPlatform(Wechat.NAME);
+        if (flag == 0) {   //微信好友
+            pla = ShareSDK.getPlatform(Wechat.NAME);
+        } else {
+            pla = ShareSDK.getPlatform(WechatMoments.NAME);
+        }
         // 执行应用分享
         pla.share(oks);
     }
+
 }
