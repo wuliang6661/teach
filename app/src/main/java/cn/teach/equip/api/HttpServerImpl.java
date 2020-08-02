@@ -1,5 +1,6 @@
 package cn.teach.equip.api;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
 
 import java.io.File;
@@ -252,9 +253,13 @@ public class HttpServerImpl {
     /**
      * 获取单位
      */
-    public static Observable<List<UnitBO>> getUnitList(String unitName) {
+    public static Observable<List<UnitBO>> getUnitList(String unitName, String provinceId, String cityId) {
         Map<String, Object> params = new HashMap<>();
         params.put("unitName", unitName);
+        if(StringUtils.isEmpty(unitName)){
+            params.put("provinceId", provinceId);
+            params.put("cityId", cityId);
+        }
         return getService().getUnitList(params).compose(RxResultHelper.httpRusult());
     }
 

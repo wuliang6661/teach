@@ -40,6 +40,9 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
     @BindView(R.id.recycle_view)
     RecyclerView recycleView;
 
+    private String provinceId;
+    private String cityId;
+
     @Override
     protected int getLayout() {
         return R.layout.act_select_unit;
@@ -51,6 +54,8 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
         super.onCreate(savedInstanceState);
 
         recycleView.setLayoutManager(new LinearLayoutManager(this));
+        provinceId = getIntent().getStringExtra("provinceId");
+        cityId = getIntent().getStringExtra("cityId");
         getUnitList("");
     }
 
@@ -70,7 +75,7 @@ public class SelectUnitActivity extends MVPBaseActivity<SelectUnitContract.View,
 
 
     private void getUnitList(String name) {
-        HttpServerImpl.getUnitList(name).subscribe(new HttpResultSubscriber<List<UnitBO>>() {
+        HttpServerImpl.getUnitList(name, provinceId, cityId).subscribe(new HttpResultSubscriber<List<UnitBO>>() {
             @Override
             public void onSuccess(List<UnitBO> s) {
                 setAdapter(s);

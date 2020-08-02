@@ -17,8 +17,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#D8D8D8" />
+        android:background="@drawable/city_line" />
 
 </RelativeLayout>

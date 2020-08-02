@@ -54,6 +54,23 @@
             </intent-filter>
         </activity>
 
+        <!--引导页1-->
+        <activity
+            android:name=".view.splash.SplashPage1"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--引导页2-->
+        <activity
+            android:name=".view.splash.SplashPage2"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--引导页2-->
+        <activity
+            android:name=".view.splash.SplashPage3"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <!--登录页面-->
         <activity

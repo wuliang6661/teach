@@ -275,6 +275,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 break;
             case R.id.jiaoyu_danwei:
                 Intent intent1 = new Intent(this, SelectUnitActivity.class);
+                intent1.putExtra("provinceId", provinceId);
+                intent1.putExtra("cityId", cityId);
                 startActivityForResult(intent1, 0x22);
                 break;
         }
