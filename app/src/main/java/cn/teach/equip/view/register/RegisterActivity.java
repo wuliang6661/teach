@@ -160,7 +160,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                             return;
                         }
                         register(strJiaoyuPhone, strJiaoyuVersion, provinceId, cityId,
-                                strJiaoyuName, strJiaoyuDanwei, selectUnit.getUnitId() + "");
+                                strJiaoyuName, strJiaoyuDanwei, selectUnit == null ? "" : selectUnit.getUnitId() + "");
                         break;
                     case 2:
                         String strQiyeName = etQiyeName.getText().toString().trim();
@@ -266,14 +266,14 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     }
 
 
-    @OnClick({R.id.jiaoyu_city, R.id.jiaoyu_danwei})
+    @OnClick({R.id.jiaoyu_city, R.id.tx_jiaoyu_huoqudanwei})
     public void click(View view) {
         switch (view.getId()) {
             case R.id.jiaoyu_city:
                 Intent intent = new Intent(this, SelectCityActivity.class);
                 startActivityForResult(intent, 0x11);
                 break;
-            case R.id.jiaoyu_danwei:
+            case R.id.tx_jiaoyu_huoqudanwei:
                 Intent intent1 = new Intent(this, SelectUnitActivity.class);
                 intent1.putExtra("provinceId", provinceId);
                 intent1.putExtra("cityId", cityId);
