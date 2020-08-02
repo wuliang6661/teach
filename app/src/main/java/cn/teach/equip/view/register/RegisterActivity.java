@@ -51,7 +51,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     @BindView(R.id.jiaoyu_city)
     TextView jiaoyuCity;
     @BindView(R.id.jiaoyu_danwei)
-    TextView jiaoyuDanwei;
+    EditText jiaoyuDanwei;
     @BindView(R.id.et_jiaoyu_name)
     EditText etJiaoyuName;
     @BindView(R.id.et_jiaoyu_phone)
@@ -298,6 +298,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                     selectUnitLayout.setVisibility(View.VISIBLE);
                 } else {
                     selectUnitLayout.setVisibility(View.GONE);
+                    selectUnit = null;
+                    jiaoyuDanwei.setText("");
                 }
                 break;
             case 0x22:
