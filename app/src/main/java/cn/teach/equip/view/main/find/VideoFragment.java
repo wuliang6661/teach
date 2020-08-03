@@ -1,5 +1,6 @@
 package cn.teach.equip.view.main.find;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseFragment;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.util.ShareUtils;
+import cn.teach.equip.weight.ShareDialog;
 
 /**
  * 作者： ch
@@ -92,12 +94,13 @@ public class VideoFragment extends BaseFragment {
         videoPlayer.getTitleTextView().setVisibility(View.GONE);
         videoPlayer.getBackButton().setVisibility(View.GONE);
         videoPlayer.getFullscreenButton().setVisibility(View.GONE);
+        videoPlayer.setBackgroundColor(Color.parseColor("#ffffff"));
 //        ENPlayView startImg = (ENPlayView) videoPlayer.getStartButton();
 //        startImg.setImageResource(R.drawable.video_start);
         if (video.getIsUp() == 1) {
-            btDianzan.setImageResource(R.drawable.dianzan);
-        } else {
             btDianzan.setImageResource(R.drawable.un_dianzan);
+        } else {
+            btDianzan.setImageResource(R.drawable.dianzan);
         }
     }
 
@@ -109,7 +112,12 @@ public class VideoFragment extends BaseFragment {
                 upVideo();
                 break;
             case R.id.bt_fenxiang:
-                ShareUtils.shareVideo(video.getTitle(), video.getDesc(), video.getUrl());
+                new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
+                    @Override
+                    public void share(int flag) {
+                        ShareUtils.shareVideo(video.getTitle(), video.getDesc(), video.getUrl(),flag);
+                    }
+                });
                 break;
         }
     }
@@ -123,10 +131,10 @@ public class VideoFragment extends BaseFragment {
                 stopProgress();
                 video.setIsUp(video.getIsUp() == 1 ? 0 : 1);
                 if (video.getIsUp() == 1) {
-                    btDianzan.setImageResource(R.drawable.dianzan);
+                    btDianzan.setImageResource(R.drawable.un_dianzan);
                     video.setLikeNum(video.getLikeNum() + 1);
                 } else {
-                    btDianzan.setImageResource(R.drawable.un_dianzan);
+                    btDianzan.setImageResource(R.drawable.dianzan);
                     video.setLikeNum(video.getLikeNum() - 1);
                 }
                 dianzanNum.setText(video.getLikeNum() + "");

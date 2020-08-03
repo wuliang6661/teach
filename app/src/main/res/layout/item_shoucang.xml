@@ -10,11 +10,11 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="22dp"
         android:layout_height="22dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/check_bg"
         android:button="@null"
         android:visibility="gone" />
@@ -24,9 +24,9 @@
         android:id="@+id/item_layout"
         android:layout_width="220dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="6dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="12dp"
         android:layout_marginBottom="5dp"
         android:minWidth="220dp"
         android:orientation="vertical"
@@ -86,5 +86,11 @@
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+    <View
+        android:id="@+id/tianchong"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:visibility="gone" />
 
+
+</LinearLayout>

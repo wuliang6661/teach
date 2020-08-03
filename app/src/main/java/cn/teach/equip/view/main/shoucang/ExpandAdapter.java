@@ -97,7 +97,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.fenleiText.setTextColor(Color.parseColor("#F7931E"));
         } else {
             holder.selectImg.setVisibility(View.GONE);
-            holder.fenleiText.setTextColor(Color.parseColor("#7F7F7F"));
+            holder.fenleiText.setTextColor(Color.parseColor("#25519A"));
         }
         holder.fenleiText.setText(getGroup(groupPosition).getLevelName2());
         TextPaint tp = holder.fenleiText.getPaint();

@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.loader.ImageLoader;
+import com.youth.banner.loader.ImageLoaderInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,6 @@ import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
-import cn.teach.equip.view.stypeclass.StypeClassActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -394,28 +394,21 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     }
 
 
-    public class GlideImageLoader extends ImageLoader {
+    public class GlideImageLoader implements ImageLoaderInterface<CardView> {
+
         @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            /**
-             注意：
-             1.图片加载器由自己选择，这里不限制，只是提供几种使用方法
-             2.返回的图片路径为Object类型，由于不能确定你到底使用的那种图片加载器，
-             传输的到的是什么格式，那么这种就使用Object接收和返回，你只需要强转成你传输的类型就行，
-             切记不要胡乱强转！
-             */
-            //Glide 加载图片简单用法
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Glide.with(context).load(path).into(imageView);
+        public void displayImage(Context context, Object path, CardView imageView) {
+            ImageView view = imageView.findViewById(R.id.image_view);
+            Glide.with(context).load(path).into(view);
         }
 
-//        //提供createImageView 方法，如果不用可以不重写这个方法，主要是方便自定义ImageView的创建
-//        @Override
-//        public ImageView createImageView(Context context) {
-//            //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
+        //提供createImageView 方法，如果不用可以不重写这个方法，主要是方便自定义ImageView的创建
+        @Override
+        public CardView createImageView(Context context) {
+            //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
 //            SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
-//            return simpleDraweeView;
-//        }
+            return (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.banner_view, null);
+        }
     }
 
     @Override

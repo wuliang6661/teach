@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
@@ -29,7 +31,9 @@ import com.guoqi.actionsheet.ActionSheet;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.File;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,8 +42,9 @@ import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.mvp.MVPBaseActivity;
-import cn.teach.equip.util.PhotoFromPhotoAlbum;
+import cn.teach.equip.util.AvatarUtils;
 
 
 /**
@@ -73,6 +78,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 
     private File cameraSavePath;//拍照照片路径
     private Uri uri;
+    private Uri mCutUri;
 
     private File file;
 
@@ -266,10 +272,19 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
                 photoPath = uri.getEncodedPath();
             }
             Log.d("拍照返回图片路径:", photoPath);
-            updateFile(new File(Objects.requireNonNull(photoPath)));
+            startPhotoZoom(uri,true);
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            photoPath = PhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
-            updateFile(new File(photoPath));
+            startPhotoZoom(data.getData(),false);
+        } else if (requestCode == 3) {
+            if (data == null) {
+                return;
+            }
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap bitmap = extras.getParcelable("data");
+                String path = AvatarUtils.savePhoto(bitmap, FileConfig.getImgFile(), "header");
+                updateFile(new File(path));
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -313,5 +328,40 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
 //        });
     }
 
+
+    private void startPhotoZoom(Uri uri,boolean fromCapture) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 320);
+        intent.putExtra("outputY", 320);
+        intent.putExtra("return-data", true);
+        // 注意一定要添加该项权限，否则会提示无法裁剪
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        // 指定裁剪完成以后的图片所保存的位置,pic info显示有延时
+        if (fromCapture) {
+            // 如果是使用拍照，那么原先的uri和最终目标的uri一致,注意这里的uri必须是Uri.fromFile生成的
+            mCutUri = Uri.fromFile(cameraSavePath);
+        } else { // 从相册中选择，那么裁剪的图片保存在take_photo中
+            String time = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA).format(new Date());
+            String fileName = "photo_" + time;
+            File mCutFile = new File(Environment.getExternalStorageDirectory() + "/take_photo", fileName + ".jpeg");
+            if (!mCutFile.getParentFile().exists()) {
+                mCutFile.getParentFile().mkdirs();
+            }
+            mCutUri = Uri.fromFile(mCutFile);
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mCutUri);
+        // 以广播方式刷新系统相册，以便能够在相册中找到刚刚所拍摄和裁剪的照片
+        Intent intentBc = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intentBc.setData(uri);
+        this.sendBroadcast(intentBc);
+
+        startActivityForResult(intent, 3);
+    }
 
 }

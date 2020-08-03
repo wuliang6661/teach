@@ -14,6 +14,7 @@ import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.main.MainActivity;
+import cn.teach.equip.view.splash.SplashPage1;
 
 public class SplashActivity extends BaseActivity {
 
@@ -30,15 +31,21 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                String token = MyApplication.spUtils.getString("token");
-                if (StringUtils.isEmpty(token)) {
-                    gotoActivity(LoginActivity.class, true);
+                boolean isFirst = MyApplication.spUtils.getBoolean("isFirst", true);
+                if (!isFirst) {
+                    String token = MyApplication.spUtils.getString("token");
+                    if (StringUtils.isEmpty(token)) {
+                        gotoActivity(LoginActivity.class, true);
+                    } else {
+                        MyApplication.token = token;
+                        login(null, null);
+                    }
                 } else {
-                    MyApplication.token = token;
-                    login(null, null);
+                    MyApplication.spUtils.put("isFirst", false);
+                    gotoActivity(SplashPage1.class, true);
                 }
             }
-        }, 2000);
+        }, 3000);
     }
 
 
