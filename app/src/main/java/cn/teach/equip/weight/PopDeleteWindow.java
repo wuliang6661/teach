@@ -22,6 +22,7 @@ public class PopDeleteWindow extends PopupWindow {
 
     private View dialogView;
 
+
     private onClickListener listener;
 
     public PopDeleteWindow(Activity context) {
