@@ -20,6 +20,7 @@ import cn.teach.equip.base.BaseActivity;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.util.AppManager;
+import cn.teach.equip.util.UpdateUtils;
 import cn.teach.equip.view.main.none.NoneFragment1;
 import cn.teach.equip.view.main.none.NoneFragment2;
 import cn.teach.equip.view.main.none.NoneFragment3;
@@ -69,7 +70,19 @@ public class MainActivity extends BaseActivity {
         initFragment();
         clickButtom(0);
         registerPush();
+        checkUpdate();
     }
+
+
+    private void checkUpdate(){
+        new UpdateUtils().checkUpdate(this, new UpdateUtils.onUpdateListener() {
+            @Override
+            public void noUpdate() {
+
+            }
+        });
+    }
+
 
 
     /**

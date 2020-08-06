@@ -12,6 +12,7 @@ import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.bean.pojo.VersionBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.bean.pojo.WenZhangVersionBO;
@@ -81,8 +82,8 @@ public interface HttpService {
     /**
      * 检查更新
      */
-    @GET("api/upload/version/version.json")
-    Observable<BaseResult<String>> getVersionInfo();
+    @POST("api/visitor/getVersionInfo")
+    Observable<BaseResult<VersionBO>> getVersionInfo();
 
     /**
      * 意见反馈

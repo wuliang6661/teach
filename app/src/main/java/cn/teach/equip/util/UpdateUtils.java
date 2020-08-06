@@ -1,12 +1,16 @@
 package cn.teach.equip.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +29,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.bean.pojo.VersionBO;
 import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.view.main.MainActivity;
 
@@ -48,26 +55,26 @@ public class UpdateUtils {
 
     public void checkUpdate(Activity context, onUpdateListener listener) {
         this.context = context;
-        HttpServerImpl.getVersionInfo().subscribe(new HttpResultSubscriber<String>() {
+        HttpServerImpl.getVersionInfo().subscribe(new HttpResultSubscriber<VersionBO>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(VersionBO s) {
                 if (s == null) {
                     if (listener != null) {
                         listener.noUpdate();
                     }
                     return;
                 }
-//                if (s.getVersionCode() > AppUtils.getAppVersionCode()) {
-//                    if (s.getForceUpdate() == 1) { //强制更新
-//                        downloadAPK(s.getVersionUrl());
-//                    } else {
-//                        createCustomDialogTwo(s);
-//                    }
-//                } else {
-//                    if (listener != null) {
-//                        listener.noUpdate();
-//                    }
-//                }
+                if (Integer.parseInt(s.getLatestVersion()) > AppUtils.getAppVersionCode()) {
+                    if (s.getIsForceUpdate() == 1) { //强制更新
+                        checkPrission(s.getDownloadUrl());
+                    } else {
+                        createCustomDialogTwo(s);
+                    }
+                } else {
+                    if (listener != null) {
+                        listener.noUpdate();
+                    }
+                }
             }
 
             @Override
@@ -106,7 +113,7 @@ public class UpdateUtils {
     }
 
 
-    private void createCustomDialogTwo() {
+    private void createCustomDialogTwo(VersionBO versionBO) {
         PopupWindow popupWindow = new PopupWindow();
         View dialogView = LayoutInflater.from(context).inflate(R.layout.layout_update_pop, null);
         TextView update = dialogView.findViewById(R.id.update);
@@ -116,6 +123,7 @@ public class UpdateUtils {
             public void onClick(View v) {
                 popupWindow.dismiss();
                 ToastUtils.showShort("开始下载新版本");
+                checkPrission(versionBO.getDownloadUrl());
             }
         });
         cancle.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +145,25 @@ public class UpdateUtils {
     }
 
 
+    private void checkPrission(String url) {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                ) {
+
+            ActivityCompat.requestPermissions(context,
+                    new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, 1);
+        } else {
+            downloadAPK(url);
+        }
+    }
+
+
     /* 开启新线程下载apk文件
      */
     public void downloadAPK(String url) {
@@ -151,7 +178,7 @@ public class UpdateUtils {
                             dir.mkdirs();
                         }
                         // 下载文件
-                        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+                        HttpsURLConnection conn = (HttpsURLConnection) new URL(url).openConnection();
                         conn.connect();
                         InputStream is = conn.getInputStream();
 //                        int length = conn.getContentLength();

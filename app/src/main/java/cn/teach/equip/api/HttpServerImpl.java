@@ -18,6 +18,7 @@ import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
+import cn.teach.equip.bean.pojo.VersionBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.bean.pojo.WenZhangVersionBO;
@@ -311,7 +312,7 @@ public class HttpServerImpl {
     /**
      * 检查更新
      */
-    public static Observable<String> getVersionInfo() {
+    public static Observable<VersionBO> getVersionInfo() {
         return getService().getVersionInfo().compose(RxResultHelper.httpRusult());
     }
 
