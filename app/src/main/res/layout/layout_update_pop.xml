@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="102dp"
+    android:layout_height="210dp"
+    android:background="@drawable/share_pop_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/update_text"
+        android:textColor="#7F7F7F"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/update"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/update_bt"
+        android:gravity="center"
+        android:text="@string/update"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/cancle"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/cancle_bg"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp" />
+
+</LinearLayout>

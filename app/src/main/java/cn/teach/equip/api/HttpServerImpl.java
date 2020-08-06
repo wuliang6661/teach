@@ -256,7 +256,7 @@ public class HttpServerImpl {
     public static Observable<List<UnitBO>> getUnitList(String unitName, String provinceId, String cityId) {
         Map<String, Object> params = new HashMap<>();
         params.put("unitName", unitName);
-        if(StringUtils.isEmpty(unitName)){
+        if (StringUtils.isEmpty(unitName)) {
             params.put("provinceId", provinceId);
             params.put("cityId", cityId);
         }
@@ -304,6 +304,14 @@ public class HttpServerImpl {
         params.put("type", 0);
         params.put("codes", code);
         return getService().productCollect(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 检查更新
+     */
+    public static Observable<String> getVersionInfo() {
+        return getService().getVersionInfo().compose(RxResultHelper.httpRusult());
     }
 
 
