@@ -1,6 +1,10 @@
 package cn.teach.equip.view.main;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -70,7 +74,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
         clickButtom(0);
         registerPush();
-        checkUpdate();
+        checkPrission();
     }
 
 
@@ -81,6 +85,25 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+
+    private void checkPrission() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                ) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    }, 1);
+        } else {
+            checkUpdate();
+        }
     }
 
 
