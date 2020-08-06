@@ -81,7 +81,7 @@ public interface HttpService {
     /**
      * 检查更新
      */
-    @POST("api/vistor/getVersionInfo")
+    @GET("api/upload/version/version.json")
     Observable<BaseResult<String>> getVersionInfo();
 
     /**
