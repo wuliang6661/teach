@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.FileUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.teach.equip.R;
+import cn.teach.equip.base.MyApplication;
+import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.util.UpdateUtils;
 import cn.teach.equip.view.FanKuiActivity;
 
 
@@ -28,8 +32,6 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
     CardView jianyifankui;
     @BindView(R.id.clear_huancun)
     CardView clearHuancun;
-    @BindView(R.id.user_msg)
-    CardView userMsg;
     @BindView(R.id.version_name)
     TextView versionName;
 
@@ -49,17 +51,25 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
     }
 
 
-    @OnClick({R.id.jianyifankui, R.id.clear_huancun, R.id.user_msg})
+    @OnClick({R.id.jianyifankui, R.id.clear_huancun, R.id.check_update})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.jianyifankui:
                 gotoActivity(FanKuiActivity.class, false);
                 break;
             case R.id.clear_huancun:
+                MyApplication.spUtils.clear();
+                FileUtils.deleteDir(FileConfig.getApkFile());
+                FileUtils.deleteDir(FileConfig.getImgFile());
                 showToast("清理成功");
                 break;
-            case R.id.user_msg:
+            case R.id.check_update:
+                new UpdateUtils().checkUpdate(this, new UpdateUtils.onUpdateListener() {
+                    @Override
+                    public void noUpdate() {
 
+                    }
+                });
                 break;
         }
     }

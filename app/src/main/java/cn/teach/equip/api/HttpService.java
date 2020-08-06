@@ -14,6 +14,7 @@ import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
+import cn.teach.equip.bean.pojo.WenZhangVersionBO;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
@@ -80,7 +81,7 @@ public interface HttpService {
     /**
      * 检查更新
      */
-    @POST("api/vistor/getVersionInfo")
+    @GET("api/upload/version/version.json")
     Observable<BaseResult<String>> getVersionInfo();
 
     /**
@@ -178,7 +179,7 @@ public interface HttpService {
      * 获取文章是否更新
      */
     @POST("api/visitor/getArticleListInfo")
-    Observable<BaseResult<String>> getArticleListInfo();
+    Observable<BaseResult<WenZhangVersionBO>> getArticleListInfo();
 
     /**
      * 下载

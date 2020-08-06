@@ -42,6 +42,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.BannerBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
+import cn.teach.equip.bean.pojo.WenZhangVersionBO;
 import cn.teach.equip.constans.IContans;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.MD5;
@@ -72,11 +73,19 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     Unbinder unbinder;
 
     List<BannerBO> bannerBOS;
+    @BindView(R.id.zhuangbei_point)
+    View zhuangbeiPoint;
+    @BindView(R.id.ronghe_point)
+    View ronghePoint;
+    @BindView(R.id.guoqi_point)
+    View guoqiPoint;
 
     private int curinPosition = 0;
     private int pageNum = 1;
 
     private List<WenZhangListBo.PageListBean> list;
+
+    private WenZhangVersionBO wenZhangVersionBO;
 
 
     @Nullable
@@ -130,7 +139,44 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void onSupportVisible() {
         super.onSupportVisible();
         getBanner();
+        getArticleListInfo();
     }
+
+    /**
+     * 获取文章是否更新
+     */
+    private void getArticleListInfo() {
+        HttpServerImpl.getArticleListInfo().subscribe(new HttpResultSubscriber<WenZhangVersionBO>() {
+            @Override
+            public void onSuccess(WenZhangVersionBO s) {
+                wenZhangVersionBO = s;
+                String latestVersion1 = MyApplication.spUtils.getString("latestVersion1", "1");
+                String latestVersion2 = MyApplication.spUtils.getString("latestVersion2", "1");
+                String latestVersion3 = MyApplication.spUtils.getString("latestVersion3", "1");
+                if (!latestVersion1.equals(s.getLatestVersion1())) {
+                    zhuangbeiPoint.setVisibility(View.VISIBLE);
+                } else {
+                    zhuangbeiPoint.setVisibility(View.GONE);
+                }
+                if (!latestVersion2.equals(s.getLatestVersion2())) {
+                    ronghePoint.setVisibility(View.VISIBLE);
+                } else {
+                    ronghePoint.setVisibility(View.GONE);
+                }
+                if (!latestVersion3.equals(s.getLatestVersion3())) {
+                    guoqiPoint.setVisibility(View.VISIBLE);
+                } else {
+                    guoqiPoint.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
 
     /**
      * 获取banner
@@ -216,6 +262,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.zhuangbei_layout:
+                if (wenZhangVersionBO != null)
+                    MyApplication.spUtils.put("latestVersion1", wenZhangVersionBO.getLatestVersion1());
                 bundle.putInt("type", 0);
                 gotoActivity(WenzhangListActivity.class, bundle, false);
                 break;
@@ -224,10 +272,14 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 //                gotoActivity(StypeClassActivity.class, false);
                 break;
             case R.id.ronghe_layout:
+                if (wenZhangVersionBO != null)
+                    MyApplication.spUtils.put("latestVersion2", wenZhangVersionBO.getLatestVersion2());
                 bundle.putInt("type", 1);
                 gotoActivity(WenzhangListActivity.class, bundle, false);
                 break;
             case R.id.guoqi_layout:
+                if (wenZhangVersionBO != null)
+                    MyApplication.spUtils.put("latestVersion3", wenZhangVersionBO.getLatestVersion3());
                 bundle.putInt("type", 2);
                 gotoActivity(WenzhangListActivity.class, bundle, false);
                 break;
