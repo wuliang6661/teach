@@ -222,6 +222,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         }).create().show();
     }
 
+
     private boolean allGranted(int[] grantResults) {
         boolean hasPermission = true;
         for (int i = 0; i < grantResults.length; i++) {
