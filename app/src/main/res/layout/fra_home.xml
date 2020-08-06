@@ -133,11 +133,24 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/rongheanli" />
+                            android:layout_height="70dp">
 
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/rongheanli" />
+
+                            <View
+                                android:id="@+id/ronghe_point"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/yello_point"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -170,10 +183,24 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:src="@drawable/guoqifengcai" />
+                            android:layout_height="70dp">
+
+                            <ImageView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/guoqifengcai" />
+
+                            <View
+                                android:id="@+id/guoqi_point"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/yello_point"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
 
 
                         <TextView

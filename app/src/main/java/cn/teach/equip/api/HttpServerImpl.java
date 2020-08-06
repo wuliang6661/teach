@@ -20,6 +20,7 @@ import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
+import cn.teach.equip.bean.pojo.WenZhangVersionBO;
 import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -280,7 +281,7 @@ public class HttpServerImpl {
     /**
      * 获取文章是否更新
      */
-    public static Observable<String> getArticleListInfo() {
+    public static Observable<WenZhangVersionBO> getArticleListInfo() {
         return getService().getArticleListInfo().compose(RxResultHelper.httpRusult());
     }
 
