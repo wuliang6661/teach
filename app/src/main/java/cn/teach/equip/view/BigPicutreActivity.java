@@ -1,5 +1,6 @@
 package cn.teach.equip.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.List;
@@ -43,8 +48,22 @@ public class BigPicutreActivity extends BaseActivity {
 //        imagePager.setCurrentItem(selectPosition);
         imagePager.setMaximumScale(10);
         imagePager.setDrawingCacheEnabled(true);
+        showProgress();
         Glide.with(BigPicutreActivity.this)
-                .load(imageBOS.get(0)).into(imagePager);
+                .load(imageBOS.get(0))
+                .addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        stopProgress();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        stopProgress();
+                        return false;
+                    }
+                }).into(imagePager);
     }
 
 
