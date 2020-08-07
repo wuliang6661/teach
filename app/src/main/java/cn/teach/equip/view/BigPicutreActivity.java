@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import cn.teach.equip.base.BaseActivity;
 public class BigPicutreActivity extends BaseActivity {
 
     @BindView(R.id.image_pager)
-    ViewPager imagePager;
+    PhotoView imagePager;
 
     List<String> imageBOS;
 
@@ -39,17 +39,19 @@ public class BigPicutreActivity extends BaseActivity {
         selectPosition = getIntent().getIntExtra("selectPosition", 0);
 
         setTitleText("查看图片");
-        imagePager.setAdapter(new MyPagerAdapter());
-        imagePager.setCurrentItem(selectPosition);
+//        imagePager.setAdapter(new MyPagerAdapter());
+//        imagePager.setCurrentItem(selectPosition);
+        imagePager.setMaximumScale(10);
+        imagePager.setDrawingCacheEnabled(true);
+        Glide.with(BigPicutreActivity.this)
+                .load(imageBOS.get(0)).into(imagePager);
     }
-
 
 
     @Override
     protected int getLayout() {
         return R.layout.act_big_picture;
     }
-
 
 
     class MyPagerAdapter extends PagerAdapter {
@@ -73,8 +75,27 @@ public class BigPicutreActivity extends BaseActivity {
         @Override
         public Object instantiateItem(ViewGroup view, int position) {
             View groupView = LayoutInflater.from(BigPicutreActivity.this).inflate(R.layout.act_big_img, null);
-            ImageView imageView = groupView.findViewById(R.id.iv_big_image);
-            Glide.with(BigPicutreActivity.this).load(imageBOS.get(position)).into(imageView);
+            PhotoView imageView = groupView.findViewById(R.id.iv_big_image);
+            Glide.with(BigPicutreActivity.this)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(imageBOS.get(position)).into(imageView);
+//            Zoomy.Builder builder = new Zoomy.Builder(BigPicutreActivity.this)
+//                    .target(imageView)
+//                    .enableImmersiveMode(true)
+//                    .animateZooming(true)
+//                    .zoomListener(new ZoomListener() {
+//                        @Override
+//                        public void onViewStartedZooming(View view) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onViewEndedZooming(View view) {
+//
+//                        }
+//                    });
+//            builder.register();
             view.addView(groupView);
             return groupView;
         }
