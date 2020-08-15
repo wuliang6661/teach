@@ -49,7 +49,14 @@ public abstract class BaseWebActivity extends BaseActivity {
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         //支持缩放
-//        settings.setSupportZoom(false);
+        settings.setSupportZoom(true);
+//设置出现缩放工具
+        settings.setBuiltInZoomControls(true);
+//设定缩放控件隐藏
+        settings.setDisplayZoomControls(false);
+
+//最小缩放等级
+//        setInitialScale(25);
         //隐藏原生的缩放控件
         settings.setDisplayZoomControls(false);
         //支持内容重新布局

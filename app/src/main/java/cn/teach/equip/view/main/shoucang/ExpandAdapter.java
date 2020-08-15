@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -88,6 +89,8 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder = new GroupHolder();
             holder.selectImg = convertView.findViewById(R.id.select_img);
             holder.fenleiText = convertView.findViewById(R.id.proce_name);
+            holder.itemView = convertView.findViewById(R.id.item_layout);
+            holder.buttomLine = convertView.findViewById(R.id.buttom_view);
             convertView.setTag(holder);
         } else {
             holder = (GroupHolder) convertView.getTag();
@@ -95,9 +98,13 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         if (groupPosition == selectGroup) {
             holder.selectImg.setVisibility(View.VISIBLE);
             holder.fenleiText.setTextColor(Color.parseColor("#F7931E"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#F4F4F4"));
+            holder.buttomLine.setVisibility(View.VISIBLE);
         } else {
             holder.selectImg.setVisibility(View.GONE);
             holder.fenleiText.setTextColor(Color.parseColor("#25519A"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.buttomLine.setVisibility(View.GONE);
         }
         holder.fenleiText.setText(getGroup(groupPosition).getLevelName2());
         TextPaint tp = holder.fenleiText.getPaint();
@@ -108,6 +115,8 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     class GroupHolder {
         ImageView selectImg;
         TextView fenleiText;
+        RelativeLayout itemView;
+        View buttomLine;
     }
 
 
@@ -119,6 +128,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder = new ChildHolder();
             holder.childLine = convertView.findViewById(R.id.selct_line);
             holder.childText = convertView.findViewById(R.id.child_text);
+            holder.buttomLine = convertView.findViewById(R.id.buttom_view);
             convertView.setTag(holder);
         } else {
             holder = (ChildHolder) convertView.getTag();
@@ -128,6 +138,11 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         } else {
             holder.childLine.setVisibility(View.GONE);
         }
+        if (getChildrenCount(groupPosition) - 1 == childPosition) {
+            holder.buttomLine.setVisibility(View.VISIBLE);
+        } else {
+            holder.buttomLine.setVisibility(View.GONE);
+        }
         holder.childText.setText(getChild(groupPosition, childPosition).getLevelName3());
         return convertView;
     }
@@ -136,6 +151,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     class ChildHolder {
         TextView childText;
         View childLine;
+        View buttomLine;
     }
 
 

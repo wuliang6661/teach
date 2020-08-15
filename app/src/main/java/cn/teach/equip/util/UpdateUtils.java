@@ -26,7 +26,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -141,7 +140,12 @@ public class UpdateUtils {
         //设置PopupWindow弹出窗体可点击
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
-        popupWindow.showAtLocation(context.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(context.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+            }
+        });
     }
 
 

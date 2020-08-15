@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#00000000"
     android:minHeight="50dp"
     android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
-        android:layout_marginRight="23dp"
+        android:layout_marginRight="7dp"
+        android:background="#f4f4f4"
         android:gravity="center"
         android:minHeight="50dp"
         android:orientation="vertical">
@@ -18,22 +20,44 @@
 
         <TextView
             android:id="@+id/child_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="10dp"
             android:text="hhh"
             android:textColor="#7F7F7F"
             android:textSize="12sp" />
 
 
         <View
-            android:id="@+id/selct_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="3dp"
-            android:background="#CCCCCC" />
+            android:background="#CCCCCC"
+            android:visibility="gone" />
 
 
     </LinearLayout>
 
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/selct_line"
+        android:layout_width="10dp"
+        android:layout_height="12dp"
+        android:layout_alignRight="@+id/item_layout"
+        android:layout_centerVertical="true"
+        android:src="@drawable/select_child" />
+
+
+    <View
+        android:id="@+id/buttom_view"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignRight="@+id/item_layout"
+        android:layout_alignBottom="@+id/item_layout"
+        android:background="@drawable/strade_bg_buttom"
+        android:visibility="gone" />
+
+</RelativeLayout>

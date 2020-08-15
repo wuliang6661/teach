@@ -3,12 +3,15 @@ package cn.teach.equip.view.main;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.blankj.utilcode.util.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,6 +28,7 @@ import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.util.AppManager;
 import cn.teach.equip.util.UpdateUtils;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.main.none.NoneFragment1;
 import cn.teach.equip.view.main.none.NoneFragment2;
 import cn.teach.equip.view.main.none.NoneFragment3;
@@ -73,18 +77,25 @@ public class MainActivity extends BaseActivity {
         linears = new LinearLayout[]{main1, main2, main3, main4};
         initFragment();
         clickButtom(0);
-        registerPush();
+        if (!StringUtils.isEmpty(MyApplication.token)) {
+            registerPush();
+        }
         checkPrission();
     }
 
 
-    private void checkUpdate(){
-        new UpdateUtils().checkUpdate(this, new UpdateUtils.onUpdateListener() {
+    private void checkUpdate() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void noUpdate() {
+            public void run() {
+                new UpdateUtils().checkUpdate(MainActivity.this, new UpdateUtils.onUpdateListener() {
+                    @Override
+                    public void noUpdate() {
 
+                    }
+                });
             }
-        });
+        }, 2000);
     }
 
 
@@ -107,7 +118,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     /**
      * 注册极光
      */
@@ -117,7 +127,6 @@ public class MainActivity extends BaseActivity {
         treeSet.add(MyApplication.userBO.getPhone());
         JPushInterface.setTags(this, 1, treeSet);
     }
-
 
 
     /**
@@ -150,6 +159,10 @@ public class MainActivity extends BaseActivity {
     @OnClick({R.id.main1, R.id.main1_cli, R.id.main2, R.id.main2_cli,
             R.id.main3, R.id.main3_cli, R.id.main4, R.id.main4_cli})
     public void click(View view) {
+        if (StringUtils.isEmpty(MyApplication.token)) {
+            gotoActivity(LoginActivity.class, false);
+            return;
+        }
         switch (view.getId()) {
             case R.id.main1:
             case R.id.main1_cli:

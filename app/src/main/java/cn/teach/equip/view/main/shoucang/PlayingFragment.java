@@ -97,7 +97,7 @@ public class PlayingFragment extends BaseFragment {
             type = getArguments().getInt("type");
             if (type == 1) {
                 optionImg.setImageResource(R.drawable.huanyipi);
-                optionText.setText("换一批");
+                optionText.setText("下一页");
             }
         }
         if (type == 1) {

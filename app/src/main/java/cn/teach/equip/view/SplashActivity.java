@@ -12,7 +12,6 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseActivity;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
-import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.main.MainActivity;
 import cn.teach.equip.view.splash.SplashPage1;
 
@@ -35,7 +34,7 @@ public class SplashActivity extends BaseActivity {
                 if (!isFirst) {
                     String token = MyApplication.spUtils.getString("token");
                     if (StringUtils.isEmpty(token)) {
-                        gotoActivity(LoginActivity.class, true);
+                        gotoActivity(MainActivity.class, true);
                     } else {
                         MyApplication.token = token;
                         login(null, null);
@@ -61,7 +60,8 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onFiled(String message) {
-                gotoActivity(LoginActivity.class, true);
+                MyApplication.token = null;
+                gotoActivity(MainActivity.class, true);
             }
         });
     }

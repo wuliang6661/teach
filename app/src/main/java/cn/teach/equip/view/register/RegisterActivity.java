@@ -140,23 +140,29 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                         String strJiaoyuPhone = etJiaoyuPhone.getText().toString().trim();
                         String strJiaoyuVersion = etJiaoyuVersion.getText().toString().trim();
                         if (StringUtils.isEmpty(strJiaoyuCity)) {
-                            showToast2("请选择省份与城市！");
+                            showToast("请选择省份与城市！");
                             return;
                         }
                         if (StringUtils.isEmpty(strJiaoyuDanwei)) {
-                            showToast2("请选择单位！");
+                            showToast("请选择单位！");
+                            return;
+                        }
+                        if (!strJiaoyuDanwei.contains("幼儿园") && !strJiaoyuDanwei.contains("小学") &&
+                                !strJiaoyuDanwei.contains("高中") && !strJiaoyuDanwei.contains("中学") &&
+                                !strJiaoyuDanwei.contains("学校")) {
+                            showToast("请输入正确的单位名称！");
                             return;
                         }
                         if (StringUtils.isEmpty(strJiaoyuName)) {
-                            showToast2("请输入姓名！");
+                            showToast("请输入姓名！");
                             return;
                         }
                         if (StringUtils.isEmpty(strJiaoyuPhone)) {
-                            showToast2("请输入手机号！");
+                            showToast("请输入手机号！");
                             return;
                         }
                         if (StringUtils.isEmpty(strJiaoyuVersion)) {
-                            showToast2("请输入验证码！");
+                            showToast("请输入验证码！");
                             return;
                         }
                         register(strJiaoyuPhone, strJiaoyuVersion, provinceId, cityId,
@@ -168,19 +174,19 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                         String strQiyePhone = etQiyePersonPhone.getText().toString().trim();
                         String strQiyeVersionPhone = etQiyeVersionCode.getText().toString().trim();
                         if (StringUtils.isEmpty(strQiyeName)) {
-                            showToast2("请选择企业名称！");
+                            showToast("请选择企业名称！");
                             return;
                         }
                         if (StringUtils.isEmpty(strQiyePersonName)) {
-                            showToast2("请输入姓名！");
+                            showToast("请输入姓名！");
                             return;
                         }
                         if (StringUtils.isEmpty(strQiyePhone)) {
-                            showToast2("请输入手机号！");
+                            showToast("请输入手机号！");
                             return;
                         }
                         if (StringUtils.isEmpty(strQiyeVersionPhone)) {
-                            showToast2("请输入验证码！");
+                            showToast("请输入验证码！");
                             return;
                         }
                         register(strQiyePhone, strQiyeVersionPhone, "", "",

@@ -51,7 +51,7 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         goBack();
         setTitleText("设置");
 
-        versionName.setText("版本：" + AppUtils.getAppVersionName());
+        versionName.setText("版本：v" + AppUtils.getAppVersionName());
     }
 
 

@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="23dp"
-                android:text="换一批"
+                android:text="下一页"
                 android:textColor="#7F7F7F"
                 android:textSize="12sp" />
 

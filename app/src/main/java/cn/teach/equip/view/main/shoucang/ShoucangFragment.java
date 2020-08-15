@@ -62,6 +62,11 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
         fragment = new PlayingFragment();
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
@@ -84,7 +89,6 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
         });
         FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
     }
-
 
     @OnClick({R.id.saoma, R.id.sousuo})
     public void clickTitle(View view) {

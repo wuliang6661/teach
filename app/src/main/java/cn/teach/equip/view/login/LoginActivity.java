@@ -19,6 +19,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.util.AppManager;
 import cn.teach.equip.view.main.MainActivity;
 import cn.teach.equip.view.register.RegisterActivity;
 
@@ -152,6 +153,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         MyApplication.token = userBO.getUserToken();
         MyApplication.userBO = userBO;
         MyApplication.spUtils.put("token",MyApplication.token);
+        AppManager.getAppManager().finishAllActivity();
         gotoActivity(MainActivity.class, true);
     }
 }

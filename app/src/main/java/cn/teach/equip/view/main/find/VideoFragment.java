@@ -79,6 +79,7 @@ public class VideoFragment extends BaseFragment {
         videoPlayer.setThumbImageView(imageView);
         videoPlayer.setUp(video.getUrl(), true, "");
         videoPlayer.startPlayLogic();
+//        videoPlayer.setSpeedPlaying(2.0f,true);
     }
 
 

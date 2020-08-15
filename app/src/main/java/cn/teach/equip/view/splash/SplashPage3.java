@@ -14,6 +14,7 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseActivity;
 import cn.teach.equip.view.login.LoginActivity;
+import cn.teach.equip.view.main.MainActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -75,6 +76,6 @@ public class SplashPage3 extends BaseActivity {
 
     @OnClick(R.id.tiyan)
     public void onClick(){
-        gotoActivity(LoginActivity.class, true);
+        gotoActivity(MainActivity.class, true);
     }
 }

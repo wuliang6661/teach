@@ -20,7 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -49,6 +51,7 @@ import cn.teach.equip.util.MD5;
 import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.jiaoyuchanpin.JiaoyuchanpinActivity;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.view.navigation.NavigationActivity;
 import cn.teach.equip.view.wenzhanglist.WenzhangListActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
@@ -259,6 +262,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @OnClick({R.id.zhuangbei_layout, R.id.jiaoxue_layout, R.id.ronghe_layout,
             R.id.guoqi_layout, R.id.yunwei_layout, R.id.zonghe_layout})
     public void clickView(View view) {
+        if (StringUtils.isEmpty(MyApplication.token)) {
+            gotoActivity(LoginActivity.class, false);
+            return;
+        }
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.zhuangbei_layout:
@@ -317,6 +324,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     @OnClick({R.id.saoma, R.id.sousuo})
     public void clickTitle(View view) {
+        if (StringUtils.isEmpty(MyApplication.token)) {
+            gotoActivity(LoginActivity.class, false);
+            return;
+        }
         switch (view.getId()) {
             case R.id.saoma:
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
@@ -391,9 +402,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.RIGHT);
         banner.setOnBannerListener(position -> {
-//            if (StringUtils.isEmpty(bannerBOS.get(position).getUrl()) || bannerBOS.get(position).getTargetType() != 1) {
-//                return;
-//            }
+            if (StringUtils.isEmpty(MyApplication.token)) {
+                gotoActivity(LoginActivity.class, false);
+                return;
+            }
             Bundle bundle = new Bundle();
             bundle.putString("url", bannerBOS.get(position).getUrl());
             bundle.putString("title", bannerBOS.get(position).getTitle());
@@ -446,20 +458,20 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     }
 
 
-    public class GlideImageLoader implements ImageLoaderInterface<CardView> {
+    public class GlideImageLoader implements ImageLoaderInterface<RelativeLayout> {
 
         @Override
-        public void displayImage(Context context, Object path, CardView imageView) {
+        public void displayImage(Context context, Object path, RelativeLayout imageView) {
             ImageView view = imageView.findViewById(R.id.image_view);
             Glide.with(context).load(path).into(view);
         }
 
         //提供createImageView 方法，如果不用可以不重写这个方法，主要是方便自定义ImageView的创建
         @Override
-        public CardView createImageView(Context context) {
+        public RelativeLayout createImageView(Context context) {
             //使用fresco，需要创建它提供的ImageView，当然你也可以用自己自定义的具有图片加载功能的ImageView
 //            SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
-            return (CardView) LayoutInflater.from(getActivity()).inflate(R.layout.banner_view, null);
+            return (RelativeLayout) LayoutInflater.from(getActivity()).inflate(R.layout.banner_view, null);
         }
     }
 
