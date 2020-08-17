@@ -318,6 +318,14 @@ public class HttpServerImpl {
 
 
     /**
+     * 获取视频分类列表
+     */
+    public static Observable<String> getVideoTypeList() {
+        return getService().getVideoTypeList().compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
      * 下载
      *
      * @param url              下载地址，全路径

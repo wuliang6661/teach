@@ -183,6 +183,12 @@ public interface HttpService {
     Observable<BaseResult<WenZhangVersionBO>> getArticleListInfo();
 
     /**
+     * 获取视频分类列表
+     */
+    @POST("api/visitor/getVideoTypeList")
+    Observable<BaseResult<String>> getVideoTypeList();
+
+    /**
      * 下载
      */
     @Streaming

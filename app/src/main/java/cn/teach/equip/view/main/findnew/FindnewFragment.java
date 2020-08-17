@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.api.HttpResultSubscriber;
+import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
@@ -61,12 +63,31 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
 
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         setVideoAdapter();
+        getVideoTypeList();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    /**
+     * 获取视频分类列表
+     */
+    private void getVideoTypeList() {
+        HttpServerImpl.getVideoTypeList().subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
     }
 
 
