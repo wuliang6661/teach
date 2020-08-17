@@ -13,11 +13,15 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
+import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
 /**
  * MVPPlugin
@@ -56,6 +60,7 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
         super.onViewCreated(view, savedInstanceState);
 
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        setVideoAdapter();
     }
 
     @Override
@@ -63,4 +68,27 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+    private void setVideoAdapter() {
+        ArrayList<String> videos = new ArrayList<>();
+        videos.add("aaaaa");
+        videos.add("aaaaa");
+        videos.add("aaaaa");
+        videos.add("aaaaa");
+        videos.add("aaaaa");
+        LGRecycleViewAdapter<String> adapter = new LGRecycleViewAdapter<String>(videos) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_find_video;
+            }
+
+            @Override
+            public void convert(LGViewHolder holder, String s, int position) {
+                holder.setText(R.id.video_title, s);
+            }
+        };
+        recycleView.setAdapter(adapter);
+    }
+
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import cn.teach.equip.R;
 import cn.teach.equip.view.main.find.FindFragment;
+import cn.teach.equip.view.main.findnew.FindnewFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -28,8 +29,8 @@ public class NoneFragment3 extends SupportFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (findChildFragment(FindFragment.class) == null) {
-            loadRootFragment(R.id.fl_first_container, new FindFragment());
+        if (findChildFragment(FindnewFragment.class) == null) {
+            loadRootFragment(R.id.fl_first_container, new FindnewFragment());
         }
     }
 
