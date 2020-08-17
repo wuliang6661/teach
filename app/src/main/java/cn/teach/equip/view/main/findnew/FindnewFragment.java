@@ -1,0 +1,66 @@
+package cn.teach.equip.view.main.findnew;
+
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.teach.equip.R;
+import cn.teach.equip.mvp.MVPBaseFragment;
+
+/**
+ * MVPPlugin
+ * 新的发现视频 页面
+ */
+
+public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, FindnewPresenter>
+        implements FindnewContract.View {
+
+
+    @BindView(R.id.sousuo)
+    LinearLayout sousuo;
+    @BindView(R.id.saoma)
+    ImageView saoma;
+    @BindView(R.id.left_menu)
+    ExpandableListView leftMenu;
+    @BindView(R.id.refresh_layout)
+    LinearLayout refreshLayout;
+    @BindView(R.id.recycle_view)
+    RecyclerView recycleView;
+    @BindView(R.id.none_layout)
+    LinearLayout noneLayout;
+    Unbinder unbinder;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fra_find_new, null);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+}
