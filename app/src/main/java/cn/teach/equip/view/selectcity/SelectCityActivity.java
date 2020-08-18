@@ -26,6 +26,8 @@ import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
+import me.yokeyword.indexablerv.IndexableAdapter;
+import me.yokeyword.indexablerv.IndexableLayout;
 
 
 /**
@@ -39,9 +41,11 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
     @BindView(R.id.left_menu)
     RecyclerView leftMenu;
     @BindView(R.id.recycle_view)
-    RecyclerView recycleView;
+    IndexableLayout recycleView;
 
     private int selectProvince = 0;
+
+    ContactAdapter mAdapter;
 
     @Override
     protected int getLayout() {
@@ -55,8 +59,21 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
 
         leftMenu.setLayoutManager(new LinearLayoutManager(this));
         recycleView.setLayoutManager(new LinearLayoutManager(this));
+        initAdapter();
         getLocationList(null);
     }
+
+
+    public void initAdapter() {
+        mAdapter = new ContactAdapter(this);
+        recycleView.setAdapter(mAdapter);
+        recycleView.setOverlayStyle_Center();
+//        indexableLayout.setOverlayStyle_MaterialDesign(Color.RED);
+        // 全字母排序。  排序规则设置为：每个字母都会进行比较排序；速度较慢
+        recycleView.setCompareMode(IndexableLayout.MODE_FAST);
+
+    }
+
 
     @OnClick(R.id.back_img)
     public void back() {
@@ -130,31 +147,47 @@ public class SelectCityActivity extends MVPBaseActivity<SelectCityContract.View,
 
 
     private void setCityAdapter(ProvinceBO provinceBO) {
-        LGRecycleViewAdapter<ProvinceBO.CityListBean> adapter = new LGRecycleViewAdapter<ProvinceBO.CityListBean>(provinceBO.getCityList()) {
+//        LGRecycleViewAdapter<ProvinceBO.CityListBean> adapter = new LGRecycleViewAdapter<ProvinceBO.CityListBean>(provinceBO.getCityList()) {
+//            @Override
+//            public int getLayoutId(int viewType) {
+//                return R.layout.item_city;
+//            }
+//
+//            @Override
+//            public void convert(LGViewHolder holder, ProvinceBO.CityListBean cityListBean, int position) {
+//                holder.setText(R.id.city_name, cityListBean.getCityName());
+//            }
+//        };
+//        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+//            @Override
+//            public void onItemClicked(View view, int position) {
+//                Intent intent = new Intent();
+//                intent.putExtra("provinceId", provinceBO.getProvinceId());
+//                intent.putExtra("cityId", adapter.getItem(position).getCityId());
+//                intent.putExtra("provinceName", provinceBO.getProvinceName());
+//                intent.putExtra("cityName", adapter.getItem(position).getCityName());
+//                intent.putExtra("hasUnit", adapter.getItem(position).getHasUnit());
+//                setResult(0x11, intent);
+//                finish();
+//            }
+//        });
+//        recycleView.setAdapter(adapter);
+        mAdapter.setDatas(provinceBO.getCityList());
+        mAdapter.setOnItemContentClickListener(new IndexableAdapter.OnItemContentClickListener<ProvinceBO.CityListBean>() {
             @Override
-            public int getLayoutId(int viewType) {
-                return R.layout.item_city;
-            }
-
-            @Override
-            public void convert(LGViewHolder holder, ProvinceBO.CityListBean cityListBean, int position) {
-                holder.setText(R.id.city_name, cityListBean.getCityName());
-            }
-        };
-        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
-            @Override
-            public void onItemClicked(View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra("provinceId", provinceBO.getProvinceId());
-                intent.putExtra("cityId", adapter.getItem(position).getCityId());
-                intent.putExtra("provinceName", provinceBO.getProvinceName());
-                intent.putExtra("cityName", adapter.getItem(position).getCityName());
-                intent.putExtra("hasUnit", adapter.getItem(position).getHasUnit());
-                setResult(0x11, intent);
-                finish();
+            public void onItemClick(View v, int originalPosition, int currentPosition, ProvinceBO.CityListBean entity) {
+                if (originalPosition >= 0) {
+                    Intent intent = new Intent();
+                    intent.putExtra("provinceId", provinceBO.getProvinceId());
+                    intent.putExtra("cityId", entity.getCityId());
+                    intent.putExtra("provinceName", provinceBO.getProvinceName());
+                    intent.putExtra("cityName", entity.getCityName());
+                    intent.putExtra("hasUnit", entity.getHasUnit());
+                    setResult(0x11, intent);
+                    finish();
+                }
             }
         });
-        recycleView.setAdapter(adapter);
     }
 
 

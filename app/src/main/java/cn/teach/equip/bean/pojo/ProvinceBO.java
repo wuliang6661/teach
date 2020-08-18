@@ -2,6 +2,8 @@ package cn.teach.equip.bean.pojo;
 
 import java.util.List;
 
+import me.yokeyword.indexablerv.IndexableEntity;
+
 public class ProvinceBO {
 
 
@@ -49,7 +51,7 @@ public class ProvinceBO {
         this.cityList = cityList;
     }
 
-    public static class CityListBean {
+    public static class CityListBean implements IndexableEntity {
         /**
          * cityName : 苏州
          * cityId : 4
@@ -109,6 +111,21 @@ public class ProvinceBO {
 
         public void setFirstLetter(String firstLetter) {
             this.firstLetter = firstLetter;
+        }
+
+        @Override
+        public String getFieldIndexBy() {
+            return cityName;
+        }
+
+        @Override
+        public void setFieldIndexBy(String indexField) {
+            this.cityName = indexField;
+        }
+
+        @Override
+        public void setFieldPinyinIndexBy(String pinyin) {
+
         }
     }
 }

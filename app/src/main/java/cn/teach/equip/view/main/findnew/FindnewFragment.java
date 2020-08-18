@@ -1,9 +1,15 @@
 package cn.teach.equip.view.main.findnew;
 
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.blankj.utilcode.util.StringUtils;
 
 import java.util.List;
 
@@ -22,11 +30,15 @@ import butterknife.Unbinder;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.VideoFeiLeiBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.view.SearchActivity;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
+import cn.teach.equip.zxing.activity.CaptureActivity;
 
 /**
  * MVPPlugin
@@ -75,6 +87,63 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    @OnClick({R.id.saoma, R.id.sousuo})
+    public void clickTitle(View view) {
+        if (StringUtils.isEmpty(MyApplication.token)) {
+            gotoActivity(LoginActivity.class, false);
+            return;
+        }
+        switch (view.getId()) {
+            case R.id.saoma:
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
+                        ) {
+
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                            }, 1);
+                } else {
+                    gotoActivity(CaptureActivity.class, false);
+                }
+                break;
+            case R.id.sousuo:
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("type", 0);
+                intent.putExtra("isCollect", 0);
+                startActivity(intent);
+                break;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    gotoActivity(CaptureActivity.class, false);
+                } else {
+                    showWaringDialog();
+                }
+                break;
+            }
+        }
+    }
+
+    private void showWaringDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("警告！")
+                .setMessage("请前往设置->应用->教育装备->权限中打开相关权限，否则功能无法正常运行！")
+                .setPositiveButton("确定", null).show();
     }
 
 
