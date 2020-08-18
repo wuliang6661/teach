@@ -115,7 +115,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.shouCangNum.setVisibility(View.GONE);
         } else {
             holder.selectImg.setVisibility(View.GONE);
-            holder.fenleiText.setTextColor(Color.parseColor("#25519A"));
+            holder.fenleiText.setTextColor(Color.parseColor("#7F7F7F"));
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
             holder.buttomLine.setVisibility(View.GONE);
             if (isShouCang == 1) {
