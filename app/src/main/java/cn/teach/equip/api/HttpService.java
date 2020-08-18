@@ -13,6 +13,7 @@ import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VersionBO;
+import cn.teach.equip.bean.pojo.VideoFeiLeiBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.bean.pojo.WenZhangVersionBO;
@@ -186,7 +187,7 @@ public interface HttpService {
      * 获取视频分类列表
      */
     @POST("api/visitor/getVideoTypeList")
-    Observable<BaseResult<String>> getVideoTypeList();
+    Observable<BaseResult<List<VideoFeiLeiBO>>> getVideoTypeList();
 
     /**
      * 下载

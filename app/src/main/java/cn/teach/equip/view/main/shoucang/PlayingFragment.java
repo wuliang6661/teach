@@ -249,6 +249,9 @@ public class PlayingFragment extends BaseFragment {
         ExpandAdapter adapter = new ExpandAdapter(getActivity(), fenLeiBOS);
         leftMenu.setAdapter(adapter);
         leftMenu.expandGroup(0);
+        if (type == 0) {
+            adapter.setIsShouCang(1);
+        }
         leftMenu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {

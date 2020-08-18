@@ -13,6 +13,7 @@ public class FenLeiBO {
 
     private int levelId2;
     private String levelName2;
+    private int collectNum;
     private List<SubListBean> subList;
 
     public int getLevelId2() {
@@ -39,6 +40,14 @@ public class FenLeiBO {
         this.subList = subList;
     }
 
+    public int getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(int collectNum) {
+        this.collectNum = collectNum;
+    }
+
     public static class SubListBean {
         /**
          * levelId3 : 10
@@ -48,6 +57,15 @@ public class FenLeiBO {
 
         private int levelId3;
         private String levelName3;
+        private int collectNum;
+
+        public int getCollectNum() {
+            return collectNum;
+        }
+
+        public void setCollectNum(int collectNum) {
+            this.collectNum = collectNum;
+        }
 
         public int getLevelId3() {
             return levelId3;

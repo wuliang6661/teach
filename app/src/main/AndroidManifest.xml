@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <permission
         android:name="cn.teach.equip.permission.JPUSH_MESSAGE"
@@ -134,6 +134,16 @@
         <activity
             android:name=".view.selectunit.SelectUnitActivity"
             android:screenOrientation="portrait" />
+
+        <!--视频播放界面-->
+        <activity
+            android:name=".view.main.findnew.VideoActivity"
+            android:screenOrientation="portrait" />
+
+        <!--全屏视频播放界面-->
+        <activity
+            android:name=".view.main.findnew.FullVideoActivity"
+            android:screenOrientation="landscape" />
 
         <!--主题教室-->
         <activity

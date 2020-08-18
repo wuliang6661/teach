@@ -19,6 +19,7 @@ import cn.teach.equip.bean.pojo.ProvinceBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VersionBO;
+import cn.teach.equip.bean.pojo.VideoFeiLeiBO;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.bean.pojo.WenZhangListBo;
 import cn.teach.equip.bean.pojo.WenZhangVersionBO;
@@ -178,10 +179,11 @@ public class HttpServerImpl {
     /**
      * 获取发现视频列表
      */
-    public static Observable<VideoListBO> getVideoList(int page) {
+    public static Observable<VideoListBO> getVideoList(int page, int videoTypeId) {
         Map<String, Object> params = new HashMap<>();
         params.put("page", page);
         params.put("size", 20);
+        params.put("videoTypeId", videoTypeId);
         return getService().getVideoList(params).compose(RxResultHelper.httpRusult());
     }
 
@@ -320,7 +322,7 @@ public class HttpServerImpl {
     /**
      * 获取视频分类列表
      */
-    public static Observable<String> getVideoTypeList() {
+    public static Observable<List<VideoFeiLeiBO>> getVideoTypeList() {
         return getService().getVideoTypeList().compose(RxResultHelper.httpRusult());
     }
 

@@ -51,6 +51,21 @@
         android:src="@drawable/select_child" />
 
 
+    <TextView
+        android:id="@+id/shoucang_num"
+        android:layout_width="32dp"
+        android:layout_height="14dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/num_bg"
+        android:gravity="center"
+        android:text="111"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+
     <View
         android:id="@+id/buttom_view"
         android:layout_width="match_parent"

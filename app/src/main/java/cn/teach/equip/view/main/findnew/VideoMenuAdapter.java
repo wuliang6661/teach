@@ -1,4 +1,4 @@
-package cn.teach.equip.view.main.shoucang;
+package cn.teach.equip.view.main.findnew;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,13 +14,20 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.teach.equip.R;
-import cn.teach.equip.bean.pojo.FenLeiBO;
+import cn.teach.equip.bean.pojo.VideoFeiLeiBO;
 
-public class ExpandAdapter extends BaseExpandableListAdapter {
+/**
+ * author : wuliang
+ * e-mail : wuliang6661@163.com
+ * date   : 2020/8/1810:40
+ * desc   : 视频侧边栏适配器
+ * version: 1.0
+ */
+public class VideoMenuAdapter extends BaseExpandableListAdapter {
 
     private Context context;
 
-    private List<FenLeiBO> fenLeiBOS;
+    private List<VideoFeiLeiBO> fenLeiBOS;
 
     /**
      * 选中的父级菜单
@@ -32,21 +39,10 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
      */
     private int selectChild = 0;
 
-    /**
-     * 是否是收藏菜单
-     */
-    private int isShouCang = 0;   //默认非收藏
-
-    public ExpandAdapter(Context context, List<FenLeiBO> fenLeiBOS) {
+    public VideoMenuAdapter(Context context, List<VideoFeiLeiBO> fenLeiBOS) {
         this.context = context;
         this.fenLeiBOS = fenLeiBOS;
     }
-
-
-    public void setIsShouCang(int isShouCang) {
-        this.isShouCang = isShouCang;
-    }
-
 
     @Override
     public int getGroupCount() {
@@ -59,7 +55,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public FenLeiBO getGroup(int groupPosition) {
+    public VideoFeiLeiBO getGroup(int groupPosition) {
         return fenLeiBOS.get(groupPosition);
     }
 
@@ -73,18 +69,18 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public FenLeiBO.SubListBean getChild(int groupPosition, int childPosition) {
+    public VideoFeiLeiBO.SubListBean getChild(int groupPosition, int childPosition) {
         return fenLeiBOS.get(groupPosition).getSubList().get(childPosition);
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return fenLeiBOS.get(groupPosition).getLevelId2();
+        return fenLeiBOS.get(groupPosition).getVideoTypeId();
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3();
+        return fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getVideoTypeId();
     }
 
     @Override
@@ -102,7 +98,6 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.fenleiText = convertView.findViewById(R.id.proce_name);
             holder.itemView = convertView.findViewById(R.id.item_layout);
             holder.buttomLine = convertView.findViewById(R.id.buttom_view);
-            holder.shouCangNum = convertView.findViewById(R.id.shoucang_num);
             convertView.setTag(holder);
         } else {
             holder = (GroupHolder) convertView.getTag();
@@ -112,22 +107,13 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.fenleiText.setTextColor(Color.parseColor("#F7931E"));
             holder.itemView.setBackgroundColor(Color.parseColor("#F4F4F4"));
             holder.buttomLine.setVisibility(View.VISIBLE);
-            holder.shouCangNum.setVisibility(View.GONE);
         } else {
             holder.selectImg.setVisibility(View.GONE);
             holder.fenleiText.setTextColor(Color.parseColor("#25519A"));
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
             holder.buttomLine.setVisibility(View.GONE);
-            if (isShouCang == 1) {
-                holder.shouCangNum.setVisibility(View.VISIBLE);
-                if (getGroup(groupPosition).getCollectNum() > 999) {
-                    holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "+");
-                } else {
-                    holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "");
-                }
-            }
         }
-        holder.fenleiText.setText(getGroup(groupPosition).getLevelName2());
+        holder.fenleiText.setText(getGroup(groupPosition).getName());
         TextPaint tp = holder.fenleiText.getPaint();
         tp.setFakeBoldText(true);
         return convertView;
@@ -138,7 +124,6 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         TextView fenleiText;
         RelativeLayout itemView;
         View buttomLine;
-        TextView shouCangNum;
     }
 
 
@@ -151,7 +136,6 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.childLine = convertView.findViewById(R.id.selct_line);
             holder.childText = convertView.findViewById(R.id.child_text);
             holder.buttomLine = convertView.findViewById(R.id.buttom_view);
-            holder.shouCangNum = convertView.findViewById(R.id.shoucang_num);
             convertView.setTag(holder);
         } else {
             holder = (ChildHolder) convertView.getTag();
@@ -166,16 +150,7 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         } else {
             holder.buttomLine.setVisibility(View.GONE);
         }
-        holder.shouCangNum.setVisibility(View.GONE);
-        if (isShouCang == 1) {
-            holder.shouCangNum.setVisibility(View.VISIBLE);
-            if (getChild(groupPosition, childPosition).getCollectNum() > 999) {
-                holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "+");
-            } else {
-                holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "");
-            }
-        }
-        holder.childText.setText(getChild(groupPosition, childPosition).getLevelName3());
+        holder.childText.setText(getChild(groupPosition, childPosition).getName());
         return convertView;
     }
 
@@ -184,7 +159,6 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         TextView childText;
         View childLine;
         View buttomLine;
-        TextView shouCangNum;
     }
 
 

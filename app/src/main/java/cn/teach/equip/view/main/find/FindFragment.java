@@ -87,26 +87,26 @@ public class FindFragment extends MVPBaseFragment<FindContract.View, FindPresent
      * 获取视频列表
      */
     private void getVideoList() {
-        HttpServerImpl.getVideoList(pageNum).subscribe(new HttpResultSubscriber<VideoListBO>() {
-            @Override
-            public void onSuccess(VideoListBO s) {
-                if (pageNum == 1) {
-                    videoList = s.getPageList();
-                    initView();
-                } else {
-                    videoList.addAll(s.getPageList());
-                    pagerAdapter.setUrlList(videoList);
-                    pagerAdapter.notifyDataSetChanged();
-                }
-                srlPage.finishLoadMore();
-            }
-
-            @Override
-            public void onFiled(String message) {
-                showToast2(message);
-                srlPage.finishLoadMore();
-            }
-        });
+//        HttpServerImpl.getVideoList(pageNum).subscribe(new HttpResultSubscriber<VideoListBO>() {
+//            @Override
+//            public void onSuccess(VideoListBO s) {
+//                if (pageNum == 1) {
+//                    videoList = s.getPageList();
+//                    initView();
+//                } else {
+//                    videoList.addAll(s.getPageList());
+//                    pagerAdapter.setUrlList(videoList);
+//                    pagerAdapter.notifyDataSetChanged();
+//                }
+//                srlPage.finishLoadMore();
+//            }
+//
+//            @Override
+//            public void onFiled(String message) {
+//                showToast2(message);
+//                srlPage.finishLoadMore();
+//            }
+//        });
     }
 
 
