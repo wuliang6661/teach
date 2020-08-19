@@ -16,6 +16,7 @@ import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
+import cn.teach.equip.bean.pojo.TagBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VersionBO;
@@ -233,6 +234,30 @@ public class HttpServerImpl {
         params.put("size", 100);
         return getService().getProductInfoList(params).compose(RxResultHelper.httpRusult());
     }
+
+
+    /**
+     * 获取配套材料列表
+     */
+    public static Observable<ChanPinBO> getPeiTao(int levelType, String tagIds, int page) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelType", levelType);
+        params.put("page", page);
+        params.put("tagIds", tagIds);
+        params.put("size", 100);
+        return getService().getProductInfoList(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取配套材料筛选列表
+     */
+    public static Observable<List<TagBO>> getProductTagList(int type) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", type);
+        return getService().getProductTagList(params).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 获取下载目录

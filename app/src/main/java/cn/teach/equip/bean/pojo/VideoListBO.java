@@ -126,6 +126,15 @@ public class VideoListBO {
         private int likeNum;
         private String code;
         private int isUp;
+        private String listIcon;
+
+        public String getListIcon() {
+            return listIcon;
+        }
+
+        public void setListIcon(String listIcon) {
+            this.listIcon = listIcon;
+        }
 
         public int getIsUp() {
             return isUp;

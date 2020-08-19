@@ -18,6 +18,7 @@ import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.main.NoneFragment;
 import cn.teach.equip.view.main.shoucang.PlayingFragment;
 import cn.teach.equip.view.mulu.MuluActivity;
+import cn.teach.equip.view.peitao.PeitaoFragment;
 import cn.teach.equip.weight.TabLinerLayout;
 
 
@@ -68,7 +69,7 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
                         FragmentUtils.replace(getSupportFragmentManager(), PlayingFragment.getInstance(1), R.id.fragment_container);
                         break;
                     case 3:
-                        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
+                        FragmentUtils.replace(getSupportFragmentManager(), PeitaoFragment.getInstanse(1), R.id.fragment_container);
                         break;
                 }
             }

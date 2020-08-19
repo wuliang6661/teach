@@ -10,6 +10,7 @@ import cn.teach.equip.bean.pojo.FenLeiBO;
 import cn.teach.equip.bean.pojo.FlagBO;
 import cn.teach.equip.bean.pojo.MuluListBO;
 import cn.teach.equip.bean.pojo.ProvinceBO;
+import cn.teach.equip.bean.pojo.TagBO;
 import cn.teach.equip.bean.pojo.UnitBO;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.bean.pojo.VersionBO;
@@ -188,6 +189,12 @@ public interface HttpService {
      */
     @POST("api/visitor/getVideoTypeList")
     Observable<BaseResult<List<VideoFeiLeiBO>>> getVideoTypeList();
+
+    /**
+     * 获取配套条件的筛选项
+     */
+    @POST("api/visitor/getProductTagList")
+    Observable<BaseResult<List<TagBO>>> getProductTagList(@Body Map<String, Object> params);
 
     /**
      * 下载

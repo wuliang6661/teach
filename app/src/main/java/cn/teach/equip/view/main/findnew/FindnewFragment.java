@@ -274,7 +274,7 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
             @Override
             public void convert(LGViewHolder holder, VideoListBO.PageListBean s, int position) {
                 holder.setText(R.id.video_title, s.getTitle());
-                holder.setImageUrl(getActivity(), R.id.video_img, s.getImgUrl());
+                holder.setImageUrl(getActivity(), R.id.video_img, s.getListIcon());
             }
         };
         adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {

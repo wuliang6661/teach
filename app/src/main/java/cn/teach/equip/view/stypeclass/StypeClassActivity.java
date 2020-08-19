@@ -164,6 +164,11 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
             @Override
             public void onSuccess(ChanPinBO chanPinBO) {
                 if (chanPinBO.getPageList().isEmpty()) {
+                    if (pageNum > 1) {
+                        showToast("这是最后一页！");
+                        pageNum = 0;
+                        return;
+                    }
                     pageNum = 0;
                 }
                 setMsgAdapter(chanPinBO.getPageList());

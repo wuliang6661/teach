@@ -140,6 +140,11 @@ public class PlayingFragment extends BaseFragment {
             @Override
             public void onSuccess(ChanPinBO chanPinBO) {
                 if (chanPinBO.getPageList().isEmpty()) {
+                    if (pageNum > 1) {
+                        showToast("这是最后一页！");
+                        pageNum = 0;
+                        return;
+                    }
                     pageNum = 0;
                 }
                 if (type == 1) {
