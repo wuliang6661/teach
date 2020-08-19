@@ -66,7 +66,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             showToast2("请输入手机号码");
             return;
         }
-        if (!RegexUtils.isMobileExact(phone)) {
+        if (!RegexUtils.isMobileSimple(phone)) {
             showToast2("请输入正确的手机号码！");
             return;
         }
@@ -86,7 +86,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             showToast2("请输入手机号码");
             return;
         }
-        if (!RegexUtils.isMobileExact(phone)) {
+        if (!RegexUtils.isMobileSimple(phone)) {
             showToast2("请输入正确的手机号码！");
             return;
         }

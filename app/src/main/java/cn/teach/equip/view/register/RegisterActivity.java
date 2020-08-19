@@ -233,7 +233,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                     showToast2("请输入手机号！");
                     return;
                 }
-                if (!RegexUtils.isMobileExact(strJiaoyuPhone)) {
+                if (!RegexUtils.isMobileSimple(strJiaoyuPhone)) {
                     showToast2("请输入正确的手机号！");
                     return;
                 }
@@ -245,7 +245,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                     showToast2("请输入手机号！");
                     return;
                 }
-                if (!RegexUtils.isMobileExact(strQiyePhone)) {
+                if (!RegexUtils.isMobileSimple(strQiyePhone)) {
                     showToast2("请输入正确的手机号！");
                     return;
                 }
