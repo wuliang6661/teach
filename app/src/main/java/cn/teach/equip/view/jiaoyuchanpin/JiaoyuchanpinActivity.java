@@ -1,6 +1,7 @@
 package cn.teach.equip.view.jiaoyuchanpin;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +14,7 @@ import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.mvp.MVPBaseActivity;
+import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.main.NoneFragment;
 import cn.teach.equip.view.main.shoucang.PlayingFragment;
 import cn.teach.equip.view.mulu.MuluActivity;
@@ -33,6 +35,8 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
     LinearLayout downLoadLayout;
     @BindView(R.id.layout_bottom)
     LinearLayout layoutBottom;
+    @BindView(R.id.right_img)
+    LinearLayout rightImg;
 
     private int type;
 
@@ -47,6 +51,7 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
 
         goBack();
         setTitleText("教学设备");
+        rightImg.setVisibility(View.VISIBLE);
         type = getIntent().getIntExtra("type", Integer.MAX_VALUE);
 //        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
@@ -78,6 +83,14 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
         }
     }
 
+
+    @OnClick(R.id.right_img)
+    public void search() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("type", 0);
+        intent.putExtra("isCollect", 0);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {

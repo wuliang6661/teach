@@ -291,7 +291,7 @@ public class PlayingFragment extends BaseFragment {
                 }
                 if (type == 0) {
                     if (!fenLeiBOS.get(groupPosition).getSubList().isEmpty()) {
-                        levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                        levelId3 = fenLeiBOS.get(groupPosition).getSubList().get(0).getLevelId3();
                         getFenlei();
                     }
                 } else {

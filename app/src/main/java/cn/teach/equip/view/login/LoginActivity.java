@@ -51,6 +51,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        goBack();
 
         txRegistest.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);  //下划线
         txRegistest.getPaint().setAntiAlias(true);//设置抗锯齿，使线条平滑

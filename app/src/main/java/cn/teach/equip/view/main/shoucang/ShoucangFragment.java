@@ -17,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.teach.equip.R;
+import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.main.NoneFragment;
@@ -62,32 +64,29 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    }
-
-    @Override
-    public void onSupportVisible() {
-        super.onSupportVisible();
-        fragment = new PlayingFragment();
-        tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
-            @Override
-            public void clickBar(int position) {
-                switch (position) {
-                    case 0:
-                        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
-                        break;
-                    case 1:
-                        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
-                        break;
-                    case 2:
-                        FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
-                        break;
-                    case 3:
-                        FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
-                        break;
+        if (!StringUtils.isEmpty(MyApplication.token)) {
+            fragment = new PlayingFragment();
+            tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
+                @Override
+                public void clickBar(int position) {
+                    switch (position) {
+                        case 0:
+                            FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                            break;
+                        case 1:
+                            FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                            break;
+                        case 2:
+                            FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
+                            break;
+                        case 3:
+                            FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                            break;
+                    }
                 }
-            }
-        });
-        FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
+            });
+            FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
+        }
     }
 
     @OnClick({R.id.saoma, R.id.sousuo})
@@ -141,7 +140,6 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                 .setMessage("请前往设置->应用->教育装备->权限中打开相关权限，否则功能无法正常运行！")
                 .setPositiveButton("确定", null).show();
     }
-
 
 
     @Override

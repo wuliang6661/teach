@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import cn.teach.equip.R;
+
 
 /**
  * Created by guizhigang on 16/8/8.
@@ -65,7 +67,7 @@ public class LGViewHolder extends RecyclerView.ViewHolder {
     public void setImageUrl(Context mContext, int viewId, String url) {
         ImageView view = (ImageView) getView(viewId);
 
-        Glide.with(mContext).load(url)
+        Glide.with(mContext).load(url).placeholder(R.drawable.person_defalt_img).error(R.drawable.person_defalt_img)
                 .into(view);
     }
 

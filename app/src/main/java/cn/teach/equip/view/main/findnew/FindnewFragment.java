@@ -89,6 +89,13 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
         unbinder.unbind();
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if(levelId3 != 0){
+            getVideoList();
+        }
+    }
 
     @OnClick({R.id.saoma, R.id.sousuo})
     public void clickTitle(View view) {
