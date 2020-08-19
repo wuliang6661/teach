@@ -28,6 +28,7 @@ import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.view.SearchActivity;
 import cn.teach.equip.view.main.NoneFragment;
+import cn.teach.equip.view.peitao.PeitaoFragment;
 import cn.teach.equip.weight.TabLinerLayout;
 import cn.teach.equip.zxing.activity.CaptureActivity;
 
@@ -49,7 +50,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     TabLinerLayout tabLinerlayout;
 
     PlayingFragment fragment;
-
+    PeitaoFragment peitaoFragment;
 
     @Nullable
     @Override
@@ -66,6 +67,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
 
         if (!StringUtils.isEmpty(MyApplication.token)) {
             fragment = new PlayingFragment();
+            peitaoFragment = PeitaoFragment.getInstanse(0);
             tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
                 @Override
                 public void clickBar(int position) {
@@ -80,7 +82,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                             FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);
                             break;
                         case 3:
-                            FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                            FragmentUtils.replace(getFragmentManager(), peitaoFragment, R.id.fragment_container);
                             break;
                     }
                 }

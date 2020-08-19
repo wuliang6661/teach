@@ -67,6 +67,9 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
     private String tagIds = "";
 
+    private boolean isEdit = false;
+
+    private List<ChanPinBO.PageListBean> pageListBeans;
 
     public static PeitaoFragment getInstanse(int type) {
         PeitaoFragment fragment = new PeitaoFragment();
@@ -110,7 +113,14 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             case R.id.refresh_layout:
                 pageNum++;
                 if (type == 0) {
-                    getShouCang();
+                    if (isEdit) {
+                        isEdit = false;
+                        setAdapter();
+                    } else {
+                        isEdit = true;
+                        rightText.setText("编  辑");
+                        setAdapter();
+                    }
                 } else {
                     getPeiTao();
                 }
@@ -185,7 +195,8 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                     }
                     pageNum = 0;
                 }
-                setAdapter(chanPinBO.getPageList());
+                pageListBeans = chanPinBO.getPageList();
+                setAdapter();
             }
 
             @Override
@@ -212,7 +223,8 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                     }
                     pageNum = 0;
                 }
-                setAdapter(chanPinBO.getPageList());
+                pageListBeans = chanPinBO.getPageList();
+                setAdapter();
             }
 
             @Override
@@ -226,7 +238,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
     /**
      * 设置产品列表
      */
-    private void setAdapter(List<ChanPinBO.PageListBean> pageListBeans) {
+    private void setAdapter() {
         if (pageListBeans.isEmpty()) {
             noneLayout.setVisibility(View.VISIBLE);
             recycleView.setVisibility(View.GONE);
@@ -243,6 +255,13 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
                     @Override
                     public void convert(LGViewHolder holder, ChanPinBO.PageListBean pageListBean, int position) {
+                        if (isEdit) {
+                            holder.getView(R.id.content_layout).setVisibility(View.GONE);
+                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.VISIBLE);
+                        } else {
+                            holder.getView(R.id.content_layout).setVisibility(View.VISIBLE);
+                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.GONE);
+                        }
                         holder.setText(R.id.shop_title, pageListBean.getTitle());
                         holder.setText(R.id.shop_message, pageListBean.getDesc());
                         holder.setImageUrl(getActivity(), R.id.shop_img, pageListBean.getSmallImgUrl());
