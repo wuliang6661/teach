@@ -98,15 +98,6 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         type = getArguments().getInt("type");
-        if (type == 0) {   //收藏
-            rightImg.setImageResource(R.drawable.bianji);
-            rightText.setText("编  辑");
-            getShouCang();
-        } else {
-            rightImg.setImageResource(R.drawable.huanyipi);
-            rightText.setText("下一页");
-            getPeiTao();
-        }
     }
 
 
@@ -135,6 +126,20 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         }
     }
 
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (type == 0) {   //收藏
+            rightImg.setImageResource(R.drawable.bianji);
+            rightText.setText("编  辑");
+            getShouCang();
+        } else {
+            rightImg.setImageResource(R.drawable.huanyipi);
+            rightText.setText("下一页");
+            getPeiTao();
+        }
+    }
 
     @Override
     public void onSupportInvisible() {
@@ -183,7 +188,11 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                     tagIds = tagIds.substring(0, tagIds.length() - 1);
                 }
                 pageNum = 1;
-                getPeiTao();
+                if (type == 0) {
+                    getShouCang();
+                } else {
+                    getPeiTao();
+                }
             }
         });
         if (sessionMap != null && !sessionMap.isEmpty()) {
