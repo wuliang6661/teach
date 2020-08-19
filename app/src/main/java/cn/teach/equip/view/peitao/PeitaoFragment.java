@@ -30,7 +30,9 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.TagBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
+import cn.teach.equip.util.ShareUtils;
 import cn.teach.equip.weight.ShaiXuanPopWindwo;
+import cn.teach.equip.weight.ShareDialog;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
 import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
 
@@ -268,6 +270,37 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                     }
                 };
         recycleView.setAdapter(adapter);
+    }
+
+
+    /**
+     * 取消收藏
+     */
+    private void productCollect(String code) {
+        HttpServerImpl.productCollect(code).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                getShouCang();
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+
+    /**
+     * 分享
+     */
+    public void share(String title, String content, String url) {
+        new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
+            @Override
+            public void share(int flag) {
+                ShareUtils.shareHtml(title, content, url, flag);
+            }
+        });
     }
 
 
