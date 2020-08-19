@@ -31,6 +31,7 @@ import cn.teach.equip.bean.pojo.ChanPinBO;
 import cn.teach.equip.bean.pojo.TagBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.ShareUtils;
+import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.weight.ShaiXuanPopWindwo;
 import cn.teach.equip.weight.ShareDialog;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
@@ -113,17 +114,18 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
     public void clickMenu(View view) {
         switch (view.getId()) {
             case R.id.refresh_layout:
-                pageNum++;
                 if (type == 0) {
                     if (isEdit) {
                         isEdit = false;
+                        rightText.setText("编  辑");
                         setAdapter();
                     } else {
                         isEdit = true;
-                        rightText.setText("编  辑");
+                        rightText.setText("完  成");
                         setAdapter();
                     }
                 } else {
+                    pageNum++;
                     getPeiTao();
                 }
                 break;
@@ -133,6 +135,16 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         }
     }
 
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        if (type == 0) {
+            isEdit = false;
+            rightText.setText("编  辑");
+            setAdapter();
+        }
+    }
 
     /**
      * 获取筛选标签
@@ -269,6 +281,28 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                         holder.setImageUrl(getActivity(), R.id.shop_img, pageListBean.getSmallImgUrl());
                     }
                 };
+        adapter.setOnItemClickListener(R.id.fenxiang, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                share(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(),
+                        adapter.getItem(position).getUrl());
+            }
+        });
+        adapter.setOnItemClickListener(R.id.shanchu, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                productCollect(adapter.getItem(position).getCode());
+            }
+        });
+        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", adapter.getItem(position).getUrl());
+                bundle.putString("title", adapter.getItem(position).getTitle());
+                gotoActivity(WebActivity.class, bundle, false);
+            }
+        });
         recycleView.setAdapter(adapter);
     }
 
