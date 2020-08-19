@@ -95,11 +95,12 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         if (type == 0) {   //收藏
             rightImg.setImageResource(R.drawable.bianji);
             rightText.setText("编  辑");
+            getShouCang();
         } else {
             rightImg.setImageResource(R.drawable.huanyipi);
             rightText.setText("下一页");
+            getPeiTao();
         }
-        getPeiTao();
     }
 
 
@@ -108,7 +109,11 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         switch (view.getId()) {
             case R.id.refresh_layout:
                 pageNum++;
-                getPeiTao();
+                if (type == 0) {
+                    getShouCang();
+                } else {
+                    getPeiTao();
+                }
                 break;
             case R.id.shaixuan_layout:
                 getProductTagList();
@@ -169,6 +174,33 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
      */
     private void getPeiTao() {
         HttpServerImpl.getPeiTao(7, StringUtils.isEmpty(tagIds) ? null : tagIds,
+                pageNum).subscribe(new HttpResultSubscriber<ChanPinBO>() {
+            @Override
+            public void onSuccess(ChanPinBO chanPinBO) {
+                if (chanPinBO.getPageList().isEmpty()) {
+                    if (pageNum > 1) {
+                        showToast("这是最后一页！");
+                        pageNum = 0;
+                        return;
+                    }
+                    pageNum = 0;
+                }
+                setAdapter(chanPinBO.getPageList());
+            }
+
+            @Override
+            public void onFiled(String message) {
+                showToast2(message);
+            }
+        });
+    }
+
+
+    /**
+     * 获取收藏商品
+     */
+    private void getShouCang() {
+        HttpServerImpl.getPeiTaoShouCang(7, StringUtils.isEmpty(tagIds) ? null : tagIds,
                 pageNum).subscribe(new HttpResultSubscriber<ChanPinBO>() {
             @Override
             public void onSuccess(ChanPinBO chanPinBO) {

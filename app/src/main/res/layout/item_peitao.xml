@@ -34,7 +34,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <TextView
@@ -60,9 +61,40 @@
                     android:textSize="10sp" />
 
             </LinearLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/edit_shoucang_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F4F4F4"
+                    android:orientation="horizontal">
+
+
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/strade_bg_top" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/strade_bg_buttom" />
+
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
-
 
 
 </LinearLayout>

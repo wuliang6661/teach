@@ -68,7 +68,7 @@ public class LGViewHolder extends RecyclerView.ViewHolder {
         ImageView view = (ImageView) getView(viewId);
 
         Glide.with(mContext).load(url).placeholder(R.drawable.person_defalt_img).error(R.drawable.person_defalt_img)
-                .into(view);
+                .dontAnimate().into(view);
     }
 
     public void setImageResurce(@IdRes int viewId, @DrawableRes int drawable) {

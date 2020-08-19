@@ -54,7 +54,6 @@ public class JiaoyuchanpinActivity extends MVPBaseActivity<JiaoyuchanpinContract
         setTitleText("教学设备");
         rightImg.setVisibility(View.VISIBLE);
         type = getIntent().getIntExtra("type", Integer.MAX_VALUE);
-//        FragmentUtils.replace(getSupportFragmentManager(), NoneFragment.getInstanse("暂无产品"), R.id.fragment_container);
         tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
             @Override
             public void clickBar(int position) {

@@ -250,6 +250,20 @@ public class HttpServerImpl {
 
 
     /**
+     * 获取配套材料收藏列表
+     */
+    public static Observable<ChanPinBO> getPeiTaoShouCang(int levelType, String tagIds, int page){
+        Map<String, Object> params = new HashMap<>();
+        params.put("levelType", levelType);
+        params.put("page", page);
+        params.put("tagIds", tagIds);
+        params.put("size", 100);
+        return getService().getProductCollectList(params).compose(RxResultHelper.httpRusult());
+    }
+
+
+
+    /**
      * 获取配套材料筛选列表
      */
     public static Observable<List<TagBO>> getProductTagList(int type) {
