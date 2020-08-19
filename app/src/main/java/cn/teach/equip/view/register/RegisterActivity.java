@@ -143,15 +143,17 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                             showToast("请选择省份与城市！");
                             return;
                         }
-                        if (StringUtils.isEmpty(strJiaoyuDanwei)) {
-                            showToast("请选择单位！");
-                            return;
-                        }
-                        if (!strJiaoyuDanwei.contains("幼儿园") && !strJiaoyuDanwei.contains("小学") &&
-                                !strJiaoyuDanwei.contains("高中") && !strJiaoyuDanwei.contains("中学") &&
-                                !strJiaoyuDanwei.contains("学校")) {
-                            showToast("请输入正确的单位名称！");
-                            return;
+                        if (selectUnitLayout.getVisibility() == View.VISIBLE) {
+                            if (StringUtils.isEmpty(strJiaoyuDanwei)) {
+                                showToast("请选择单位！");
+                                return;
+                            }
+                            if (!strJiaoyuDanwei.contains("幼儿园") && !strJiaoyuDanwei.contains("小学") &&
+                                    !strJiaoyuDanwei.contains("高中") && !strJiaoyuDanwei.contains("中学") &&
+                                    !strJiaoyuDanwei.contains("学校")) {
+                                showToast("请输入正确的单位名称！");
+                                return;
+                            }
                         }
                         if (StringUtils.isEmpty(strJiaoyuName)) {
                             showToast("请输入姓名！");
