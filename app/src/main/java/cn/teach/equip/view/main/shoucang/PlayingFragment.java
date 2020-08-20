@@ -170,7 +170,7 @@ public class PlayingFragment extends BaseFragment {
         } else {
             if (isEdit) {  //正在修改
                 isEdit = false;
-                optionText.setText("编辑");
+                optionText.setText("编   辑");
                 popDeleteWindow.dismiss();
                 selectMaps.clear();
             } else {
@@ -191,7 +191,7 @@ public class PlayingFragment extends BaseFragment {
                             productCollect(builder.substring(0, builder.length() - 1));
                             popDeleteWindow.dismiss();
                             isEdit = false;
-                            optionText.setText("编辑");
+                            optionText.setText("编   辑");
                             popDeleteWindow.dismiss();
                             selectMaps.clear();
                         }
@@ -264,7 +264,7 @@ public class PlayingFragment extends BaseFragment {
                 adapter.setSelectChild(childPosition);
                 if (isEdit) {  //正在修改
                     isEdit = false;
-                    optionText.setText("编辑");
+                    optionText.setText("编   辑");
                     popDeleteWindow.dismiss();
                     selectMaps.clear();
                 }
@@ -291,7 +291,7 @@ public class PlayingFragment extends BaseFragment {
                 adapter.setSelectChild(0);
                 if (isEdit) {  //正在修改
                     isEdit = false;
-                    optionText.setText("编辑");
+                    optionText.setText("编   辑");
                     popDeleteWindow.dismiss();
                     selectMaps.clear();
                 }

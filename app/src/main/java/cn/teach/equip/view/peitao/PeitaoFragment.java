@@ -118,7 +118,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                 if (type == 0) {
                     if (isEdit) {  //正在修改
                         isEdit = false;
-                        rightText.setText("编辑");
+                        rightText.setText("编   辑");
                         popDeleteWindow.dismiss();
                         selectMaps.clear();
                     } else {
@@ -139,7 +139,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                                     productCollect(builder.substring(0, builder.length() - 1));
                                     popDeleteWindow.dismiss();
                                     isEdit = false;
-                                    rightText.setText("编辑");
+                                    rightText.setText("编   辑");
                                     popDeleteWindow.dismiss();
                                     selectMaps.clear();
                                 }
@@ -165,7 +165,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         super.onSupportVisible();
         if (type == 0) {   //收藏
             rightImg.setImageResource(R.drawable.bianji);
-            rightText.setText("编  辑");
+            rightText.setText("编   辑");
             noneText.setText("还未收藏产品");
             getShouCang();
         } else {
@@ -180,7 +180,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         super.onSupportInvisible();
         if (type == 0) {
             isEdit = false;
-            rightText.setText("编  辑");
+            rightText.setText("编   辑");
             setAdapter();
         }
     }
