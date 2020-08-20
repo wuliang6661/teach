@@ -106,12 +106,13 @@ public class PlayingFragment extends BaseFragment {
             recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
         recycleView.setNestedScrollingEnabled(false);
-        getChanPing();
+//        getChanPing();
     }
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        getChanPing();
     }
 
     /**
@@ -210,7 +211,7 @@ public class PlayingFragment extends BaseFragment {
         HttpServerImpl.productCollect(code).subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
-                getFenlei();
+                getChanPing();
             }
 
             @Override
