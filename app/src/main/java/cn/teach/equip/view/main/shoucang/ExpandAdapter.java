@@ -119,11 +119,15 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
             holder.buttomLine.setVisibility(View.GONE);
             if (isShouCang == 1) {
-                holder.shouCangNum.setVisibility(View.VISIBLE);
-                if (getGroup(groupPosition).getCollectNum() > 999) {
-                    holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "+");
+                if (getGroup(groupPosition).getCollectNum() > 0) {
+                    holder.shouCangNum.setVisibility(View.VISIBLE);
+                    if (getGroup(groupPosition).getCollectNum() > 999) {
+                        holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "+");
+                    } else {
+                        holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "");
+                    }
                 } else {
-                    holder.shouCangNum.setText(getGroup(groupPosition).getCollectNum() + "");
+                    holder.shouCangNum.setVisibility(View.GONE);
                 }
             }
         }
@@ -168,11 +172,15 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         }
         holder.shouCangNum.setVisibility(View.GONE);
         if (isShouCang == 1) {
-            holder.shouCangNum.setVisibility(View.VISIBLE);
-            if (getChild(groupPosition, childPosition).getCollectNum() > 999) {
-                holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "+");
+            if (getChild(groupPosition, childPosition).getCollectNum() > 0) {
+                holder.shouCangNum.setVisibility(View.VISIBLE);
+                if (getChild(groupPosition, childPosition).getCollectNum() > 999) {
+                    holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "+");
+                } else {
+                    holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "");
+                }
             } else {
-                holder.shouCangNum.setText(getChild(groupPosition, childPosition).getCollectNum() + "");
+                holder.shouCangNum.setVisibility(View.GONE);
             }
         }
         holder.childText.setText(getChild(groupPosition, childPosition).getLevelName3());
