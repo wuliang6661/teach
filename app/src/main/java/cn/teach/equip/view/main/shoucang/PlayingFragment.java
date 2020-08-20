@@ -128,7 +128,7 @@ public class PlayingFragment extends BaseFragment {
 
             @Override
             public void onFiled(String message) {
-                showToast2(message);
+//                showToast2(message);
             }
         });
     }
@@ -245,7 +245,7 @@ public class PlayingFragment extends BaseFragment {
 
             @Override
             public void onFiled(String message) {
-                showToast2(message);
+//                showToast2(message);
             }
         });
     }
@@ -253,10 +253,14 @@ public class PlayingFragment extends BaseFragment {
 
     private void setClassAdapter() {
         ExpandAdapter adapter = new ExpandAdapter(getActivity(), fenLeiBOS);
-        leftMenu.setAdapter(adapter);
-        leftMenu.expandGroup(0);
-        if (type == 0) {
-            adapter.setIsShouCang(1);
+        try {
+            leftMenu.setAdapter(adapter);
+            leftMenu.expandGroup(0);
+            if (type == 0) {
+                adapter.setIsShouCang(1);
+            }
+        }catch (Exception ex){
+
         }
         leftMenu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -337,12 +341,16 @@ public class PlayingFragment extends BaseFragment {
      * 设置内容适配器
      */
     private void setMsgAdapter(List<ChanPinBO.PageListBean> listBeans) {
-        if (listBeans.isEmpty()) {
-            noneLayout.setVisibility(View.VISIBLE);
-            recycleView.setVisibility(View.GONE);
-        } else {
-            noneLayout.setVisibility(View.GONE);
-            recycleView.setVisibility(View.VISIBLE);
+        try {
+            if (listBeans.isEmpty()) {
+                noneLayout.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.GONE);
+            } else {
+                noneLayout.setVisibility(View.GONE);
+                recycleView.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception ex){
+
         }
         LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
                 new LGRecycleViewAdapter<ChanPinBO.PageListBean>(listBeans) {

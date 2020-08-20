@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.StringUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +55,8 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
     PlayingFragment fragment;
     PeitaoFragment peitaoFragment;
 
+    List<Fragment> fragments;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +73,11 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
         if (!StringUtils.isEmpty(MyApplication.token)) {
             fragment = new PlayingFragment();
             peitaoFragment = PeitaoFragment.getInstanse(0);
+//            fragments = new ArrayList<>();
+//            fragments.add(new NoneFragment());
+//            fragments.add(new NoneFragment());
+//            fragments.add(fragment);
+//            fragments.add(peitaoFragment);
             tabLinerlayout.setListener(new TabLinerLayout.onClickBarListener() {
                 @Override
                 public void clickBar(int position) {
@@ -85,6 +95,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                             FragmentUtils.replace(getFragmentManager(), peitaoFragment, R.id.fragment_container);
                             break;
                     }
+//                    FragmentUtils.showHide(position,fragments);
                 }
             });
             FragmentUtils.replace(getFragmentManager(), fragment, R.id.fragment_container);

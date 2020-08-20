@@ -258,7 +258,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
             @Override
             public void onFiled(String message) {
-                showToast2(message);
+//                showToast2(message);
             }
         });
     }
@@ -286,7 +286,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
             @Override
             public void onFiled(String message) {
-                showToast2(message);
+//                showToast2(message);
             }
         });
     }
@@ -296,12 +296,16 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
      * 设置产品列表
      */
     private void setAdapter() {
-        if (pageListBeans.isEmpty()) {
-            noneLayout.setVisibility(View.VISIBLE);
-            recycleView.setVisibility(View.GONE);
-        } else {
-            noneLayout.setVisibility(View.GONE);
-            recycleView.setVisibility(View.VISIBLE);
+        try {
+            if (pageListBeans.isEmpty()) {
+                noneLayout.setVisibility(View.VISIBLE);
+                recycleView.setVisibility(View.GONE);
+            } else {
+                noneLayout.setVisibility(View.GONE);
+                recycleView.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception ex){
+
         }
         LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
                 new LGRecycleViewAdapter<ChanPinBO.PageListBean>(pageListBeans) {
