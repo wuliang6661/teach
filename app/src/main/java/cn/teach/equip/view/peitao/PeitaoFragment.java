@@ -183,6 +183,9 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             rightText.setText("编   辑");
             setAdapter();
         }
+        if(popDeleteWindow != null){
+            popDeleteWindow.dismiss();
+        }
     }
 
     /**
@@ -395,6 +398,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             }
         });
     }
+
 
 
     @Override

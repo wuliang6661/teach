@@ -204,6 +204,14 @@ public class PlayingFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        if(popDeleteWindow != null){
+            popDeleteWindow.dismiss();
+        }
+    }
+
     /**
      * 取消收藏
      */
