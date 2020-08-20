@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import butterknife.BindView;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseActivity;
+import cn.teach.equip.weight.SampleCoverVideo;
 
 /**
  * author : wuliang
@@ -25,7 +25,7 @@ import cn.teach.equip.base.BaseActivity;
 public class FullVideoActivity extends BaseActivity {
 
     @BindView(R.id.video_player)
-    StandardGSYVideoPlayer videoPlayer;
+    SampleCoverVideo videoPlayer;
 
     String url;
     long startTime;
@@ -41,7 +41,9 @@ public class FullVideoActivity extends BaseActivity {
 
         inviVideo();
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
+
         videoPlayer.getTitleTextView().setText(title);
+        videoPlayer.setTitle(title);
     }
 
 

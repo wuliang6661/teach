@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +35,7 @@ import cn.teach.equip.bean.pojo.TagBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
 import cn.teach.equip.util.ShareUtils;
 import cn.teach.equip.view.WebActivity;
+import cn.teach.equip.weight.PopDeleteWindow;
 import cn.teach.equip.weight.ShaiXuanPopWindwo;
 import cn.teach.equip.weight.ShareDialog;
 import cn.teach.equip.weight.lgrecycleadapter.LGRecycleViewAdapter;
@@ -61,6 +65,8 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
     TextView rightText;
     @BindView(R.id.xuanze_layout)
     RelativeLayout xuanzeLayout;
+    @BindView(R.id.none_text)
+    TextView noneText;
 
     private int pageNum = 1;
 
@@ -73,6 +79,10 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
     private boolean isEdit = false;
 
     private List<ChanPinBO.PageListBean> pageListBeans;
+
+    private Map<String, ChanPinBO.PageListBean> selectMaps = new HashMap<>();
+
+    private PopDeleteWindow popDeleteWindow;
 
     public static PeitaoFragment getInstanse(int type) {
         PeitaoFragment fragment = new PeitaoFragment();
@@ -106,15 +116,38 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         switch (view.getId()) {
             case R.id.refresh_layout:
                 if (type == 0) {
-                    if (isEdit) {
+                    if (isEdit) {  //正在修改
                         isEdit = false;
-                        rightText.setText("编  辑");
-                        setAdapter();
+                        rightText.setText("编辑");
+                        popDeleteWindow.dismiss();
+                        selectMaps.clear();
                     } else {
                         isEdit = true;
-                        rightText.setText("完  成");
-                        setAdapter();
+                        rightText.setText("完成");
+                        popDeleteWindow = new PopDeleteWindow(getActivity());
+                        popDeleteWindow.setListener(new PopDeleteWindow.onClickListener() {
+                            @Override
+                            public void onClick() {
+                                if (selectMaps.isEmpty()) {
+                                    showToast2("请选择要删除的收藏！");
+                                } else {
+                                    StringBuilder builder = new StringBuilder();
+                                    for (String code : selectMaps.keySet()) {
+                                        builder.append(code);
+                                        builder.append(",");
+                                    }
+                                    productCollect(builder.substring(0, builder.length() - 1));
+                                    popDeleteWindow.dismiss();
+                                    isEdit = false;
+                                    rightText.setText("编辑");
+                                    popDeleteWindow.dismiss();
+                                    selectMaps.clear();
+                                }
+                            }
+                        });
+                        popDeleteWindow.showAtLocation(getActivity().getWindow().getDecorView());
                     }
+                    setAdapter();
                 } else {
                     pageNum++;
                     getPeiTao();
@@ -133,6 +166,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
         if (type == 0) {   //收藏
             rightImg.setImageResource(R.drawable.bianji);
             rightText.setText("编  辑");
+            noneText.setText("还未收藏产品");
             getShouCang();
         } else {
             rightImg.setImageResource(R.drawable.huanyipi);
@@ -278,16 +312,28 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
 
                     @Override
                     public void convert(LGViewHolder holder, ChanPinBO.PageListBean pageListBean, int position) {
-                        if (isEdit) {
-                            holder.getView(R.id.content_layout).setVisibility(View.GONE);
-                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.VISIBLE);
-                        } else {
-                            holder.getView(R.id.content_layout).setVisibility(View.VISIBLE);
-                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.GONE);
-                        }
+//                        if (isEdit) {
+//                            holder.getView(R.id.content_layout).setVisibility(View.GONE);
+//                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.VISIBLE);
+//                        } else {
+//                            holder.getView(R.id.content_layout).setVisibility(View.VISIBLE);
+//                            holder.getView(R.id.edit_shoucang_layout).setVisibility(View.GONE);
+//                        }
                         holder.setText(R.id.shop_title, pageListBean.getTitle());
                         holder.setText(R.id.shop_message, pageListBean.getDesc());
                         holder.setImageUrl(getActivity(), R.id.shop_img, pageListBean.getSmallImgUrl());
+                        CheckBox checkBox = (CheckBox) holder.getView(R.id.checkbox);
+                        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                if (isChecked) {
+                                    selectMaps.put(pageListBean.getCode(), pageListBean);
+                                } else {
+                                    selectMaps.remove(pageListBean.getCode());
+                                }
+                            }
+                        });
+                        checkBox.setVisibility(isEdit ? View.VISIBLE : View.GONE);
                     }
                 };
         adapter.setOnItemClickListener(R.id.fenxiang, new LGRecycleViewAdapter.ItemClickListener() {

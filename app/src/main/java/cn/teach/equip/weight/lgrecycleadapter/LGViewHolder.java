@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import cn.teach.equip.R;
 
@@ -67,7 +68,9 @@ public class LGViewHolder extends RecyclerView.ViewHolder {
     public void setImageUrl(Context mContext, int viewId, String url) {
         ImageView view = (ImageView) getView(viewId);
 
-        Glide.with(mContext).load(url).placeholder(R.drawable.person_defalt_img).error(R.drawable.person_defalt_img)
+        Glide.with(mContext).load(url).placeholder(R.drawable.person_defalt_img)
+                .error(R.drawable.person_defalt_img)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .dontAnimate().into(view);
     }
 

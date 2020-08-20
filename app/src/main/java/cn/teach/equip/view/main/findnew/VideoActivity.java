@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,6 +18,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseActivity;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.util.ShareUtils;
+import cn.teach.equip.weight.SampleCoverVideo;
 import cn.teach.equip.weight.ShareDialog;
 
 /**
@@ -32,7 +32,7 @@ public class VideoActivity extends BaseActivity {
 
 
     @BindView(R.id.video_player)
-    StandardGSYVideoPlayer videoPlayer;
+    SampleCoverVideo videoPlayer;
     @BindView(R.id.bt_fenxiang)
     ImageView btFenxiang;
     @BindView(R.id.bt_dianzan)

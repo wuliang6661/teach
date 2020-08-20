@@ -97,7 +97,7 @@ public class BigPicutreActivity extends BaseActivity {
             PhotoView imageView = groupView.findViewById(R.id.iv_big_image);
             Glide.with(BigPicutreActivity.this)
                     .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .load(imageBOS.get(position)).into(imageView);
 //            Zoomy.Builder builder = new Zoomy.Builder(BigPicutreActivity.this)
 //                    .target(imageView)
