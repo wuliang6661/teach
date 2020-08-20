@@ -207,6 +207,13 @@ public class PlayingFragment extends BaseFragment {
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
+        if (isEdit) {  //正在修改
+            isEdit = false;
+            optionText.setText("编   辑");
+            popDeleteWindow.dismiss();
+            selectMaps.clear();
+            setMsgAdapter(shoucangList.getPageList());
+        }
         if(popDeleteWindow != null){
             popDeleteWindow.dismiss();
         }
