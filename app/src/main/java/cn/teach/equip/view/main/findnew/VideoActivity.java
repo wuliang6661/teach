@@ -18,7 +18,7 @@ import cn.teach.equip.api.HttpServerImpl;
 import cn.teach.equip.base.BaseActivity;
 import cn.teach.equip.bean.pojo.VideoListBO;
 import cn.teach.equip.util.ShareUtils;
-import cn.teach.equip.weight.SampleCoverVideo;
+import cn.teach.equip.weight.video.SampleCoverVideo;
 import cn.teach.equip.weight.ShareDialog;
 
 /**

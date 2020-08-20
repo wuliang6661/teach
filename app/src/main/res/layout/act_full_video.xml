@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
 
-    <cn.teach.equip.weight.SampleCoverVideo
+    <cn.teach.equip.weight.video.FullVideoView
         android:id="@+id/video_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

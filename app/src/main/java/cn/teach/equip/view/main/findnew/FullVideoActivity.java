@@ -13,7 +13,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import butterknife.BindView;
 import cn.teach.equip.R;
 import cn.teach.equip.base.BaseActivity;
-import cn.teach.equip.weight.SampleCoverVideo;
+import cn.teach.equip.weight.video.FullVideoView;
 
 /**
  * author : wuliang
@@ -25,7 +25,7 @@ import cn.teach.equip.weight.SampleCoverVideo;
 public class FullVideoActivity extends BaseActivity {
 
     @BindView(R.id.video_player)
-    SampleCoverVideo videoPlayer;
+    FullVideoView videoPlayer;
 
     String url;
     long startTime;

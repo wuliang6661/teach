@@ -1,4 +1,4 @@
-package cn.teach.equip.weight;
+package cn.teach.equip.weight.video;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -20,13 +20,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
 import cn.teach.equip.R;
 
-
-/**
- * 带封面
- * Created by guoshuyu on 2017/9/3.
- */
-
-public class SampleCoverVideo extends StandardGSYVideoPlayer {
+public class FullVideoView extends StandardGSYVideoPlayer {
 
     ImageView mCoverImage;
 
@@ -36,15 +30,15 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
 
     int mDefaultRes;
 
-    public SampleCoverVideo(Context context, Boolean fullFlag) {
+    public FullVideoView(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
 
-    public SampleCoverVideo(Context context) {
+    public FullVideoView(Context context) {
         super(context);
     }
 
-    public SampleCoverVideo(Context context, AttributeSet attrs) {
+    public FullVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -87,7 +81,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
-        SampleCoverVideo sampleCoverVideo = (SampleCoverVideo) gsyBaseVideoPlayer;
+        FullVideoView sampleCoverVideo = (FullVideoView) gsyBaseVideoPlayer;
         if (mCoverOriginUrl != null) {
             sampleCoverVideo.loadCoverImage(mCoverOriginUrl, mDefaultRes);
         } else if (mCoverOriginId != 0) {
@@ -100,7 +94,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
     @Override
     public GSYBaseVideoPlayer showSmallVideo(Point size, boolean actionBar, boolean statusBar) {
         //下面这里替换成你自己的强制转化
-        SampleCoverVideo sampleCoverVideo = (SampleCoverVideo) super.showSmallVideo(size, actionBar, statusBar);
+        FullVideoView sampleCoverVideo = (FullVideoView) super.showSmallVideo(size, actionBar, statusBar);
         sampleCoverVideo.mStartButton.setVisibility(GONE);
         sampleCoverVideo.mStartButton = null;
         return sampleCoverVideo;
@@ -109,8 +103,8 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
     @Override
     protected void cloneParams(GSYBaseVideoPlayer from, GSYBaseVideoPlayer to) {
         super.cloneParams(from, to);
-        SampleCoverVideo sf = (SampleCoverVideo) from;
-        SampleCoverVideo st = (SampleCoverVideo) to;
+        FullVideoView sf = (FullVideoView) from;
+        FullVideoView st = (FullVideoView) to;
         st.mShowFullAnimation = sf.mShowFullAnimation;
     }
 
@@ -143,7 +137,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
         final View oldF = vp.findViewById(getFullId());
         if (oldF != null) {
             //此处fix bug#265，推出全屏的时候，虚拟按键问题
-            SampleCoverVideo gsyVideoPlayer = (SampleCoverVideo) oldF;
+            FullVideoView gsyVideoPlayer = (FullVideoView) oldF;
             gsyVideoPlayer.mIfCurrentIsFullscreen = false;
         }
 
@@ -214,7 +208,7 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
         Debuger.printfLog("Sample changeUiToPreparingShow");
         setViewShowState(mBottomContainer, INVISIBLE);
         setViewShowState(mStartButton, INVISIBLE);
-        mFullscreenButton.setImageResource(R.drawable.quanpin);
+        mFullscreenButton.setImageResource(R.drawable.suoxiao);
     }
 
     @Override
@@ -254,3 +248,4 @@ public class SampleCoverVideo extends StandardGSYVideoPlayer {
         super.onStartTrackingTouch(seekBar);
     }
 }
+
