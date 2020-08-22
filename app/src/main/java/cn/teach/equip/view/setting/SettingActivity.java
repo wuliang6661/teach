@@ -2,6 +2,7 @@ package cn.teach.equip.view.setting;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import cn.teach.equip.constans.FileConfig;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.util.UpdateUtils;
 import cn.teach.equip.view.FanKuiActivity;
+import cn.teach.equip.view.WebActivity;
 
 
 /**
@@ -71,6 +73,29 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
                 requestPermission();
                 break;
         }
+    }
+
+
+    @OnClick({R.id.yonghuxieyi, R.id.yinsizhengce})
+    public void clickZhengce(View view) {
+        String url = null;
+        String title = null;
+        switch (view.getId()) {
+            case R.id.yonghuxieyi:
+                url = "https://shjz.yingjin.pro/privacy.htm";
+                title = "用户协议";
+                break;
+            case R.id.yinsizhengce:
+                url = "https://shjz.yingjin.pro/privacy.htm";
+                title = "隐私政策";
+                break;
+        }
+        Intent intent = new Intent(this, WebActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        bundle.putString("title", title);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 
