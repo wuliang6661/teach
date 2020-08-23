@@ -1,10 +1,18 @@
 package cn.teach.equip.view.login;
 
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,6 +28,7 @@ import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseActivity;
 import cn.teach.equip.util.AppManager;
+import cn.teach.equip.view.WebActivity;
 import cn.teach.equip.view.main.MainActivity;
 import cn.teach.equip.view.register.RegisterActivity;
 
@@ -41,9 +50,12 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     TextView txRegistest;
     @BindView(R.id.get_version)
     TextView getVersion;
+    @BindView(R.id.biaoti)
+    TextView biaoti;
 
     @Override
     protected int getLayout() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         return R.layout.act_login;
     }
 
@@ -55,7 +67,60 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
         txRegistest.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);  //下划线
         txRegistest.getPaint().setAntiAlias(true);//设置抗锯齿，使线条平滑
+
+        setButtomView();
     }
+
+
+    private void setButtomView(){
+        String str = "登录即表明您同意上海教装《用户协议》和《隐私政策》";
+        SpannableStringBuilder spannableBuilder1 = new SpannableStringBuilder(str);
+        // 在设置点击事件、同时设置字体颜色
+        ClickableSpan clickableSpanTwo = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, WebActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", "https://shjz.yingjin.pro/useragree.htm");
+                bundle.putString("title", "用户协议");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint paint) {
+//                paint.setColor(Color.parseColor("#3072F6"));
+                // 设置下划线 true显示、false不显示
+                paint.setUnderlineText(true);
+                // paint.setStrikeThruText(true);
+            }
+        };
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, WebActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", "https://shjz.yingjin.pro/privacy.htm");
+                bundle.putString("title", "隐私政策");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint paint) {
+//                paint.setColor(Color.parseColor("#3072F6"));
+                // 设置下划线 true显示、false不显示
+                paint.setUnderlineText(true);
+                // paint.setStrikeThruText(true);
+            }
+        };
+        spannableBuilder1.setSpan(clickableSpanTwo, 13, 17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableBuilder1.setSpan(clickableSpan2, 20, 24, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // 不设置点击不生效
+        biaoti.setMovementMethod(LinkMovementMethod.getInstance());
+        biaoti.setText(spannableBuilder1);
+    }
+
 
 
     @OnClick(R.id.login_bt)
@@ -153,7 +218,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     public void loginSourcess(UserBO userBO) {
         MyApplication.token = userBO.getUserToken();
         MyApplication.userBO = userBO;
-        MyApplication.spUtils.put("token",MyApplication.token);
+        MyApplication.spUtils.put("token", MyApplication.token);
         AppManager.getAppManager().finishAllActivity();
         gotoActivity(MainActivity.class, true);
     }

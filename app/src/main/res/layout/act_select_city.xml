@@ -92,7 +92,7 @@
                 android:textSize="16sp" />
 
 
-            <me.yokeyword.indexablerv.IndexableLayout
+            <!--<me.yokeyword.indexablerv.IndexableLayout
                 android:id="@+id/recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -102,14 +102,14 @@
                 app:indexBar_selectedTextColor="@color/black"
                 app:indexBar_textColor="#7F7F7F"
                 app:indexBar_textSize="12sp"
-                app:indexBar_textSpace="5dp" />
+                app:indexBar_textSpace="5dp" />-->
 
-            <!--<android.support.v7.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="50dp"
-                android:layout_marginRight="80dp" />-->
+                android:layout_marginRight="80dp" />
 
         </LinearLayout>
 

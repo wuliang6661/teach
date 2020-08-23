@@ -82,12 +82,12 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         String title = null;
         switch (view.getId()) {
             case R.id.yonghuxieyi:
-                url = "https://shjz.yingjin.pro/privacy.htm";
+                url = "https://shjz.yingjin.pro/useragree.htm";
                 title = "用户协议";
                 break;
             case R.id.yinsizhengce:
                 url = "https://shjz.yingjin.pro/privacy.htm";
-                title = "隐私政策";
+                title = "隐私政策 ";
                 break;
         }
         Intent intent = new Intent(this, WebActivity.class);
