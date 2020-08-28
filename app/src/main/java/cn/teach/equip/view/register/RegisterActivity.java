@@ -148,12 +148,12 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                                 showToast("请选择单位！");
                                 return;
                             }
-                            if (!strJiaoyuDanwei.contains("幼儿园") && !strJiaoyuDanwei.contains("小学") &&
-                                    !strJiaoyuDanwei.contains("高中") && !strJiaoyuDanwei.contains("中学") &&
-                                    !strJiaoyuDanwei.contains("学校")) {
-                                showToast("请输入正确的单位名称！");
-                                return;
-                            }
+//                            if (!strJiaoyuDanwei.contains("幼儿园") && !strJiaoyuDanwei.contains("小学") &&
+//                                    !strJiaoyuDanwei.contains("高中") && !strJiaoyuDanwei.contains("中学") &&
+//                                    !strJiaoyuDanwei.contains("学校")) {
+//                                showToast("请输入正确的单位名称！");
+//                                return;
+//                            }
                         }
                         if (StringUtils.isEmpty(strJiaoyuName)) {
                             showToast("请输入姓名！");
@@ -349,12 +349,12 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     @Override
     protected void onPause() {
         super.onPause();
-        if (jiaoyuTimer != null) {
-            jiaoyuTimer.cancel();
-        }
-        if (gongsiTimer != null) {
-            gongsiTimer.cancel();
-        }
+//        if (jiaoyuTimer != null) {
+//            jiaoyuTimer.cancel();
+//        }
+//        if (gongsiTimer != null) {
+//            gongsiTimer.cancel();
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -375,6 +375,12 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
 
     @Override
     protected void onDestroy() {
+        if (jiaoyuTimer != null) {
+            jiaoyuTimer.cancel();
+        }
+        if (gongsiTimer != null) {
+            gongsiTimer.cancel();
+        }
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
