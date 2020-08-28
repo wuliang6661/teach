@@ -10,6 +10,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.ToastUtils;
 
 import cn.teach.equip.R;
+import cn.teach.equip.view.login.LoginActivity;
 import cn.teach.equip.weight.ToastManager;
 import me.yokeyword.fragmentation.SupportFragment;
 

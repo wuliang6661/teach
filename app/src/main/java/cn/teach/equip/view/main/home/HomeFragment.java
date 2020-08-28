@@ -264,6 +264,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void clickView(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
+            getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
             return;
         }
         Bundle bundle = new Bundle();
@@ -326,6 +327,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void clickTitle(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
+            getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
             return;
         }
         switch (view.getId()) {
@@ -404,6 +406,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         banner.setOnBannerListener(position -> {
             if (StringUtils.isEmpty(MyApplication.token)) {
                 gotoActivity(LoginActivity.class, false);
+                getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
                 return;
             }
             Bundle bundle = new Bundle();

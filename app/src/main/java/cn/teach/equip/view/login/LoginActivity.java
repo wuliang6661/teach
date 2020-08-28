@@ -222,4 +222,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         AppManager.getAppManager().finishAllActivity();
         gotoActivity(MainActivity.class, true);
     }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.bottom_silent,R.anim.bottom_out);
+    }
 }

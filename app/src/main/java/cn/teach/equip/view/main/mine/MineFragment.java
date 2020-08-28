@@ -141,14 +141,14 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     }
 
     @OnClick(R.id.user_img)
-    public void clickUserImg(){
-        if(StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())){
+    public void clickUserImg() {
+        if (StringUtils.isEmpty(MyApplication.userBO.getAvatarUrl())) {
             return;
         }
         ArrayList<String> images = new ArrayList<>();
         images.add(MyApplication.userBO.getAvatarUrl());
-        Intent intent = new Intent(getActivity(),BigPicutreActivity.class);
-        intent.putStringArrayListExtra("imageBos",images);
+        Intent intent = new Intent(getActivity(), BigPicutreActivity.class);
+        intent.putStringArrayListExtra("imageBos", images);
         startActivity(intent);
     }
 
@@ -162,11 +162,14 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                         public void onSuccess(String s) {
                             JPushInterface.deleteAlias(getActivity(), 1);
                             JPushInterface.cleanTags(getActivity(), 1);
-                            Intent intent = new Intent();
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            intent.setClass(getActivity(), LoginActivity.class);
-                            AppManager.getAppManager().finishAllActivity();
-                            startActivity(intent);
+//                            Intent intent = new Intent();
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                            intent.setClass(getActivity(), LoginActivity.class);
+//                            AppManager.getAppManager().finishAllActivity();
+//                            startActivity(intent);
+                            MyApplication.token = null;
+                            MyApplication.spUtils.remove("token");
+                            EventBus.getDefault().post(new SwitchEvent(0));
                         }
 
                         @Override

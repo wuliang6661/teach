@@ -101,6 +101,7 @@ public class FindnewFragment extends MVPBaseFragment<FindnewContract.View, Findn
     public void clickTitle(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
+            getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
             return;
         }
         switch (view.getId()) {

@@ -161,6 +161,7 @@ public class MainActivity extends BaseActivity {
     public void click(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
+            overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
             return;
         }
         switch (view.getId()) {

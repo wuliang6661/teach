@@ -7,6 +7,7 @@ import android.webkit.JavascriptInterface;
 
 import java.util.ArrayList;
 
+import cn.teach.equip.R;
 import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.util.AppManager;
 import cn.teach.equip.util.ShareUtils;
@@ -92,6 +93,7 @@ public class WebJsInterface {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         AppManager.getAppManager().finishAllActivity();
         activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
     }
 
 
