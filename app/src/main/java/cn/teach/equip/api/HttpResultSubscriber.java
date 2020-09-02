@@ -49,9 +49,9 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<T> {
 //            svProgressHUD.dismiss();
 //        }
         if (e instanceof NetworkErrorException) {
-            onFiled("没网提示：网络出错，请检查您的网络！");
+            onFiled("网络出错，请检查您的网络！");
         } else if (e instanceof SocketException) {
-            onFiled("没网提示：网络出错，请检查您的网络！");
+            onFiled("网络出错，请检查您的网络！");
         } else {
             onFiled(e.getMessage());
         }
