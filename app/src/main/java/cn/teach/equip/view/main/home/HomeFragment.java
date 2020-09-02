@@ -86,7 +86,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private int curinPosition = 0;
     private int pageNum = 1;
 
-    private List<WenZhangListBo.PageListBean> list;
+    private List<WenZhangListBo.PageListBean> list = new ArrayList<>();
 
     private WenZhangVersionBO wenZhangVersionBO;
 
@@ -111,7 +111,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         jingxuanRecycle.setNestedScrollingEnabled(false);
 //        onScollViewListener();
         addListener();
-        getArticleList(8, 1);
         setJingXuanAdapter();
     }
 
@@ -143,6 +142,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         super.onSupportVisible();
         getBanner();
         getArticleListInfo();
+        getArticleList(8, 1);
     }
 
     /**
