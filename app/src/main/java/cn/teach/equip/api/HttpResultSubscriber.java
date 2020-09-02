@@ -1,8 +1,11 @@
 package cn.teach.equip.api;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+
+import java.net.SocketException;
 
 import rx.Subscriber;
 
@@ -45,8 +48,13 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<T> {
 //        if (svProgressHUD != null && svProgressHUD.isShowing()) {
 //            svProgressHUD.dismiss();
 //        }
-
-        onFiled(e.getMessage());
+        if (e instanceof NetworkErrorException) {
+            onFiled("网络断开！");
+        } else if (e instanceof SocketException) {
+            onFiled("网络断开！");
+        } else {
+            onFiled(e.getMessage());
+        }
     }
 
 
