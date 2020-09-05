@@ -23,7 +23,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
@@ -112,7 +111,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
         }
         String address = "";
         if (!StringUtils.isEmpty(MyApplication.userBO.getProvinceName())) {
-            address += MyApplication.userBO.getProvinceName() + "省";
+            address += MyApplication.userBO.getProvinceName();
         }
         if (!StringUtils.isEmpty(MyApplication.userBO.getCityName())) {
             address += MyApplication.userBO.getCityName();
@@ -273,9 +272,9 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
                 photoPath = uri.getEncodedPath();
             }
             Log.d("拍照返回图片路径:", photoPath);
-            startPhotoZoom(uri,true);
+            startPhotoZoom(uri, true);
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            startPhotoZoom(data.getData(),false);
+            startPhotoZoom(data.getData(), false);
         } else if (requestCode == 3) {
             if (data == null) {
                 return;
@@ -330,7 +329,7 @@ public class PersonMessageActivity extends MVPBaseActivity<PersonMessageContract
     }
 
 
-    private void startPhotoZoom(Uri uri,boolean fromCapture) {
+    private void startPhotoZoom(Uri uri, boolean fromCapture) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
