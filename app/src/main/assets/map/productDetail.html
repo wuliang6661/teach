@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta id="vp" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/productDetail.css">
+    <script src="./js/rem.js"></script>
+    <title>产品详情</title>
+</head>
+
+<body>
+    <div class="productDetail">
+        <!-- 顶部swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"> <img class="swiper-img" src="https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2943480387,2366356131&fm=26&gp=0.jpg" /></div>
+                <div class="swiper-slide"> <img class="swiper-img" src="./images/axiba.png" /></div>
+                <div class="swiper-slide"> <img class="swiper-img" src="./images/axiba.png" /></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- 中间的标题和详情 -->
+        <div class="content">
+            <div class="product-info">
+                <h3 class="product-name">我爱你你却爱着他</h3>
+                <p class="product-describe">我把我心都交给了你而你在梦中却喊着他就在你梦醒的时分眼里还在含着泪花是什么让你爱上了他难道他比我对你好吗如果真的会是这样我也会把你放心里呀我爱你你却爱着他我的为你的心都碎了是不是只有忘记我自己我的泪才不会如雨下我爱你你却爱着他这场游戏我真的累了你可曾想过我的感受这样对我公平吗</p>
+            </div>
+            <div class="option-box">
+                <button class="btns share " @click="toShare"></button>
+                <button class="btns collect" @click="toCollect"></button>
+                <button class="btns collect-no" @click="toCollect"></button>
+            </div>
+        </div>
+        <div class="default-text">暂无内容</div>
+        <!-- 底部各种 -->
+        <div class="all-image">
+            <p>
+                <img src="https://shjz.yingjin.pro/api/upload/article/img/Je6YYGtsXGdYWjyw.png" data-filename="Je6YYGtsXGdYWjyw.png" style="width: 451px;">
+                <img src="https://shjz.yingjin.pro/api/upload/article/img/Je6YYGtsXGdYWjyw.png" data-filename="Je6YYGtsXGdYWjyw.png" style="width: 451px;">
+                <img src="https://shjz.yingjin.pro/api/upload/article/img/udgbfjlGtiSMKTtN.jpg" data-filename="udgbfjlGtiSMKTtN.jpg" style="width: 778px;">
+            </p>
+        </div>
+        <button class="to-top" title="返回顶部"></button>
+    </div>
+    <script src="https://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/productDetail.js"></script>
+</body>
+
+</html>

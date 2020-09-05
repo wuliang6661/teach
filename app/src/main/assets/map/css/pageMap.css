@@ -1,0 +1,270 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 24.726rem;
+    overflow-x: scroll;
+}
+
+body {
+    width: 100vw;
+    border-radius: 1rem 1rem 0 0;
+    /* background: linear-gradient(to left bottom, #d4ff84, 40%, #caeb85, #c8eb89); */
+}
+
+html {
+    background: #fff;
+}
+
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.wrapper {
+    width: 24.726rem;
+    /* height: 16.5rem; */
+    height: 16.64rem;
+    font-size: 0.25rem;
+    position: relative;
+    background: url('../images/map.gif')center no-repeat;
+    background-size: cover;
+}
+
+.subject-class {
+    height: 1rem;
+    width: 2rem;
+    position: absolute;
+    top: 5.3rem;
+    left: 14.3rem;
+    z-index: 2;
+}
+
+.active-room {
+    height: 1rem;
+    width: 2rem;
+    position: absolute;
+    top: 6rem;
+    left: 8.3rem;
+    z-index: 2;
+}
+
+.health-safe {
+    height: 1rem;
+    width: 2.5rem;
+    position: absolute;
+    top: 8.7rem;
+    left: 19rem;
+    z-index: 2;
+}
+
+.out-sport {
+    height: 1rem;
+    width: 2.5rem;
+    position: absolute;
+    top: 10.7rem;
+    left: 7.5rem;
+    z-index: 2;
+    transform: rotate(-40deg);
+}
+
+.you-should-know {
+    height: 1rem;
+    width: 2rem;
+    position: absolute;
+    top: 13.9rem;
+    left: 12rem;
+    z-index: 2;
+}
+
+.show-subject-room-options {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.opt-box {
+    height: 4rem;
+    width: 2rem;
+    border-radius: 1rem;
+    background: #fff;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.product-list,
+.qr-show {
+    height: 50%;
+    width: 100%;
+    font-size: 0.3rem;
+    color: #738fbe;
+    text-align: center;
+    line-height: 2.7rem;
+}
+
+.product-list {
+    background: url("../images/list.png") top 0.45rem center no-repeat;
+    background-size: auto 0.68rem;
+    border-bottom: 0.01rem solid #b4b2b2;
+}
+
+.qr-show {
+    background: url("../images/qr.png") top 0.45rem center no-repeat;
+    background-size: auto 0.68rem;
+}
+
+.to-vr-list {
+    height: 1.6rem;
+    width: 1.76rem;
+    text-align: center;
+    line-height: 2.4rem;
+    background: url(../images/qr.png) top 0.15rem center no-repeat #fff;
+    background-size: auto 0.77rem;
+    position: fixed;
+    right: .52rem;
+    bottom: .58rem;
+    z-index: 2;
+    border-radius: 0.6rem;
+    color: #738fbe;
+    font-size: 0.24rem;
+    box-shadow: 0 0 0.17rem 0.01rem lightgrey;
+    text-decoration: none;
+}
+
+.show-words {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.the-words {
+    width: 6.8rem;
+    height: 11rem;
+    background: #fff;
+    border-radius: 0.6rem;
+    margin: 0 auto;
+    font-size: 0.3rem;
+    color: #908d91;
+    background: url("../images/qianyan_bg.png") center no-repeat;
+    background-size: contain;
+    overflow-y: scroll;
+    padding: 1.7rem 0;
+    box-sizing: border-box;
+}
+
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    .the-words {
+        padding: 1.7rem 0;
+    }
+    .close-you-should-know {
+        top: 1.7rem!important;
+    }
+}
+
+.mask {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: #000;
+    text-align: center;
+    line-height: 3rem;
+    font-size: .2rem;
+    z-index: 5;
+    color: #fff;
+    display: none;
+}
+
+@media screen and (orientation:landscape) {
+    .mask {
+        display: block;
+    }
+}
+
+.the-words::before {
+    display: block;
+    width: 100%;
+    height: .5rem;
+    color: #738fbe;
+    content: "";
+    text-align: center;
+    margin-bottom: 0.3rem;
+    background: url("../images/qianyan.png") center no-repeat;
+    background-size: contain;
+}
+
+.content {
+    width: 4rem;
+    height: 90%;
+    margin: 0 auto;
+    overflow: auto;
+    font-size: .37rem;
+}
+
+.close-you-should-know {
+    height: .64rem;
+    width: .64rem;
+    position: absolute;
+    right: 1rem;
+    top: .4rem;
+    z-index: 3;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll {
+    width: 1.76rem;
+    text-align: center;
+    background-size: auto 0.77rem;
+    position: fixed;
+    right: .52rem;
+    bottom: 2.4rem;
+    z-index: 2;
+    border-radius: 0.6rem;
+    color: #738fbe;
+    font-size: 0.24rem;
+}
+
+.scroll-img {
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.scroll-text {
+    color: #fff;
+    font-size: .23rem;
+    text-shadow: 0 .05rem .05rem gray;
+}

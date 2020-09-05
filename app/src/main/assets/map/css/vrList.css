@@ -1,0 +1,90 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: #f3f3f3;
+}
+
+.vr-list {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+.list {
+    height: 3.36rem;
+    width: 6.74rem;
+    margin: .3rem auto;
+    overflow: hidden;
+}
+
+.list-desc {
+    width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    margin-top: 2.36rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .3rem;
+    box-sizing: border-box;
+}
+
+.show-btn {
+    color: #25519A;
+    text-align: center;
+    font-size: .28rem;
+}
+
+.eyes {
+    height: .54rem;
+    width: .76rem;
+}
+
+.desc-detail {
+    height: 100%;
+    width: 4rem;
+    font-size: .27rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #4D4D4D;
+}
+
+.list1 {
+    background: url("../images/pujiaotejiaoyouer.png") center no-repeat;
+    background-size: contain;
+}
+
+.list2 {
+    background: url("../images/youergebiehua.png") center no-repeat;
+    background-size: contain;
+}
+
+.list3 {
+    background: url("../images/youerduogongneng.png") center no-repeat;
+    background-size: contain;
+}
+
+.list4 {
+    background: url("../images/youertushuyulan.png") center no-repeat;
+    background-size: contain;
+}
+
+.list5 {
+    background: url("../images/youerstream.png") center no-repeat;
+    background-size: contain;
+}
+
+.list6 {
+    background: url("../images/youerchuantongwenhua.png") center no-repeat;
+    background-size: contain;
+}
+
+.list7 {
+    background: url("../images/youerganjuetonghe.png") center no-repeat;
+    background-size: contain;
+}

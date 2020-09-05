@@ -55,8 +55,12 @@ public class WebActivity extends BaseWebActivity {
         LogUtils.e(url);
         Map<String, String> headers = new HashMap<>();
         headers.put("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token);
-        headers.put("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":",""));
-        wenView.loadUrl(url, headers);
+        headers.put("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":", ""));
+        if ("1".equals(url)) {
+            wenView.loadUrl("file:///android_asset/map/pageMap.html", headers);
+        } else {
+            wenView.loadUrl(url, headers);
+        }
     }
 
 
