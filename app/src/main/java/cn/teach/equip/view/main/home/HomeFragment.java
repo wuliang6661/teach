@@ -413,8 +413,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             Bundle bundle = new Bundle();
             bundle.putString("url", bannerBOS.get(position).getUrl());
             bundle.putString("title", bannerBOS.get(position).getTitle());
-//            bundle.putInt("targetType",bannerBOS.get(position).getTargetType());
-            bundle.putInt("targetType",-1);
+            bundle.putInt("targetType",bannerBOS.get(position).getTargetType());
+//            bundle.putInt("targetType",-1);
             gotoActivity(WebActivity.class, bundle, false);
         });
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

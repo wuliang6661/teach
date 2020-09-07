@@ -53,15 +53,14 @@ public class WebActivity extends BaseWebActivity {
         wenView.setWebViewClient(new MyWebClient(this));
         wenView.addJavascriptInterface(new WebJsInterface(this), "app");
 //        wenView.loadUrl("https://www.kuleiman.com/122283/index.html?from=groupmessage&isappinstalled=0");
-        LogUtils.e(url);
         Map<String, String> headers = new HashMap<>();
         headers.put("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token);
         headers.put("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":", ""));
         if (targetType == -1) {
-            wenView.loadUrl("file:///android_asset/map/pageMap.html", headers);
-        } else {
-            wenView.loadUrl(url, headers);
+            url = "file:///android_asset/map/pageMap.html";
         }
+        wenView.loadUrl(url, headers);
+        LogUtils.e(url);
     }
 
 
