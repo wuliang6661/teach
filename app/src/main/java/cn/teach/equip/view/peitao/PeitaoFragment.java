@@ -362,6 +362,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putInt("targetType",0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });

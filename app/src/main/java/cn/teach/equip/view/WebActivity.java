@@ -46,6 +46,7 @@ public class WebActivity extends BaseWebActivity {
 
         String title = getIntent().getExtras().getString("title");
         String url = getIntent().getExtras().getString("url");
+        int targetType = getIntent().getExtras().getInt("targetType", 0);
         setTitleText(title);
         chooseClient = new ChromeClient(this);
         wenView.setWebChromeClient(chooseClient);
@@ -56,7 +57,7 @@ public class WebActivity extends BaseWebActivity {
         Map<String, String> headers = new HashMap<>();
         headers.put("user-token", StringUtils.isEmpty(MyApplication.token) ? "" : MyApplication.token);
         headers.put("user-deviceId", DeviceUtils.getMacAddress().replaceAll(":", ""));
-        if ("1".equals(url)) {
+        if (targetType == -1) {
             wenView.loadUrl("file:///android_asset/map/pageMap.html", headers);
         } else {
             wenView.loadUrl(url, headers);

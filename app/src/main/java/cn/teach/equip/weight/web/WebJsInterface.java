@@ -64,6 +64,7 @@ public class WebJsInterface {
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
         bundle.putString("title", title);
+        bundle.putInt("targetType", 0);
         intent.putExtras(bundle);
         activity.startActivity(intent);
     }
@@ -93,7 +94,7 @@ public class WebJsInterface {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         AppManager.getAppManager().finishAllActivity();
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+        activity.overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
     }
 
 
@@ -101,11 +102,11 @@ public class WebJsInterface {
      * 查看大图
      */
     @JavascriptInterface
-    public void zoomBigImg(String imageUrl){
+    public void zoomBigImg(String imageUrl) {
         ArrayList<String> images = new ArrayList<>();
         images.add(imageUrl);
-        Intent intent = new Intent(activity,BigPicutreActivity.class);
-        intent.putStringArrayListExtra("imageBos",images);
+        Intent intent = new Intent(activity, BigPicutreActivity.class);
+        intent.putStringArrayListExtra("imageBos", images);
         activity.startActivity(intent);
     }
 

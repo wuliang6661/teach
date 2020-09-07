@@ -296,6 +296,7 @@ public class NavigationActivity extends MVPBaseActivity<NavigationContract.View,
                 Bundle bundle = new Bundle();
                 bundle.putString("url", s.get(position).getUrl());
                 bundle.putString("title", s.get(position).getTitle());
+                bundle.putInt("targetType",s.get(position).getTargetType());
                 gotoActivity(WebActivity.class, bundle, false);
                 return false;
             }

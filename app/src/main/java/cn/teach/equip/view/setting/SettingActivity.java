@@ -94,6 +94,7 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
         bundle.putString("title", title);
+        bundle.putInt("targetType",0);
         intent.putExtras(bundle);
         startActivity(intent);
     }

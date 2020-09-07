@@ -153,6 +153,7 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putInt("targetType",adapter.getItem(position).getTargetType());
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });

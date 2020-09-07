@@ -204,6 +204,7 @@ public class StypeClassActivity extends MVPBaseActivity<StypeClassContract.View,
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putInt("targetType",0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });

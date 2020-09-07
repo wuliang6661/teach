@@ -117,7 +117,7 @@ function addEvent(dom) {
                     });
                 }
                 if (yourOs === 'android') {
-                    window.app.goVR('VR全景教室', 'https://shjz.yingjin.pro/api/upload/map/vrList.html');
+                    window.app.goVR('VR全景教室', 'file:///android_asset/map/vrList.html');
                 }
                 break;
         }

@@ -130,6 +130,15 @@ public class WenZhangListBo {
         private String content;
         private boolean collect;
         private List<?> bannerList;
+        private int targetType;
+
+        public int getTargetType() {
+            return targetType;
+        }
+
+        public void setTargetType(int targetType) {
+            this.targetType = targetType;
+        }
 
         public String getTitle() {
             return title;

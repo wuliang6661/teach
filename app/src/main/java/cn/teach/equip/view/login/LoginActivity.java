@@ -83,6 +83,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 Bundle bundle = new Bundle();
                 bundle.putString("url", "https://shjz.yingjin.pro/useragree.htm");
                 bundle.putString("title", "用户协议");
+                bundle.putInt("targetType",0);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -102,6 +103,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 Bundle bundle = new Bundle();
                 bundle.putString("url", "https://shjz.yingjin.pro/privacy.htm");
                 bundle.putString("title", "隐私政策");
+                bundle.putInt("targetType",0);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

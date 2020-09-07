@@ -251,6 +251,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putInt("targetType",adapter.getItem(position).getTargetType());
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
@@ -312,6 +313,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     Bundle bundle1 = new Bundle();
                     bundle1.putString("url", url);
                     bundle1.putString("title", "运维服务");
+                    bundle.putInt("targetType",0);
                     gotoActivity(WebActivity.class, bundle1, false);
                 }
                 break;
@@ -411,6 +413,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             Bundle bundle = new Bundle();
             bundle.putString("url", bannerBOS.get(position).getUrl());
             bundle.putString("title", bannerBOS.get(position).getTitle());
+//            bundle.putInt("targetType",bannerBOS.get(position).getTargetType());
+            bundle.putInt("targetType",-1);
             gotoActivity(WebActivity.class, bundle, false);
         });
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
