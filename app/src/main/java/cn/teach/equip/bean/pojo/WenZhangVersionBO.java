@@ -19,6 +19,9 @@ public class WenZhangVersionBO {
     private String latestVersion1;
     private String latestVersion2;
     private String latestVersion3;
+    private int readStatus1;
+    private int readStatus2;
+    private int readStatus3;
 
     public String getLatestVersion1() {
         return latestVersion1;
@@ -42,5 +45,29 @@ public class WenZhangVersionBO {
 
     public void setLatestVersion3(String latestVersion3) {
         this.latestVersion3 = latestVersion3;
+    }
+
+    public int getReadStatus1() {
+        return readStatus1;
+    }
+
+    public void setReadStatus1(int readStatus1) {
+        this.readStatus1 = readStatus1;
+    }
+
+    public int getReadStatus2() {
+        return readStatus2;
+    }
+
+    public void setReadStatus2(int readStatus2) {
+        this.readStatus2 = readStatus2;
+    }
+
+    public int getReadStatus3() {
+        return readStatus3;
+    }
+
+    public void setReadStatus3(int readStatus3) {
+        this.readStatus3 = readStatus3;
     }
 }

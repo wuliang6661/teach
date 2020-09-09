@@ -155,17 +155,17 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 String latestVersion1 = MyApplication.spUtils.getString("latestVersion1", "1");
                 String latestVersion2 = MyApplication.spUtils.getString("latestVersion2", "1");
                 String latestVersion3 = MyApplication.spUtils.getString("latestVersion3", "1");
-                if (!latestVersion1.equals(s.getLatestVersion1())) {
+                if (s.getReadStatus1() == 0) {
                     zhuangbeiPoint.setVisibility(View.VISIBLE);
                 } else {
                     zhuangbeiPoint.setVisibility(View.GONE);
                 }
-                if (!latestVersion2.equals(s.getLatestVersion2())) {
+                if (s.getReadStatus2() == 0) {
                     ronghePoint.setVisibility(View.VISIBLE);
                 } else {
                     ronghePoint.setVisibility(View.GONE);
                 }
-                if (!latestVersion3.equals(s.getLatestVersion3())) {
+                if (s.getReadStatus3() == 0) {
                     guoqiPoint.setVisibility(View.VISIBLE);
                 } else {
                     guoqiPoint.setVisibility(View.GONE);
@@ -251,7 +251,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
-                bundle.putInt("targetType",adapter.getItem(position).getTargetType());
+                bundle.putInt("targetType", adapter.getItem(position).getTargetType());
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
@@ -264,7 +264,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void clickView(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
-            getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+            getActivity().overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
             return;
         }
         Bundle bundle = new Bundle();
@@ -313,7 +313,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     Bundle bundle1 = new Bundle();
                     bundle1.putString("url", url);
                     bundle1.putString("title", "运维服务");
-                    bundle.putInt("targetType",0);
+                    bundle.putInt("targetType", 0);
                     gotoActivity(WebActivity.class, bundle1, false);
                 }
                 break;
@@ -328,7 +328,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void clickTitle(View view) {
         if (StringUtils.isEmpty(MyApplication.token)) {
             gotoActivity(LoginActivity.class, false);
-            getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+            getActivity().overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
             return;
         }
         switch (view.getId()) {
@@ -407,13 +407,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         banner.setOnBannerListener(position -> {
             if (StringUtils.isEmpty(MyApplication.token)) {
                 gotoActivity(LoginActivity.class, false);
-                getActivity().overridePendingTransition(R.anim.bottom_in,R.anim.bottom_silent);
+                getActivity().overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
                 return;
             }
             Bundle bundle = new Bundle();
             bundle.putString("url", bannerBOS.get(position).getUrl());
             bundle.putString("title", bannerBOS.get(position).getTitle());
-            bundle.putInt("targetType",bannerBOS.get(position).getTargetType());
+            bundle.putInt("targetType", bannerBOS.get(position).getTargetType());
 //            bundle.putInt("targetType",-1);
             gotoActivity(WebActivity.class, bundle, false);
         });

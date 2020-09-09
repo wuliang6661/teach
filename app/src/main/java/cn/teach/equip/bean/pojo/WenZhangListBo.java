@@ -131,6 +131,15 @@ public class WenZhangListBo {
         private boolean collect;
         private List<?> bannerList;
         private int targetType;
+        private int readStatus;
+
+        public int getReadStatus() {
+            return readStatus;
+        }
+
+        public void setReadStatus(int readStatus) {
+            this.readStatus = readStatus;
+        }
 
         public int getTargetType() {
             return targetType;

@@ -76,6 +76,13 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
         getWenZhangList();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     private void addListener() {
         srlPage.setEnableAutoLoadMore(true);
@@ -145,6 +152,11 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                 holder.setImageUrl(WenzhangListActivity.this, R.id.wenzhang_img, pageListBean.getSmallImgUrl());
                 holder.setText(R.id.wenzhang_title, pageListBean.getTitle());
                 holder.setText(R.id.wenzhang_time, pageListBean.getAddTime());
+                if (pageListBean.getReadStatus() == 0) {
+                    holder.getView(R.id.zhuangbei_point).setVisibility(View.VISIBLE);
+                } else {
+                    holder.getView(R.id.zhuangbei_point).setVisibility(View.GONE);
+                }
             }
         };
         adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
@@ -153,7 +165,8 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
-                bundle.putInt("targetType",adapter.getItem(position).getTargetType());
+                bundle.putInt("targetType", adapter.getItem(position).getTargetType());
+                list.get(position).setReadStatus(1);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
