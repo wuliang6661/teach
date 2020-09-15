@@ -274,7 +274,7 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                 new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
                     @Override
                     public void share(int flag) {
-                        ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath,flag);
+                        ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath, flag);
                     }
                 });
 
@@ -290,13 +290,14 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
                 item.getUrl(), progress -> {
                     RelativeLayout layout = (RelativeLayout) recycleView.getChildAt(position);
                     LinearLayout layout_fuceng = layout.findViewById(R.id.layout_fuceng);
-                    layout_fuceng.setVisibility(View.GONE);
                     ProgressBar progressBar = layout.findViewById(R.id.progress_bar);
                     ImageView image = layout.findViewById(R.id.item_img);
+                    image.setVisibility(View.GONE);
                     TextView itemText = layout.findViewById(R.id.progress_text);
                     progressBar.setProgress(progress);
+                    itemText.setText(progress + "%");
                     if (progress == 100) {
-                        layout_fuceng.setVisibility(View.VISIBLE);
+                        image.setVisibility(View.VISIBLE);
                         image.setImageResource(R.drawable.xiazaiwancheng);
                         itemText.setText("已下载");
                         fileMap = FileUtils.getAllFiles(null);

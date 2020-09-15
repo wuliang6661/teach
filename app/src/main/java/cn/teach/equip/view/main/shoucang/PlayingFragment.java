@@ -377,7 +377,7 @@ public class PlayingFragment extends BaseFragment {
                     @Override
                     public void convert(LGViewHolder holder, ChanPinBO.PageListBean productListBean, int position) {
                         holder.setText(R.id.wenzhang_title, productListBean.getTitle());
-                        holder.setText(R.id.wenzhang_time, productListBean.getContent());
+                        holder.setText(R.id.wenzhang_time, productListBean.getDesc());
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());
                         CheckBox checkBox = (CheckBox) holder.getView(R.id.checkbox);
                         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
