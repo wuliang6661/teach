@@ -61,6 +61,8 @@ public class PlayingFragment extends BaseFragment {
     ImageView optionImg;
     @BindView(R.id.option_text)
     TextView optionText;
+    @BindView(R.id.tianchong)
+    View tianchong;
 
     private int type = 0;
     private int levelId3;
@@ -104,9 +106,14 @@ public class PlayingFragment extends BaseFragment {
             recycleView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         } else {
             recycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            tianchong.setVisibility(View.VISIBLE);
         }
         recycleView.setNestedScrollingEnabled(false);
-//        getChanPing();
+        if (MyApplication.userBO.getUserType() != 2) {
+            tianchong.setVisibility(View.VISIBLE);
+        } else {
+            tianchong.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -214,7 +221,7 @@ public class PlayingFragment extends BaseFragment {
             selectMaps.clear();
             setMsgAdapter(shoucangList.getPageList());
         }
-        if(popDeleteWindow != null){
+        if (popDeleteWindow != null) {
             popDeleteWindow.dismiss();
         }
     }
@@ -274,7 +281,7 @@ public class PlayingFragment extends BaseFragment {
             if (type == 0) {
                 adapter.setIsShouCang(1);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         leftMenu.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -364,7 +371,7 @@ public class PlayingFragment extends BaseFragment {
                 noneLayout.setVisibility(View.GONE);
                 recycleView.setVisibility(View.VISIBLE);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
@@ -391,11 +398,11 @@ public class PlayingFragment extends BaseFragment {
                             }
                         });
                         checkBox.setVisibility(isEdit ? View.VISIBLE : View.GONE);
-                        if (position == getItemCount() - 1) {
-                            holder.getView(R.id.tianchong).setVisibility(View.VISIBLE);
-                        } else {
-                            holder.getView(R.id.tianchong).setVisibility(View.GONE);
-                        }
+//                        if (position == getItemCount() - 1) {
+//                            holder.getView(R.id.tianchong).setVisibility(View.VISIBLE);
+//                        } else {
+//                            holder.getView(R.id.tianchong).setVisibility(View.GONE);
+//                        }
                     }
                 };
         adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
@@ -404,7 +411,7 @@ public class PlayingFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
-                bundle.putInt("targetType",0);
+                bundle.putInt("targetType", 0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
@@ -434,11 +441,6 @@ public class PlayingFragment extends BaseFragment {
                     public void convert(LGViewHolder holder, ChanPinBO.PageListBean productListBean, int position) {
                         holder.setText(R.id.wenzhang_title, productListBean.getTitle());
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());
-                        if (position == getItemCount() - 1 && MyApplication.userBO.getUserType() != 2) {
-                            holder.getView(R.id.tianchong).setVisibility(View.VISIBLE);
-                        } else {
-                            holder.getView(R.id.tianchong).setVisibility(View.GONE);
-                        }
                     }
                 };
         adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
@@ -447,7 +449,7 @@ public class PlayingFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
-                bundle.putInt("targetType",0);
+                bundle.putInt("targetType", 0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });

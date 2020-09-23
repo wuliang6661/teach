@@ -62,13 +62,28 @@
         </LinearLayout>
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="10dp"
-            android:visibility="visible" />
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:visibility="visible" />
+
+            <View
+                android:id="@+id/tianchong"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
 
         <LinearLayout
