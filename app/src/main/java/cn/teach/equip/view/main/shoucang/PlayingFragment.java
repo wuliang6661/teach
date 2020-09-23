@@ -256,11 +256,16 @@ public class PlayingFragment extends BaseFragment {
                 fenLeiBOS = s;
                 setClassAdapter();
                 if (type == 0) {
-                    levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                    if (levelId3 == 0) {
+                        levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                    }
                     getFenlei();
                 } else {
-                    levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
-                    pageNum = 1;
+                    if (levelId3 == 0) {
+                        levelId3 = fenLeiBOS.get(0).getSubList().get(0).getLevelId3();
+                        pageNum = 1;
+                    }
+
                     getMsg();
                 }
             }
@@ -272,9 +277,14 @@ public class PlayingFragment extends BaseFragment {
         });
     }
 
+    ExpandAdapter adapter;
 
     private void setClassAdapter() {
-        ExpandAdapter adapter = new ExpandAdapter(getActivity(), fenLeiBOS);
+        if (adapter != null) {
+            adapter.setData(fenLeiBOS);
+            return;
+        }
+        adapter = new ExpandAdapter(getActivity(), fenLeiBOS);
         try {
             leftMenu.setAdapter(adapter);
             leftMenu.expandGroup(0);
@@ -359,6 +369,8 @@ public class PlayingFragment extends BaseFragment {
     }
 
 
+    LGRecycleViewAdapter<ChanPinBO.PageListBean> shoucangAdapter;
+
     /**
      * 设置内容适配器
      */
@@ -374,7 +386,11 @@ public class PlayingFragment extends BaseFragment {
         } catch (Exception ex) {
 
         }
-        LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
+        if (shoucangAdapter != null) {
+            shoucangAdapter.setData(listBeans);
+            return;
+        }
+        shoucangAdapter =
                 new LGRecycleViewAdapter<ChanPinBO.PageListBean>(listBeans) {
                     @Override
                     public int getLayoutId(int viewType) {
@@ -398,26 +414,23 @@ public class PlayingFragment extends BaseFragment {
                             }
                         });
                         checkBox.setVisibility(isEdit ? View.VISIBLE : View.GONE);
-//                        if (position == getItemCount() - 1) {
-//                            holder.getView(R.id.tianchong).setVisibility(View.VISIBLE);
-//                        } else {
-//                            holder.getView(R.id.tianchong).setVisibility(View.GONE);
-//                        }
                     }
                 };
-        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+        shoucangAdapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", adapter.getItem(position).getUrl());
-                bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putString("url", shoucangAdapter.getItem(position).getUrl());
+                bundle.putString("title", shoucangAdapter.getItem(position).getTitle());
                 bundle.putInt("targetType", 0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
-        recycleView.setAdapter(adapter);
+        recycleView.setAdapter(shoucangAdapter);
     }
 
+
+    LGRecycleViewAdapter<ChanPinBO.PageListBean> chanpinAdapter;
 
     /**
      * 设置内容适配器 ,产品列表的时候显示这种样式
@@ -430,7 +443,11 @@ public class PlayingFragment extends BaseFragment {
             noneLayout.setVisibility(View.GONE);
             recycleView.setVisibility(View.VISIBLE);
         }
-        LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
+        if (chanpinAdapter != null) {
+            chanpinAdapter.setData(listBeans);
+            return;
+        }
+        chanpinAdapter =
                 new LGRecycleViewAdapter<ChanPinBO.PageListBean>(listBeans) {
                     @Override
                     public int getLayoutId(int viewType) {
@@ -443,17 +460,17 @@ public class PlayingFragment extends BaseFragment {
                         holder.setImageUrl(getActivity(), R.id.wenzhang_img, productListBean.getSmallImgUrl());
                     }
                 };
-        adapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
+        chanpinAdapter.setOnItemClickListener(R.id.item_layout, new LGRecycleViewAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("url", adapter.getItem(position).getUrl());
-                bundle.putString("title", adapter.getItem(position).getTitle());
+                bundle.putString("url", chanpinAdapter.getItem(position).getUrl());
+                bundle.putString("title", chanpinAdapter.getItem(position).getTitle());
                 bundle.putInt("targetType", 0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
-        recycleView.setAdapter(adapter);
+        recycleView.setAdapter(chanpinAdapter);
     }
 
 
