@@ -43,6 +43,11 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     }
 
 
+    public void setData(List<FenLeiBO> fenLeiBOS) {
+        this.fenLeiBOS = fenLeiBOS;
+        notifyDataSetChanged();
+    }
+
     public void setIsShouCang(int isShouCang) {
         this.isShouCang = isShouCang;
     }
