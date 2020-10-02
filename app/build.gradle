@@ -18,8 +18,8 @@ android {
         applicationId "cn.teach.equip"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 104
+        versionName "1.0.4"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
