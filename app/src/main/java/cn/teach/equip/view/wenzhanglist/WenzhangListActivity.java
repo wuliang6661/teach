@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -37,6 +40,12 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
     RecyclerView recycleView;
     @BindView(R.id.srl_page)
     SmartRefreshLayout srlPage;
+    @BindView(R.id.et_sousuo)
+    EditText etSousuo;
+    @BindView(R.id.bt_sousuo)
+    ImageView btSousuo;
+    @BindView(R.id.sousuo)
+    LinearLayout sousuo;
 
     private int selectType = 1; // 默认装备指南
 
