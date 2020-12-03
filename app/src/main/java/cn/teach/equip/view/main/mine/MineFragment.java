@@ -32,9 +32,8 @@ import cn.teach.equip.base.MyApplication;
 import cn.teach.equip.bean.event.SwitchEvent;
 import cn.teach.equip.bean.pojo.UserBO;
 import cn.teach.equip.mvp.MVPBaseFragment;
-import cn.teach.equip.util.AppManager;
 import cn.teach.equip.view.BigPicutreActivity;
-import cn.teach.equip.view.login.LoginActivity;
+import cn.teach.equip.view.ContactFragment;
 import cn.teach.equip.view.mulu.MuluActivity;
 import cn.teach.equip.view.personmessage.PersonMessageActivity;
 import cn.teach.equip.view.setting.SettingActivity;
@@ -63,6 +62,8 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
     @BindView(R.id.my_shoucang)
     CardView myShoucang;
     Unbinder unbinder;
+    @BindView(R.id.lianxi)
+    CardView lianxi;
 
     @Nullable
     @Override
@@ -178,6 +179,11 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                         }
                     });
                 }).show();
+    }
+
+    @OnClick(R.id.lianxi)
+    public void lianxi() {
+        gotoActivity(ContactFragment.class, false);
     }
 
 

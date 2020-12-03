@@ -384,7 +384,7 @@ public class PlayingFragment extends BaseFragment {
                 recycleView.setVisibility(View.VISIBLE);
             }
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         }
         if (shoucangAdapter != null) {
             shoucangAdapter.setData(listBeans);
