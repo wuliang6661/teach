@@ -167,11 +167,12 @@ public class HttpServerImpl {
     /**
      * 获取文章列表
      */
-    public static Observable<WenZhangListBo> getArticleList(int type, int pageNum) {
+    public static Observable<WenZhangListBo> getArticleList(int type, int pageNum, String searchContent) {
         Map<String, Object> params = new HashMap<>();
         params.put("type", type);
         params.put("page", pageNum);
         params.put("size", 20);
+        params.put("searchContent", searchContent);
         return getService().getArticleList(params).compose(RxResultHelper.httpRusult());
     }
 

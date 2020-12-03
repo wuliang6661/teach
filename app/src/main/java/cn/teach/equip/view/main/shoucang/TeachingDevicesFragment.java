@@ -40,10 +40,10 @@ import cn.teach.equip.weight.lgrecycleadapter.LGViewHolder;
  * author : wuliang
  * e-mail : wuliang6661@163.com
  * date   : 2020/7/913:45
- * desc   : 玩教具
+ * desc   : 教学仪器
  * version: 1.0
  */
-public class PlayingFragment extends BaseFragment {
+public class TeachingDevicesFragment extends BaseFragment {
 
 
     @BindView(R.id.edit_layout)
@@ -73,10 +73,10 @@ public class PlayingFragment extends BaseFragment {
     private PopDeleteWindow popDeleteWindow;
     private Map<String, ChanPinBO.PageListBean> selectMaps = new HashMap<>();
 
-    public static PlayingFragment getInstance(int type) {
+    public static TeachingDevicesFragment getInstance(int type) {
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
-        PlayingFragment fragment = new PlayingFragment();
+        TeachingDevicesFragment fragment = new TeachingDevicesFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -250,7 +250,7 @@ public class PlayingFragment extends BaseFragment {
      * 获取产品分类
      */
     private void getChanPing() {
-        HttpServerImpl.getProductList(6, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
+        HttpServerImpl.getProductList(4, 1).subscribe(new HttpResultSubscriber<List<FenLeiBO>>() {
             @Override
             public void onSuccess(List<FenLeiBO> s) {
                 fenLeiBOS = s;

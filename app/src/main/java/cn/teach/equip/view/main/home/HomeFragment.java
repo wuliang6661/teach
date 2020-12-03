@@ -204,7 +204,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
      * 获取文章列表
      */
     private void getArticleList(int type, int page) {
-        HttpServerImpl.getArticleList(type, page).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
+        HttpServerImpl.getArticleList(type, page,null).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
             @Override
             public void onSuccess(WenZhangListBo s) {
                 if (pageNum == 1) {

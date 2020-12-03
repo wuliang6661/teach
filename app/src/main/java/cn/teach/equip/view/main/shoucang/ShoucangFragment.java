@@ -54,6 +54,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
 
     PlayingFragment fragment;
     PeitaoFragment peitaoFragment;
+    TeachingDevicesFragment teachingDevicesFragment;
 
     List<Fragment> fragments;
 
@@ -73,6 +74,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
         if (!StringUtils.isEmpty(MyApplication.token)) {
             fragment = new PlayingFragment();
             peitaoFragment = PeitaoFragment.getInstanse(0);
+            teachingDevicesFragment = new TeachingDevicesFragment();
 //            fragments = new ArrayList<>();
 //            fragments.add(new NoneFragment());
 //            fragments.add(new NoneFragment());
@@ -83,7 +85,7 @@ public class ShoucangFragment extends MVPBaseFragment<ShoucangContract.View, Sho
                 public void clickBar(int position) {
                     switch (position) {
                         case 0:
-                            FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);
+                            FragmentUtils.replace(getFragmentManager(), teachingDevicesFragment, R.id.fragment_container);
                             break;
                         case 1:
                             FragmentUtils.replace(getFragmentManager(), new NoneFragment(), R.id.fragment_container);

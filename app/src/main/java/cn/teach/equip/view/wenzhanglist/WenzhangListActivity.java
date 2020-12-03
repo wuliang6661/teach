@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.teach.equip.R;
 import cn.teach.equip.api.HttpResultSubscriber;
 import cn.teach.equip.api.HttpServerImpl;
@@ -55,6 +56,8 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
 
     LGRecycleViewAdapter<WenZhangListBo.PageListBean> adapter;
 
+    private String key;
+
     @Override
     protected int getLayout() {
         return R.layout.act_wenzhang_list;
@@ -82,7 +85,7 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
         }
         recycleView.setLayoutManager(new LinearLayoutManager(this));
         addListener();
-        getWenZhangList();
+        getWenZhangList(null);
     }
 
     @Override
@@ -104,7 +107,7 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                     @Override
                     public void run() {
                         pageNum++;
-                        getWenZhangList();
+                        getWenZhangList(key);
                     }
                 }, 1000);
 
@@ -115,18 +118,33 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
                 srlPage.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        key = null;
                         pageNum = 1;
-                        getWenZhangList();
+                        getWenZhangList(key);
                     }
                 }, 1000);
             }
         });
     }
 
-    private void getWenZhangList() {
-        HttpServerImpl.getArticleList(selectType, pageNum).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
+
+    /**
+     * 搜索
+     */
+    @OnClick(R.id.bt_sousuo)
+    public void sousuo() {
+        key = etSousuo.getText().toString().trim();
+        pageNum = 1;
+        getWenZhangList(key);
+    }
+
+
+    private void getWenZhangList(String searchContent) {
+        showProgress();
+        HttpServerImpl.getArticleList(selectType, pageNum, searchContent).subscribe(new HttpResultSubscriber<WenZhangListBo>() {
             @Override
             public void onSuccess(WenZhangListBo wenZhangListBo) {
+                stopProgress();
                 if (pageNum == 1) {
                     list = wenZhangListBo.getPageList();
                     setAdapter();
@@ -143,6 +161,7 @@ public class WenzhangListActivity extends MVPBaseActivity<WenzhangListContract.V
 
             @Override
             public void onFiled(String message) {
+                stopProgress();
                 showToast2(message);
             }
         });
