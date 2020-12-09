@@ -63,6 +63,12 @@ public class TeachingDevicesFragment extends BaseFragment {
     TextView optionText;
     @BindView(R.id.tianchong)
     View tianchong;
+    @BindView(R.id.zhu_layout)
+    LinearLayout zhuLayout;
+    @BindView(R.id.kong_layout)
+    LinearLayout kongLayout;
+    @BindView(R.id.none_text)
+    TextView noneText;
 
     private int type = 0;
     private int levelId3;
@@ -254,6 +260,18 @@ public class TeachingDevicesFragment extends BaseFragment {
             @Override
             public void onSuccess(List<FenLeiBO> s) {
                 fenLeiBOS = s;
+                if (s == null || s.size() == 0) {
+                    zhuLayout.setVisibility(View.GONE);
+                    kongLayout.setVisibility(View.VISIBLE);
+                    if (type == 1) {
+                        noneText.setText("暂无产品");
+                    } else {
+                        noneText.setText("还未收藏产品");
+                    }
+                    return;
+                }
+                zhuLayout.setVisibility(View.VISIBLE);
+                kongLayout.setVisibility(View.GONE);
                 setClassAdapter();
                 if (type == 0) {
                     if (levelId3 == 0) {
