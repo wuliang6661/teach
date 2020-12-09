@@ -63,6 +63,8 @@ public class PlayingFragment extends BaseFragment {
     TextView optionText;
     @BindView(R.id.tianchong)
     View tianchong;
+    @BindView(R.id.recycle_layout)
+    LinearLayout recycleLayout;
 
     private int type = 0;
     private int levelId3;
@@ -438,10 +440,10 @@ public class PlayingFragment extends BaseFragment {
     private void setGridAdapter(List<ChanPinBO.PageListBean> listBeans) {
         if (listBeans.isEmpty()) {
             noneLayout.setVisibility(View.VISIBLE);
-            recycleView.setVisibility(View.GONE);
+            recycleLayout.setVisibility(View.GONE);
         } else {
             noneLayout.setVisibility(View.GONE);
-            recycleView.setVisibility(View.VISIBLE);
+            recycleLayout.setVisibility(View.VISIBLE);
         }
         if (chanpinAdapter != null) {
             chanpinAdapter.setData(listBeans);
