@@ -183,7 +183,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             rightText.setText("编   辑");
             setAdapter();
         }
-        if(popDeleteWindow != null){
+        if (popDeleteWindow != null) {
             popDeleteWindow.dismiss();
         }
     }
@@ -303,11 +303,13 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             if (pageListBeans.isEmpty()) {
                 noneLayout.setVisibility(View.VISIBLE);
                 recycleView.setVisibility(View.GONE);
+                xuanzeLayout.setVisibility(View.GONE);
             } else {
                 noneLayout.setVisibility(View.GONE);
                 recycleView.setVisibility(View.VISIBLE);
+                xuanzeLayout.setVisibility(View.VISIBLE);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         LGRecycleViewAdapter<ChanPinBO.PageListBean> adapter =
@@ -362,7 +364,7 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
                 Bundle bundle = new Bundle();
                 bundle.putString("url", adapter.getItem(position).getUrl());
                 bundle.putString("title", adapter.getItem(position).getTitle());
-                bundle.putInt("targetType",0);
+                bundle.putInt("targetType", 0);
                 gotoActivity(WebActivity.class, bundle, false);
             }
         });
@@ -399,7 +401,6 @@ public class PeitaoFragment extends MVPBaseFragment<PeitaoContract.View, PeitaoP
             }
         });
     }
-
 
 
     @Override
