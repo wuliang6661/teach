@@ -151,6 +151,7 @@ public class ShareUtils {
      * 分享文件
      */
     public static void shareFile(String title, String content, String filePath, int flag) {
+        content = "hhhhhh";
         Platform.ShareParams oks = new Platform.ShareParams();
         oks.setShareType(Platform.SHARE_FILE);
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
