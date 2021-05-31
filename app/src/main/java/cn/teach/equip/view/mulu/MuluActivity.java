@@ -271,12 +271,13 @@ public class MuluActivity extends MVPBaseActivity<MuluContract.View, MuluPresent
             public void onItemClicked(View view, int position) {
                 String filePath = new File(FileConfig.getMlFile(), adapter.getItem(position).getCode() + "." +
                         adapter.getItem(position).getSuffix()).getAbsolutePath();
-                new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
-                    @Override
-                    public void share(int flag) {
-                        ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath, flag);
-                    }
-                });
+                ShareUtils.shareFile(adapter.getItem(position).getTitle(), adapter.getItem(position).getDesc(), filePath, 0);
+//                new ShareDialog().showShareDialog(new ShareDialog.OnClickShare() {
+//                    @Override
+//                    public void share(int flag) {
+//
+//                    }
+//                });
 
             }
         });
