@@ -18,7 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitXY"
-        android:src="@drawable/splash_img" />
+        android:src="@drawable/splash_img2" />
 
 
     <ImageView
@@ -26,7 +26,8 @@
         android:layout_height="56dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/gongsi_tupian" />
+        android:src="@drawable/gongsi_tupian"
+        android:visibility="gone" />
 
 
 </LinearLayout>
