@@ -38,7 +38,7 @@ import rx.Observable;
 
 public interface HttpService {
 
-    String URL = "http://www.shsjyjszbfwzx.cn/shjz/";
+    String URL = "https://www.shsjyjszbfwzx.cn/shjz/";
 
 
     /**
