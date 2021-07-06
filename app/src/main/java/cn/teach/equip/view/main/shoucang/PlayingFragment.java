@@ -316,7 +316,7 @@ public class PlayingFragment extends BaseFragment {
                         levelId3 = fenLeiBOS.get(groupPosition).getSubList().get(childPosition).getLevelId3();
                         pageNum = 1;
                         getMsg();
-                        
+
                     }
                 }
                 adapter.notifyDataSetChanged();
