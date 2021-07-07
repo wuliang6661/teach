@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.OnClick
 import cn.teach.equip.R
 import cn.teach.equip.api.HttpResultSubscriber
 import cn.teach.equip.api.HttpServerImpl
@@ -40,7 +38,7 @@ class FanKuiActivity : BaseActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.commit -> {
-                val fankui = etFankui?.text.toString()
+                val fankui = etFankui?.text.toString().trim()
                 if (StringUtils.isEmpty(fankui)) {
                     showToast2("请填写反馈！")
                     return
